@@ -16,25 +16,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    about_app.cpp \
+	about_app/about_app.cpp \
     main.cpp \
-    mainwindow.cpp \
-    window_login.cpp \
-    window_login.cpp \
-    window_registration.cpp
+	mainwindow.cpp \
+    window_login/window_login.cpp \
+	window_register/window_registration.cpp \
 
 HEADERS += \
-    about_app.h \
-    mainwindow.h \
-    window_login.h \
-    window_registration.h
+	about_app/about_app.h \
+	mainwindow.h \
+    window_login/window_login.h \
+	window_register/window_registration.h \
 
 FORMS += \
-    about_app.ui \
-    mainwindow.ui \
-    window_login.ui \
-    window_login.ui \
-    window_registration.ui
+	about_app/about_app.ui \
+	mainwindow.ui \
+    window_login/window_login.ui \
+	window_register/window_registration.ui \
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

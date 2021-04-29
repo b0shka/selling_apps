@@ -1,15 +1,13 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "window_login.h"
-#include "about_app.h"
+#include "window_login/window_login.h"
+#include "about_app/about_app.h"
 #include <vector>
-
-using namespace std;
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    add_name_app();
+    add_name_app_from_db();
 }
 
 MainWindow::~MainWindow()
@@ -28,11 +26,13 @@ void MainWindow::on_pushButton_clicked()
     {
         ui->lineEdit->setStyleSheet(lock_style);
         ui->listWidget->clear();
-        add_name_app();
+        add_name_app_from_db();
     }
     else
     {
         ui->lineEdit->setStyleSheet(default_style);
+        ui->listWidget->clear();
+        search_result(search);
         ui->lineEdit->setText("");
     }
 }
@@ -52,11 +52,66 @@ void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
     app_information.exec();
 }
 
-void MainWindow::add_name_app()
+void MainWindow::add_name_app_from_db()
 {
     vector<QString> names_app = {"Keylogger", "Database", "Messenger", "Voice assistant", "Telegram assistant bot"};
     for (QString i : names_app)
     {
         ui->listWidget->addItem(i);
     }
+}
+
+void MainWindow::search_result(QString search)
+{
+    vector<QString> names_app = {"Keylogger", "Database", "Messenger", "Voice assistant", "Telegram assistant bot"};
+    vector<QString> list_result = {};
+
+    for (QString i : names_app)
+    {
+        if (check_error(search.toLower(), i.toLower()) == 1)
+            list_result.push_back(i);
+
+        else if (check_word_in_word(search.toLower(), i.toLower()) == 1)
+            list_result.push_back(i);
+    }
+    add_search_result(list_result);
+}
+
+int MainWindow::check_error(QString search, QString name_main)
+{
+    int count = 0;
+    if (name_main.size() == search.size())
+    {
+        for (int j = 0; j < search.size(); j++)
+        {
+            if (name_main[j] != search[j])
+            {
+                count++;
+            }
+        }
+        if (count <= 2)
+            return 1;
+        else
+            return 0;
+    }
+}
+
+int MainWindow::check_word_in_word(QString search, QString name_main)
+{
+    bool result = name_main.contains(search);
+
+    if (result == true)
+        return 1;
+    else
+        return 0;
+}
+
+void MainWindow::add_search_result(vector<QString> list_result)
+{
+    ui->listWidget->clear();
+    for (QString i : list_result)
+    {
+        ui->listWidget->addItem(i);
+    }
+    list_result = {};
 }
