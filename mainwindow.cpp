@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 #include "window_login/window_login.h"
 #include "about_app/about_app.h"
+#include <QDebug>
+#include <regex>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -45,8 +47,11 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 {
-    QList<QString> name_app = {item->text()};
-    about_app app_information(name_app);
+    QList<QString> name_app = item->text().split("\t\t\t\t\t");
+    QList<QString> description = item->toolTip().split(";");
+    QList<QString> param_app = {name_app[0], name_app[1].replace("\t", ""), description[0], description[1]};
+    qDebug() << param_app;
+    about_app app_information(param_app);
     app_information.setModal(true);
     app_information.exec();
 }
@@ -71,7 +76,7 @@ void MainWindow::add_name_app_from_db()
         else
             title_app = i[0] + "\t\t\t\t\t" + i[1];
         item->setText(title_app);
-        item->setToolTip(i[3]);
+        item->setToolTip(i[3] + ";" + i[2]);
         ui->listWidget->addItem(item);
     }
 }
