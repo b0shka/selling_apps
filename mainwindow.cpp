@@ -2,7 +2,6 @@
 #include "ui_mainwindow.h"
 #include "window_login/window_login.h"
 #include "about_app/about_app.h"
-#include <vector>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -46,7 +45,7 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 {
-    QString name_app = item->text();
+    QList<QString> name_app = {item->text()};
     about_app app_information(name_app);
     app_information.setModal(true);
     app_information.exec();
@@ -54,24 +53,46 @@ void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 
 void MainWindow::add_name_app_from_db()
 {
-    vector<QString> names_app = {"Keylogger", "Database", "Messenger", "Voice assistant", "Telegram assistant bot"};
-    for (QString i : names_app)
+    QList<QList<QString>> names_app = {
+        {"Keylogger", "3000", "Alex Ivanov", "Программа для контроля нажатыми клавишами"},
+        {"Database", "5000", "Vanya Petrov", "Программа для создания, просмотра и изменения баз данных"},
+        {"Messenger", "10000", "Arseniy", "Программа для ведения переписок с друзьями"},
+        {"Voice assistant", "7500", "Nastya", "Голосовой ассистент с полезными функциями"},
+        {"Telegram assistant bot", "4500", "John", "Telegram бот с полезными функциями"},
+    };
+    for (QList<QString> i : names_app)
     {
-        ui->listWidget->addItem(i);
+        QListWidgetItem *item = new QListWidgetItem;
+        QString title_app;
+        if (i[0].size() < 11)
+            title_app = i[0] + "\t\t\t\t\t\t\t" + i[1];
+        else if (i[0].size() < 23)
+            title_app = i[0] + "\t\t\t\t\t\t" + i[1];
+        else
+            title_app = i[0] + "\t\t\t\t\t" + i[1];
+        item->setText(title_app);
+        item->setToolTip(i[3]);
+        ui->listWidget->addItem(item);
     }
 }
 
 void MainWindow::search_result(QString search)
 {
-    vector<QString> names_app = {"Keylogger", "Database", "Messenger", "Voice assistant", "Telegram assistant bot"};
-    vector<QString> list_result = {};
+    QList<QList<QString>> names_app = {
+        {"Keylogger", "3000", "Alex Ivanov", "Программа для контроля нажатыми клавишами"},
+        {"Database", "5000", "Vanya Petrov", "Программа для создания, просмотра и изменения баз данных"},
+        {"Messenger", "10000", "Arseniy", "Программа для ведения переписок с друзьями"},
+        {"Voice assistant", "7500", "Nastya", "Голосовой ассистент с полезными функциями"},
+        {"Telegram assistant bot", "4500", "John", "Telegram бот с полезными функциями"},
+    };
+    QList<QList<QString>> list_result = {};
 
-    for (QString i : names_app)
+    for (QList<QString> i : names_app)
     {
-        if (check_error(search.toLower(), i.toLower()) == 1)
+        if (check_error(search.toLower(), i[0].toLower()) == 1)
             list_result.push_back(i);
 
-        else if (check_word_in_word(search.toLower(), i.toLower()) == 1)
+        else if (check_word_in_word(search.toLower(), i[0].toLower()) == 1)
             list_result.push_back(i);
     }
     add_search_result(list_result);
@@ -106,12 +127,39 @@ int MainWindow::check_word_in_word(QString search, QString name_main)
         return 0;
 }
 
-void MainWindow::add_search_result(vector<QString> list_result)
+void MainWindow::add_search_result(QList<QList<QString>> list_result)
 {
     ui->listWidget->clear();
-    for (QString i : list_result)
+    for (QList<QString> i : list_result)
     {
-        ui->listWidget->addItem(i);
+        QListWidgetItem *item = new QListWidgetItem;
+        QString title_app;
+        if (i[0].size() < 11)
+            title_app = i[0] + "\t\t\t\t\t\t\t" + i[1];
+        else if (i[0].size() < 23)
+            title_app = i[0] + "\t\t\t\t\t\t" + i[1];
+        else
+            title_app = i[0] + "\t\t\t\t\t" + i[1];
+        item->setText(title_app);
+        item->setToolTip(i[3]);
+        ui->listWidget->addItem(item);
     }
-    list_result = {};
+    list_result.clear();
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    switch (event->key())
+    {
+        case Qt::Key_Escape:
+            close();
+            break;
+        case Qt::Key_Control:
+            ui->lineEdit->setText("");
+    }
+}
+
+void MainWindow::on_lineEdit_returnPressed()
+{
+    on_pushButton_clicked();
 }

@@ -12,7 +12,7 @@ class about_app : public QDialog
     Q_OBJECT
 
 public:
-    explicit about_app(QString name_app, QWidget *parent = nullptr);
+    explicit about_app(QList<QString> name_app, QWidget *parent = nullptr);
     ~about_app();
 
 private:

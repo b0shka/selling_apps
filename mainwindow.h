@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QListWidgetItem>
+#include <QKeyEvent>
 
 using namespace std;
 
@@ -26,7 +27,9 @@ private slots:
     void search_result(QString search);
     int check_error(QString search, QString name_main);
     int check_word_in_word(QString search, QString name_main);
-    void add_search_result(vector<QString> list_result);
+    void add_search_result(QList<QList<QString>> list_result);
+    void keyPressEvent(QKeyEvent *event);
+    void on_lineEdit_returnPressed();
 
 private:
     Ui::MainWindow *ui;
