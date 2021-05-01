@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -19,12 +19,14 @@ SOURCES += \
 	about_app/about_app.cpp \
     main.cpp \
 	mainwindow.cpp \
+	sql_database/sql_database.cpp \
     window_login/window_login.cpp \
 	window_register/window_registration.cpp \
 
 HEADERS += \
 	about_app/about_app.h \
 	mainwindow.h \
+	sql_database/sql_database.h \
     window_login/window_login.h \
 	window_register/window_registration.h \
 

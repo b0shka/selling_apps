@@ -2,8 +2,8 @@
 #include "ui_mainwindow.h"
 #include "window_login/window_login.h"
 #include "about_app/about_app.h"
+#include "sql_database/sql_database.h"
 #include <QDebug>
-#include <regex>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -56,8 +56,27 @@ void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
     app_information.exec();
 }
 
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    switch (event->key())
+    {
+        case Qt::Key_Escape:
+            close();
+            break;
+        case Qt::Key_Control:
+            ui->lineEdit->setText("");
+    }
+}
+
+void MainWindow::on_lineEdit_returnPressed()
+{
+    on_pushButton_clicked();
+}
+
 void MainWindow::add_name_app_from_db()
 {
+    sql_database();
+
     QList<QList<QString>> names_app = {
         {"Keylogger", "3000", "Alex Ivanov", "Программа для контроля нажатыми клавишами"},
         {"Database", "5000", "Vanya Petrov", "Программа для создания, просмотра и изменения баз данных"},
@@ -69,9 +88,9 @@ void MainWindow::add_name_app_from_db()
     {
         QListWidgetItem *item = new QListWidgetItem;
         QString title_app;
-        if (i[0].size() < 11)
+        if (i[0].size() < 9)
             title_app = i[0] + "\t\t\t\t\t\t\t" + i[1];
-        else if (i[0].size() < 23)
+        else if (i[0].size() < 22)
             title_app = i[0] + "\t\t\t\t\t\t" + i[1];
         else
             title_app = i[0] + "\t\t\t\t\t" + i[1];
@@ -150,21 +169,4 @@ void MainWindow::add_search_result(QList<QList<QString>> list_result)
         ui->listWidget->addItem(item);
     }
     list_result.clear();
-}
-
-void MainWindow::keyPressEvent(QKeyEvent *event)
-{
-    switch (event->key())
-    {
-        case Qt::Key_Escape:
-            close();
-            break;
-        case Qt::Key_Control:
-            ui->lineEdit->setText("");
-    }
-}
-
-void MainWindow::on_lineEdit_returnPressed()
-{
-    on_pushButton_clicked();
 }
