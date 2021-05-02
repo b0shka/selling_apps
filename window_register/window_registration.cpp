@@ -63,7 +63,6 @@ void window_registration::on_pushButton_clicked()
         ui->lineEdit_2->setStyleSheet(default_style);
 
         sql_database accessing_db;
-        accessing_db.create_new_table();
         QString result_register = accessing_db.register_new_user(username, password);
         if (result_register == "OK")
         {

@@ -16,6 +16,7 @@ class window_login : public QDialog
 public:
     explicit window_login(QWidget *parent = nullptr);
     ~window_login();
+    int status_autorization = 0;
 
 private slots:
     void on_pushButton_clicked();

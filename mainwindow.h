@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include <QListWidgetItem>
 #include <QKeyEvent>
-#include <QDebug>
 #include "window_login/window_login.h"
 #include "about_app/about_app.h"
 #include "sql_database/sql_database.h"
@@ -32,11 +31,13 @@ private slots:
     void on_lineEdit_returnPressed();
 
     // функции для работы с записями и поиском
-    void add_name_app_from_db();
+    void get_name_app_from_db();
     void search_result(QString search);
     int check_error(QString search, QString name_main);
     int check_word_in_word(QString search, QString name_main);
-    void add_search_result(QList<QList<QString>> list_result);
+    void add_apps_to_listWidget(QList<QList<QString>> list_result);
+
+    // для работы с авторизацией
 
 private:
     Ui::MainWindow *ui;

@@ -2,6 +2,7 @@
 #define ABOUT_APP_H
 
 #include <QDialog>
+#include "../sql_database/sql_database.h"
 
 namespace Ui {
 class about_app;

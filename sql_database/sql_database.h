@@ -13,10 +13,10 @@ using namespace std;
 
 class sql_database
 {
-public:
-    sql_database();
 public slots:
+    void first_start();
     void create_new_table();
+    QList<QList<QString>> get_apps_name();
     QString register_new_user(QString user_login, QString user_password);
     QString check_login_user(QString user_login, QString user_password);
 private:

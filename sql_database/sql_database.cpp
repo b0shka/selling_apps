@@ -1,6 +1,6 @@
 #include "sql_database.h"
 
-sql_database::sql_database()
+void sql_database::first_start()
 {
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("./server.db");
@@ -10,6 +10,7 @@ sql_database::sql_database()
         qDebug() << "[ERROR] " << db.lastError().text();
         return;
     }
+    create_new_table();
 }
 
 void sql_database::create_new_table()
@@ -19,7 +20,7 @@ void sql_database::create_new_table()
                                                                 "login VARCHAR (40) NOT NULL,"
                                                                 "password TEXT NOT NULL,"
                                                                 "app_name VARCHAR (32),"
-                                                                "app_price integer,"
+                                                                "app_price VARCHAR (20),"
                                                                 "app_description TEXT"
                                                                 ");";
     if (!sql.exec(str_requests))
@@ -29,6 +30,26 @@ void sql_database::create_new_table()
     }
     db.commit();
     qDebug() << "[INFO] Создана таблица";
+}
+
+QList<QList<QString>> sql_database::get_apps_name()
+{
+    str_requests = "SELECT login, app_name, app_price, app_description FROM " + name_table + ";";
+    sql.exec(str_requests);
+    QList<QList<QString>> list_apps_name = {};
+
+    QSqlRecord get_data = sql.record();
+    QString app_name, app_price, app_description, login;
+    while (sql.next())
+    {
+        app_name = sql.value(get_data.indexOf("app_name")).toString();
+        app_price = sql.value(get_data.indexOf("app_price")).toString();
+        app_description = sql.value(get_data.indexOf("app_description")).toString();
+        login = sql.value(get_data.indexOf("login")).toString();
+        list_apps_name.push_back({app_name, app_price, app_description, login});
+    }
+
+    return list_apps_name;
 }
 
 QString sql_database::register_new_user(QString user_login, QString user_password)

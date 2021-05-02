@@ -61,8 +61,6 @@ void window_login::on_pushButton_clicked()
         ui->lineEdit_2->setStyleSheet(default_style);
 
         sql_database accessing_db;
-        accessing_db.create_new_table();
-
         QString result_login = accessing_db.check_login_user(username, password);
         if (result_login == "OK")
         {
@@ -70,6 +68,7 @@ void window_login::on_pushButton_clicked()
             ui->label_3->setText("Вы успешно авторизировались!");
             ui->lineEdit->setText("");
             ui->lineEdit_2->setText("");
+            status_autorization = 1;
             qDebug() << "[INFO] Авторизация пользователя";
         }
         else if (result_login == "NOT")

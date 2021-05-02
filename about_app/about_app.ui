@@ -82,7 +82,7 @@ background-color: #2a2a2a;</string>
     <rect>
      <x>20</x>
      <y>380</y>
-     <width>91</width>
+     <width>101</width>
      <height>21</height>
     </rect>
    </property>
@@ -103,9 +103,9 @@ color: silver;</string>
   <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
-     <x>115</x>
+     <x>125</x>
      <y>380</y>
-     <width>256</width>
+     <width>251</width>
      <height>21</height>
     </rect>
    </property>
@@ -121,6 +121,25 @@ color: silver;</string>
    </property>
    <property name="text">
     <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>80</y>
+     <width>566</width>
+     <height>286</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
    </property>
   </widget>
  </widget>

@@ -4,7 +4,9 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    add_name_app_from_db();
+    sql_database database;
+    database.first_start();
+    get_name_app_from_db();
 }
 
 MainWindow::~MainWindow()
@@ -16,14 +18,26 @@ void MainWindow::on_pushButton_clicked()
 {
     QString search = ui->lineEdit->text();
 
-    QString lock_style = "padding:2px 5px;\nheight: 28px;\ncolor: white;\nbackground-color: #2a2a2a;\nborder-radius: 5px;\nborder: 2px solid #f5a2a2";
-    QString default_style = "padding:2px 5px;\nheight: 28px;\ncolor: white;\nbackground-color: #2a2a2a;\nborder-radius: 5px;\nborder: none";
+    QString lock_style = "padding:2px 5px;"
+                         "height: 28px;"
+                         "color: white;"
+                         "background-color: #2a2a2a;"
+                         "border-radius: 5px;"
+                         "border: 2px solid #f5a2a2;"
+                         "font-size: 14px;";
+    QString default_style = "padding:2px 5px;"
+                            "height: 28px;"
+                            "color: white;"
+                            "background-color: #2a2a2a;"
+                            "border-radius: 5px;"
+                            "border: none;"
+                            "font-size: 14px;";
 
     if (search == "")
     {
         ui->lineEdit->setStyleSheet(lock_style);
         ui->listWidget->clear();
-        add_name_app_from_db();
+        get_name_app_from_db();
     }
     else
     {
@@ -69,45 +83,21 @@ void MainWindow::on_lineEdit_returnPressed()
     on_pushButton_clicked();
 }
 
-void MainWindow::add_name_app_from_db()
+void MainWindow::get_name_app_from_db()
 {
-    sql_database();
+    sql_database sql_apps_name;
+    QList<QList<QString>> list_apps_name = sql_apps_name.get_apps_name();
 
-    QList<QList<QString>> names_app = {
-        {"Keylogger", "3000", "Alex Ivanov", "Программа для контроля нажатыми клавишами"},
-        {"Database", "5000", "Vanya Petrov", "Программа для создания, просмотра и изменения баз данных"},
-        {"Messenger", "10000", "Arseniy", "Программа для ведения переписок с друзьями"},
-        {"Voice assistant", "7500", "Nastya", "Голосовой ассистент с полезными функциями"},
-        {"Telegram assistant bot", "4500", "John", "Telegram бот с полезными функциями"},
-    };
-    for (QList<QString> i : names_app)
-    {
-        QListWidgetItem *item = new QListWidgetItem;
-        QString title_app;
-        if (i[0].size() < 9)
-            title_app = i[0] + "\t\t\t\t\t\t\t" + i[1];
-        else if (i[0].size() < 22)
-            title_app = i[0] + "\t\t\t\t\t\t" + i[1];
-        else
-            title_app = i[0] + "\t\t\t\t\t" + i[1];
-        item->setText(title_app);
-        item->setToolTip(i[3] + ";" + i[2]);
-        ui->listWidget->addItem(item);
-    }
+    add_apps_to_listWidget(list_apps_name);
 }
 
 void MainWindow::search_result(QString search)
 {
-    QList<QList<QString>> names_app = {
-        {"Keylogger", "3000", "Alex Ivanov", "Программа для контроля нажатыми клавишами"},
-        {"Database", "5000", "Vanya Petrov", "Программа для создания, просмотра и изменения баз данных"},
-        {"Messenger", "10000", "Arseniy", "Программа для ведения переписок с друзьями"},
-        {"Voice assistant", "7500", "Nastya", "Голосовой ассистент с полезными функциями"},
-        {"Telegram assistant bot", "4500", "John", "Telegram бот с полезными функциями"},
-    };
+    sql_database sql_apps_name;
+    QList<QList<QString>> list_apps_name = sql_apps_name.get_apps_name();
     QList<QList<QString>> list_result = {};
 
-    for (QList<QString> i : names_app)
+    for (QList<QString> i : list_apps_name)
     {
         if (check_error(search.toLower(), i[0].toLower()) == 1)
             list_result.push_back(i);
@@ -115,7 +105,7 @@ void MainWindow::search_result(QString search)
         else if (check_word_in_word(search.toLower(), i[0].toLower()) == 1)
             list_result.push_back(i);
     }
-    add_search_result(list_result);
+    add_apps_to_listWidget(list_result);
 }
 
 int MainWindow::check_error(QString search, QString name_main)
@@ -147,21 +137,21 @@ int MainWindow::check_word_in_word(QString search, QString name_main)
         return 0;
 }
 
-void MainWindow::add_search_result(QList<QList<QString>> list_result)
+void MainWindow::add_apps_to_listWidget(QList<QList<QString>> list_result)
 {
     ui->listWidget->clear();
     for (QList<QString> i : list_result)
     {
         QListWidgetItem *item = new QListWidgetItem;
         QString title_app;
-        if (i[0].size() < 11)
+        if (i[0].size() < 9)
             title_app = i[0] + "\t\t\t\t\t\t\t" + i[1];
-        else if (i[0].size() < 23)
+        else if (i[0].size() < 22)
             title_app = i[0] + "\t\t\t\t\t\t" + i[1];
         else
             title_app = i[0] + "\t\t\t\t\t" + i[1];
         item->setText(title_app);
-        item->setToolTip(i[3]);
+        item->setToolTip(i[2] + ";" + i[3]);
         ui->listWidget->addItem(item);
     }
     list_result.clear();
