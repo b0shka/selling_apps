@@ -2,6 +2,8 @@
 #define WINDOW_LOGIN_H
 
 #include <QDialog>
+#include "../window_register/window_registration.h"
+#include "../sql_database/sql_database.h"
 
 namespace Ui {
 class window_login;

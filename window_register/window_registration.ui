@@ -70,8 +70,7 @@ color: white;</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">font-size: 22px;
-letter-spacing: 5px;</string>
+    <string notr="true">font-size: 22px;</string>
    </property>
    <property name="text">
     <string>Регистрация</string>

@@ -1,9 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "window_login/window_login.h"
-#include "about_app/about_app.h"
-#include "sql_database/sql_database.h"
-#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {

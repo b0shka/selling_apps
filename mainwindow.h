@@ -4,6 +4,10 @@
 #include <QMainWindow>
 #include <QListWidgetItem>
 #include <QKeyEvent>
+#include <QDebug>
+#include "window_login/window_login.h"
+#include "about_app/about_app.h"
+#include "sql_database/sql_database.h"
 
 using namespace std;
 

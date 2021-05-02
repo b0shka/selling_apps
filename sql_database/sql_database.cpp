@@ -1,6 +1,4 @@
 #include "sql_database.h"
-#include <QSqlError>
-#include <QSqlRecord>
 
 sql_database::sql_database()
 {
@@ -8,13 +6,9 @@ sql_database::sql_database()
     db.setDatabaseName("./server.db");
     sql = QSqlQuery(db);
     if (!db.open())
-        qDebug() << "Error: " << db.lastError().text();
-    else
     {
-        create_new_table();
-        QString name = "Alex";
-        QString pass = "qwerty123";
-        create_new_user(name, pass);
+        qDebug() << "[ERROR] " << db.lastError().text();
+        return;
     }
 }
 
@@ -28,24 +22,57 @@ void sql_database::create_new_table()
                                                                 "app_price integer,"
                                                                 "app_description TEXT"
                                                                 ");";
-    sql.exec(str_requests);
+    if (!sql.exec(str_requests))
+    {
+        qDebug() << "[ERROR] Не удается создать таблицу: " << db.lastError().text();
+        return;
+    }
     db.commit();
-    qDebug() << "Create table";
+    qDebug() << "[INFO] Создана таблица";
 }
 
-void sql_database::create_new_user(QString user_login, QString user_password)
+void sql_database::register_new_user(QString user_login, QString user_password)
 {
-    //int user_id = 1;
-    //sql.exec("SELECT id FROM users;");
-    /*while (sql.next())
+    str_requests = "SELECT id FROM " + name_table + " WHERE login = ('%1');";
+    if (!sql.exec(str_requests.arg(user_login)))
     {
-        qDebug() << sql.record();
-    }*/
+        qDebug() << "[ERROR] Не удалось сделать проверку на существование такого же пользователя:" << db.lastError().text();
+        return;
+    }
+    int count_users = 0;
+    while (sql.next())
+        count_users++;
 
-    str_requests = "INSERT INTO " + name_table + " (id, login, password) "
-                                                 "VALUES(%1, '%2', '%3');";
-    sql.exec(str_requests.arg(1).arg(user_login).arg(user_password));
-    db.commit();
-    qDebug() << "Create new user";
-    qDebug() << user_login << user_password;
+    if (count_users > 0)
+        qDebug() << "Пользователь с таким login уже существует";
+    else
+    {
+        str_requests = "SELECT id FROM " + name_table;
+        sql.exec(str_requests);
+        if (!sql.exec(str_requests))
+        {
+            qDebug() << "[ERROR] Не удается получить данные из БД для генерации id: " << db.lastError().text();
+            return;
+        }
+        QSqlRecord get_data = sql.record();
+        int user_id = 1;
+        int check_id;
+        while (sql.next())
+        {
+            check_id = sql.value(get_data.indexOf("id")).toInt();
+            if (user_id == check_id)
+                user_id++;
+            else
+                break;
+        }
+
+        str_requests = "INSERT INTO " + name_table + " (id, login, password) VALUES(%1, '%2', '%3');";
+        if (!sql.exec(str_requests.arg(user_id).arg(user_login).arg(user_password)))
+        {
+            qDebug() << "[ERROR] Не получается создать запись: " << db.lastError().text();
+            return;
+        }
+        db.commit();
+        qDebug() << "[INFO] Добавлен новый пользователь";
+    }
 }

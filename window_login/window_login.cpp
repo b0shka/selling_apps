@@ -1,6 +1,5 @@
 #include "window_login.h"
 #include "ui_window_login.h"
-#include "../window_register/window_registration.h"
 
 window_login::window_login(QWidget *parent) : QDialog(parent), ui(new Ui::window_login)
 {
@@ -17,8 +16,20 @@ void window_login::on_pushButton_clicked()
     QString username = ui->lineEdit->text();
     QString password = ui->lineEdit_2->text();
 
-    QString lock_style = "padding:2px 5px;\nheight: 28px;\ncolor: white;\nbackground-color: #404040;\nborder-radius: 5px;\nborder: 2px solid #f5a2a2;\nfont-size: 14px;";
-    QString default_style = "padding:2px 5px;\nheight: 28px;\ncolor: white;\nbackground-color: #404040;\nborder-radius: 5px;\nborder: none;\nfont-size: 14px;";
+    QString lock_style = "padding:2px 5px;"
+                         "height: 28px;"
+                         "color: white;"
+                         "background-color: #404040;"
+                         "border-radius: 5px;"
+                         "border: 2px solid #f5a2a2;"
+                         "font-size: 14px;";
+    QString default_style = "padding:2px 5px;"
+                            "height: 28px;"
+                            "color: white;"
+                            "background-color: #404040;"
+                            "border-radius: 5px;"
+                            "border: none;"
+                            "font-size: 14px;";
 
     if (username == "" && password == "")
     {
@@ -42,6 +53,10 @@ void window_login::on_pushButton_clicked()
     {
         ui->lineEdit->setStyleSheet(default_style);
         ui->lineEdit_2->setStyleSheet(default_style);
+
+        sql_database accessing_db;
+        accessing_db.create_new_table();
+
         if (username == "user" && password == "123")
         {
 
@@ -57,7 +72,7 @@ void window_login::on_pushButton_clicked()
 
 void window_login::on_pushButton_2_clicked()
 {
-    hide();
+    close();
     window_registration registration;
     registration.setModal(true);
     registration.exec();

@@ -2,11 +2,12 @@
 #define SQL_DATABASE_H
 
 #include <QWidget>
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QtSql>
 #include <iostream>
 #include <QDebug>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QSqlError>
+#include <QSqlRecord>
 
 using namespace std;
 
@@ -14,9 +15,9 @@ class sql_database
 {
 public:
     sql_database();
-private slots:
+public slots:
     void create_new_table();
-    void create_new_user(QString user_login, QString user_password);
+    void register_new_user(QString user_login, QString user_password);
 private:
     QSqlDatabase db;
     QSqlQuery sql;

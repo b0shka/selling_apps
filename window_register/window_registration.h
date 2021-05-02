@@ -2,6 +2,7 @@
 #define WINDOW_REGISTRATION_H
 
 #include <QDialog>
+#include "../sql_database/sql_database.h"
 
 namespace Ui {
 class window_registration;

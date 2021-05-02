@@ -18,8 +18,20 @@ void window_registration::on_pushButton_clicked()
     QString username = ui->lineEdit->text();
     QString password = ui->lineEdit_2->text();
 
-    QString lock_style = "padding:2px 5px;\nheight: 28px;\ncolor: white;\nbackground-color: #404040;\nborder-radius: 5px;\nborder: 2px solid #f5a2a2;\nfont-size: 14px;";
-    QString default_style = "padding:2px 5px;\nheight: 28px;\ncolor: white;\nbackground-color: #404040;\nborder-radius: 5px;\nborder: none;\nfont-size: 14px;";
+    QString lock_style = "padding:2px 5px;"
+                         "height: 28px;"
+                         "color: white;"
+                         "background-color: #404040;"
+                         "border-radius: 5px;"
+                         "border: 2px solid #f5a2a2;"
+                         "font-size: 14px;";
+    QString default_style = "padding:2px 5px;"
+                            "height: 28px;"
+                            "color: white;"
+                            "background-color: #404040;"
+                            "border-radius: 5px;"
+                            "border: none;"
+                            "font-size: 14px;";
 
     if (username == "" && password == "")
     {
@@ -43,6 +55,10 @@ void window_registration::on_pushButton_clicked()
     {
         ui->lineEdit->setStyleSheet(default_style);
         ui->lineEdit_2->setStyleSheet(default_style);
+
+        sql_database accessing_db;
+        accessing_db.create_new_table();
+        accessing_db.register_new_user(username, password);
 
         ui->lineEdit->setText("");
         ui->lineEdit_2->setText("");
