@@ -17,7 +17,8 @@ public:
     sql_database();
 public slots:
     void create_new_table();
-    void register_new_user(QString user_login, QString user_password);
+    QString register_new_user(QString user_login, QString user_password);
+    QString check_login_user(QString user_login, QString user_password);
 private:
     QSqlDatabase db;
     QSqlQuery sql;

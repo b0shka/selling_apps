@@ -30,6 +30,12 @@ void window_login::on_pushButton_clicked()
                             "border-radius: 5px;"
                             "border: none;"
                             "font-size: 14px;";
+    QString lock_style_label = "font-size: 14px;"
+                               "color: #f5a2a2;";
+    QString success_style_label = "font-size: 14px;"
+                                  "color: #93edd2";
+    QString error_style_label = "font-size: 14px;"
+                                "color: #ffc552";
 
     if (username == "" && password == "")
     {
@@ -57,16 +63,25 @@ void window_login::on_pushButton_clicked()
         sql_database accessing_db;
         accessing_db.create_new_table();
 
-        if (username == "user" && password == "123")
+        QString result_login = accessing_db.check_login_user(username, password);
+        if (result_login == "OK")
         {
-
+            ui->label_3->setStyleSheet(success_style_label);
+            ui->label_3->setText("Вы успешно авторизировались!");
+            ui->lineEdit->setText("");
+            ui->lineEdit_2->setText("");
+            qDebug() << "[INFO] Авторизация пользователя";
         }
-        else
+        else if (result_login == "NOT")
         {
-
+            ui->label_3->setStyleSheet(lock_style_label);
+            ui->label_3->setText("Не верный login или password");
         }
-        ui->lineEdit->setText("");
-        ui->lineEdit_2->setText("");
+        else if (result_login == "ERROR")
+        {
+            ui->label_3->setStyleSheet(error_style_label);
+            ui->label_3->setText("Ошибка на стороне сервера");
+        }
     }
 }
 

@@ -31,20 +31,20 @@ void sql_database::create_new_table()
     qDebug() << "[INFO] Создана таблица";
 }
 
-void sql_database::register_new_user(QString user_login, QString user_password)
+QString sql_database::register_new_user(QString user_login, QString user_password)
 {
     str_requests = "SELECT id FROM " + name_table + " WHERE login = ('%1');";
     if (!sql.exec(str_requests.arg(user_login)))
     {
         qDebug() << "[ERROR] Не удалось сделать проверку на существование такого же пользователя:" << db.lastError().text();
-        return;
+        return "ERROR";
     }
     int count_users = 0;
     while (sql.next())
         count_users++;
 
     if (count_users > 0)
-        qDebug() << "Пользователь с таким login уже существует";
+        return "NOT";
     else
     {
         str_requests = "SELECT id FROM " + name_table;
@@ -52,7 +52,7 @@ void sql_database::register_new_user(QString user_login, QString user_password)
         if (!sql.exec(str_requests))
         {
             qDebug() << "[ERROR] Не удается получить данные из БД для генерации id: " << db.lastError().text();
-            return;
+            return "ERROR";
         }
         QSqlRecord get_data = sql.record();
         int user_id = 1;
@@ -69,10 +69,28 @@ void sql_database::register_new_user(QString user_login, QString user_password)
         str_requests = "INSERT INTO " + name_table + " (id, login, password) VALUES(%1, '%2', '%3');";
         if (!sql.exec(str_requests.arg(user_id).arg(user_login).arg(user_password)))
         {
-            qDebug() << "[ERROR] Не получается создать запись: " << db.lastError().text();
-            return;
+            qDebug() << "[ERROR] Не получается создать запись при регистрации: " << db.lastError().text();
+            return "ERROR";
         }
         db.commit();
-        qDebug() << "[INFO] Добавлен новый пользователь";
+        return "OK";
     }
+}
+
+QString sql_database::check_login_user(QString user_login, QString user_password)
+{
+    str_requests = "SELECT id FROM " + name_table + " WHERE login = ('%1') and password = ('%2');";
+    if (!sql.exec(str_requests.arg(user_login).arg(user_password)))
+    {
+        qDebug() << "[ERROR] Не удается получить данные для авторизации" << db.lastError().text();
+        return "ERROR";
+    }
+
+    int count_users = 0;
+    while (sql.next())
+        count_users++;
+    if (count_users > 0)
+        return "OK";
+    else
+        return "NOT";
 }

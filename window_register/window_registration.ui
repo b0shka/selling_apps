@@ -33,7 +33,7 @@ background-color: #2a2a2a;</string>
    <property name="geometry">
     <rect>
      <x>130</x>
-     <y>170</y>
+     <y>165</y>
      <width>151</width>
      <height>31</height>
     </rect>
@@ -52,8 +52,8 @@ color: white;</string>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>40</y>
+     <x>125</x>
+     <y>35</y>
      <width>161</width>
      <height>26</height>
     </rect>
@@ -80,7 +80,7 @@ color: white;</string>
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>85</y>
+     <y>80</y>
      <width>226</width>
      <height>31</height>
     </rect>
@@ -107,7 +107,7 @@ color: white;</string>
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>125</y>
+     <y>120</y>
      <width>226</width>
      <height>31</height>
     </rect>
@@ -128,6 +128,39 @@ color: white;</string>
    </property>
    <property name="clearButtonEnabled">
     <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>215</y>
+     <width>366</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+     <underline>false</underline>
+     <strikeout>false</strikeout>
+     <kerning>true</kerning>
+    </font>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 14px;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
  </widget>
