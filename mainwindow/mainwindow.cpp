@@ -55,9 +55,7 @@ void MainWindow::on_pushButton_2_clicked()
     login.setModal(true);
     login.exec();
     if (login.status_autorization == 1)
-    {
         change_mainwindow(login.username);
-    }
 }
 
 void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
@@ -93,7 +91,8 @@ void MainWindow::get_name_app_from_db()
     sql_database sql_apps_name;
     QList<QList<QString>> list_apps_name = sql_apps_name.get_apps_name();
 
-    add_apps_to_listWidget(list_apps_name);
+    if (list_apps_name.at(0).at(0) != "ERROR")
+        add_apps_to_listWidget(list_apps_name);
 }
 
 void MainWindow::search_result(QString search)
@@ -165,7 +164,8 @@ void MainWindow::add_apps_to_listWidget(QList<QList<QString>> list_result)
 void MainWindow::change_mainwindow(QString login)
 {
     close();
-    autorization_mainwindow autorization_window(login);
+    autorization_mainwindow autorization_window;
+    autorization_window.autorizate(login);
     autorization_window.setModal(false);
     autorization_window.exec();
 }

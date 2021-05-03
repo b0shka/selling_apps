@@ -1,19 +1,25 @@
 #include "autorization_mainwindow.h"
 #include "ui_autorization_mainwindow.h"
+#include "../profile/profile.h"
 
-autorization_mainwindow::autorization_mainwindow(QString login, QWidget *parent) :
+autorization_mainwindow::autorization_mainwindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::autorization_mainwindow)
 {
     ui->setupUi(this);
-    ui->label->setText(login);
-    ui->pushButton_2->setText(login.at(0));
-    get_name_app_from_db();
 }
 
 autorization_mainwindow::~autorization_mainwindow()
 {
     delete ui;
+}
+
+void autorization_mainwindow::autorizate(QString login)
+{
+    user_name = login;
+    ui->label->setText(login);
+    ui->pushButton_2->setText(login.at(0));
+    get_name_app_from_db();
 }
 
 void autorization_mainwindow::on_pushButton_clicked()
@@ -52,7 +58,14 @@ void autorization_mainwindow::on_pushButton_clicked()
 
 void autorization_mainwindow::on_pushButton_2_clicked()
 {
+    profile profile_window(user_name);
+    profile_window.setModal(true);
+    profile_window.exec();
 
+    if (profile_window.status_delete == 1)
+    {
+        close();
+    }
 }
 
 void autorization_mainwindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)

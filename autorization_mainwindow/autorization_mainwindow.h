@@ -13,8 +13,13 @@ class autorization_mainwindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit autorization_mainwindow(QString login, QWidget *parent = nullptr);
+    explicit autorization_mainwindow(QWidget *parent = nullptr);
     ~autorization_mainwindow();
+    QString user_name;
+
+public slots:
+    // функции для авторизации
+    void autorizate(QString login);
 
 private slots:
     // функции для кнопок

@@ -35,21 +35,28 @@ void sql_database::create_new_table()
 QList<QList<QString>> sql_database::get_apps_name()
 {
     str_requests = "SELECT login, app_name, app_price, app_description FROM " + name_table + ";";
-    sql.exec(str_requests);
-    QList<QList<QString>> list_apps_name = {};
-
-    QSqlRecord get_data = sql.record();
-    QString app_name, app_price, app_description, login;
-    while (sql.next())
+    if (!sql.exec(str_requests))
     {
-        app_name = sql.value(get_data.indexOf("app_name")).toString();
-        app_price = sql.value(get_data.indexOf("app_price")).toString();
-        app_description = sql.value(get_data.indexOf("app_description")).toString();
-        login = sql.value(get_data.indexOf("login")).toString();
-        list_apps_name.push_back({app_name, app_price, app_description, login});
+        qDebug() << "[ERROR] Не удается получить данные для списка программ: " << db.lastError().text();
+        return {{"ERROR"}};
     }
+    else
+    {
+        QList<QList<QString>> list_apps_name = {};
 
-    return list_apps_name;
+        QSqlRecord get_data = sql.record();
+        QString app_name, app_price, app_description, login;
+        while (sql.next())
+        {
+            app_name = sql.value(get_data.indexOf("app_name")).toString();
+            app_price = sql.value(get_data.indexOf("app_price")).toString();
+            app_description = sql.value(get_data.indexOf("app_description")).toString();
+            login = sql.value(get_data.indexOf("login")).toString();
+            list_apps_name.push_back({app_name, app_price, app_description, login});
+        }
+
+        return list_apps_name;
+    }
 }
 
 QString sql_database::register_new_user(QString user_login, QString user_password)
@@ -114,4 +121,38 @@ QString sql_database::check_login_user(QString user_login, QString user_password
         return "OK";
     else
         return "NOT";
+}
+
+QList<QString> sql_database::get_info_for_profile(QString login)
+{
+    str_requests = "SELECT id FROM " + name_table + " WHERE login = ('%1');";
+    if (!sql.exec(str_requests.arg(login)))
+    {
+        qDebug() << "[ERROR] Не удается получить данные для профиля: " << db.lastError().text();
+        return {"ERROR"};
+    }
+    else
+    {
+        QSqlRecord get_data = sql.record();
+        QString user_id;
+        while (sql.next())
+        {
+            user_id = sql.value(get_data.indexOf("id")).toString();
+        }
+
+        return {user_id};
+    }
+}
+
+QString sql_database::delete_user_from_db(QString login)
+{
+    str_requests = "DELETE FROM " + name_table + " WHERE login = ('%1');";
+    if (!sql.exec(str_requests.arg(login)))
+    {
+        qDebug() << "[ERROR] Ошибка при удалении пользователя";
+        return "ERROR";
+    }
+    db.commit();
+    qDebug() << "[INFO] Пользователь успешно удален";
+    return "Success";
 }

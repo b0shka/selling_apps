@@ -20,7 +20,6 @@ SOURCES += \
 	autorization_mainwindow/autorization_mainwindow.cpp \
 	main.cpp \
 	mainwindow/mainwindow.cpp \
-	profile.cpp \
 	profile/profile.cpp \
 	sql_database/sql_database.cpp \
 	window_login/window_login.cpp \
@@ -30,7 +29,6 @@ HEADERS += \
 	about_app/about_app.h \
 	autorization_mainwindow/autorization_mainwindow.h \
 	mainwindow/mainwindow.h \
-	profile.h \
 	profile/profile.h \
 	sql_database/sql_database.h \
     window_login/window_login.h \
@@ -40,7 +38,6 @@ FORMS += \
 	about_app/about_app.ui \
 	autorization_mainwindow/autorization_mainwindow.ui \
 	mainwindow/mainwindow.ui \
-	profile.ui \
 	profile/profile.ui \
     window_login/window_login.ui \
 	window_register/window_registration.ui \
