@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "autorization_mainwindow/autorization_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -53,6 +54,10 @@ void MainWindow::on_pushButton_2_clicked()
     window_login login;
     login.setModal(true);
     login.exec();
+    if (login.status_autorization == 1)
+    {
+        change_mainwindow(login.username);
+    }
 }
 
 void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
@@ -60,7 +65,7 @@ void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
     QList<QString> name_app = item->text().split("\t\t\t\t\t");
     QList<QString> description = item->toolTip().split(";");
     QList<QString> param_app = {name_app[0], name_app[1].replace("\t", ""), description[0], description[1]};
-    qDebug() << param_app;
+
     about_app app_information(param_app);
     app_information.setModal(true);
     app_information.exec();
@@ -155,4 +160,12 @@ void MainWindow::add_apps_to_listWidget(QList<QList<QString>> list_result)
         ui->listWidget->addItem(item);
     }
     list_result.clear();
+}
+
+void MainWindow::change_mainwindow(QString login)
+{
+    close();
+    autorization_mainwindow autorization_window(login);
+    autorization_window.setModal(false);
+    autorization_window.exec();
 }

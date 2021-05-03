@@ -22,6 +22,10 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+public slots:
+    // для работы с авторизацией
+    void change_mainwindow(QString login);
+
 private slots:
     // функции для кнопок
     void on_pushButton_clicked();
@@ -37,9 +41,8 @@ private slots:
     int check_word_in_word(QString search, QString name_main);
     void add_apps_to_listWidget(QList<QList<QString>> list_result);
 
-    // для работы с авторизацией
-
 private:
     Ui::MainWindow *ui;
+    QString name_autorizate_user = "";
 };
 #endif // MAINWINDOW_H

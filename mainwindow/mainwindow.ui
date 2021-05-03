@@ -131,9 +131,9 @@ border-radius: 5px;</string>
    <widget class="QListWidget" name="listWidget">
     <property name="geometry">
      <rect>
-      <x>5</x>
+      <x>0</x>
       <y>55</y>
-      <width>661</width>
+      <width>671</width>
       <height>371</height>
      </rect>
     </property>
@@ -143,6 +143,7 @@ border-radius: 5px;</string>
 	font-size:15px;
 	background-color: #2a2a2a;
 	color: white;
+	padding: 5px 7px;
 }
 
 QListWidget::item {

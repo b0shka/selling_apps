@@ -177,7 +177,7 @@ color: white;</string>
     <string notr="true">font-size: 14px;</string>
    </property>
    <property name="text">
-    <string/>
+    <string>Заполните поля авторизации</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>

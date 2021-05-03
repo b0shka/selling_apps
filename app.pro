@@ -17,22 +17,31 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
 	about_app/about_app.cpp \
-    main.cpp \
-	mainwindow.cpp \
+	autorization_mainwindow/autorization_mainwindow.cpp \
+	main.cpp \
+	mainwindow/mainwindow.cpp \
+	profile.cpp \
+	profile/profile.cpp \
 	sql_database/sql_database.cpp \
-    window_login/window_login.cpp \
+	window_login/window_login.cpp \
 	window_register/window_registration.cpp \
 
 HEADERS += \
 	about_app/about_app.h \
-	mainwindow.h \
+	autorization_mainwindow/autorization_mainwindow.h \
+	mainwindow/mainwindow.h \
+	profile.h \
+	profile/profile.h \
 	sql_database/sql_database.h \
     window_login/window_login.h \
 	window_register/window_registration.h \
 
 FORMS += \
 	about_app/about_app.ui \
-	mainwindow.ui \
+	autorization_mainwindow/autorization_mainwindow.ui \
+	mainwindow/mainwindow.ui \
+	profile.ui \
+	profile/profile.ui \
     window_login/window_login.ui \
 	window_register/window_registration.ui \
 

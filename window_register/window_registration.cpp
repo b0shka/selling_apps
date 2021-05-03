@@ -67,7 +67,7 @@ void window_registration::on_pushButton_clicked()
         if (result_register == "OK")
         {
             ui->label_2->setStyleSheet(success_style_label);
-            ui->label_2->setText("Вы зарегестрировались!");
+            ui->label_2->setText("Вы успешно зарегистрировались!");
             ui->lineEdit->setText("");
             ui->lineEdit_2->setText("");
             qDebug() << "[INFO] Успешная регистрация пользователя";

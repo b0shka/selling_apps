@@ -76,6 +76,9 @@ background-color: #2a2a2a;</string>
    <property name="text">
     <string/>
    </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
   </widget>
   <widget class="QLabel" name="label_4">
    <property name="geometry">

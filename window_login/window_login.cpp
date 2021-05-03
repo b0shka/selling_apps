@@ -1,5 +1,6 @@
 #include "window_login.h"
 #include "ui_window_login.h"
+#include "../mainwindow/mainwindow.h"
 
 window_login::window_login(QWidget *parent) : QDialog(parent), ui(new Ui::window_login)
 {
@@ -13,8 +14,8 @@ window_login::~window_login()
 
 void window_login::on_pushButton_clicked()
 {
-    QString username = ui->lineEdit->text();
-    QString password = ui->lineEdit_2->text();
+    username = ui->lineEdit->text();
+    password = ui->lineEdit_2->text();
 
     QString lock_style = "padding:2px 5px;"
                          "height: 28px;"
@@ -70,6 +71,7 @@ void window_login::on_pushButton_clicked()
             ui->lineEdit_2->setText("");
             status_autorization = 1;
             qDebug() << "[INFO] Авторизация пользователя";
+            close();
         }
         else if (result_login == "NOT")
         {

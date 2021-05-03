@@ -17,6 +17,7 @@ public:
     explicit window_login(QWidget *parent = nullptr);
     ~window_login();
     int status_autorization = 0;
+    QString username;
 
 private slots:
     void on_pushButton_clicked();
@@ -24,6 +25,7 @@ private slots:
 
 private:
     Ui::window_login *ui;
+    QString password;
 };
 
 #endif // WINDOW_LOGIN_H
