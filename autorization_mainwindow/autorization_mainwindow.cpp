@@ -1,6 +1,7 @@
 ﻿#include "autorization_mainwindow.h"
 #include "ui_autorization_mainwindow.h"
 #include "../profile/profile.h"
+#include "../add_app/add_app.h"
 
 autorization_mainwindow::autorization_mainwindow(QWidget *parent) :
     QDialog(parent),
@@ -81,6 +82,14 @@ void autorization_mainwindow::on_pushButton_2_clicked()
         auto mainwindow = new MainWindow();
         mainwindow->show();
     }
+}
+
+void autorization_mainwindow::on_pushButton_4_clicked()
+{
+    add_app new_app(user_name);
+    new_app.setModal(true);
+    new_app.exec();
+    get_name_app_from_db();
 }
 
 void autorization_mainwindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)

@@ -1,4 +1,4 @@
-#ifndef AUTORIZATION_MAINWINDOW_H
+﻿#ifndef AUTORIZATION_MAINWINDOW_H
 #define AUTORIZATION_MAINWINDOW_H
 
 #include <QDialog>
@@ -25,6 +25,7 @@ private slots:
     // функции для кнопок
     void on_pushButton_clicked();
     void on_pushButton_2_clicked();
+    void on_pushButton_4_clicked();
     void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
     void keyPressEvent(QKeyEvent *event);
     void on_lineEdit_returnPressed();

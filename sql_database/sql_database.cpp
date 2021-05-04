@@ -135,8 +135,7 @@ QString sql_database::check_login_user(QString user_login, QString user_password
         count_users++;
         user_name_login = sql.value(get_data.indexOf("login")).toString();
     }
-    qDebug() << user_name_login;
-    qDebug() << count_users;
+
     if (count_users > 0)
         return "OK";
     else
@@ -186,4 +185,35 @@ QString sql_database::save_change_in_profile(QList<QString> data_change)
     }
     db.commit();
     return "Successs";
+}
+
+QString sql_database::add_new_app(QList<QString> param_app)
+{
+    str_requests = "SELECT id FROM " + app_table;
+    sql.exec(str_requests);
+    if (!sql.exec(str_requests))
+    {
+        qDebug() << "[ERROR] Не удается получить данные из БД для генерации id: " << db.lastError().text();
+        return "ERROR";
+    }
+    QSqlRecord get_data = sql.record();
+    int app_id = 1;
+    int check_id;
+    while (sql.next())
+    {
+        check_id = sql.value(get_data.indexOf("id")).toInt();
+        if (app_id == check_id)
+            app_id++;
+        else
+            break;
+    }
+
+    str_requests = "INSERT INTO " + app_table + " (id, app_name, app_price, app_description, author) VALUES(%1, '%2', '%3', '%4', '%5');";
+    if (!sql.exec(str_requests.arg(app_id).arg(param_app.at(0)).arg(param_app.at(1)).arg(param_app.at(2)).arg(param_app.at(3))))
+    {
+        qDebug() << "[ERROR] Ошибка при добавлении новой программы в БД";
+        return "ERROR";
+    }
+    db.commit();
+    return "OK";
 }

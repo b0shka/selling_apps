@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
 	about_app/about_app.cpp \
+    add_app/add_app.cpp \
 	autorization_mainwindow/autorization_mainwindow.cpp \
 	main.cpp \
 	mainwindow/mainwindow.cpp \
@@ -27,6 +28,7 @@ SOURCES += \
 
 HEADERS += \
 	about_app/about_app.h \
+    add_app/add_app.h \
 	autorization_mainwindow/autorization_mainwindow.h \
 	mainwindow/mainwindow.h \
 	profile/profile.h \
@@ -36,6 +38,7 @@ HEADERS += \
 
 FORMS += \
 	about_app/about_app.ui \
+    add_app/add_app.ui \
 	autorization_mainwindow/autorization_mainwindow.ui \
 	mainwindow/mainwindow.ui \
 	profile/profile.ui \
