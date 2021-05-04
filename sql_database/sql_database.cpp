@@ -1,5 +1,6 @@
-#include "sql_database.h"
+﻿#include "sql_database.h"
 
+// создания файла с БД
 void sql_database::first_start()
 {
     db = QSqlDatabase::addDatabase("QSQLITE");
@@ -10,57 +11,70 @@ void sql_database::first_start()
         qDebug() << "[ERROR] " << db.lastError().text();
         return;
     }
-    create_new_table();
+    create_table();
 }
 
-void sql_database::create_new_table()
+void sql_database::create_table()
 {
-    str_requests = "CREATE TABLE IF NOT EXISTS " + name_table + " ("
-                                                                "id integer PRIMARY KEY NOT NULL,"
-                                                                "login VARCHAR (40) NOT NULL,"
-                                                                "password TEXT NOT NULL,"
-                                                                "email TEXT,"
-                                                                "number_phone VARCHAR (20),"
-                                                                "app_name VARCHAR (32),"
-                                                                "app_price VARCHAR (20),"
-                                                                "app_description TEXT"
-                                                                ");";
+    str_requests = "CREATE TABLE IF NOT EXIST " + user_table + " ("
+                                                  "id integer PRIMARY KEY NOT NULL,"
+                                                  "login VARCHAR (40) NOT NULL,"
+                                                  "password TEXT NOT NULL,"
+                                                  "email TEXT,"
+                                                  "number_phone VARCHAR (20)"
+                                                  ");";
     if (!sql.exec(str_requests))
     {
-        qDebug() << "[ERROR] Не удается создать таблицу: " << db.lastError().text();
+        qDebug() << "[ERROR] Не удается создать таблицу с пользователями: " << db.lastError().text();
+        return;
+    }
+    qDebug() << "[INFO] Создана таблица с пользователями";
+
+    str_requests = "CREATE TABLE IF NOT EXIST " + app_table + " ("
+                                                 "id integer PRIMARY KEY NOT NULL,"
+                                                 "app_name VARCHAR (32) NOT NULL,"
+                                                 "app_price VARCHAR (20),"
+                                                 "app_description TEXT,"
+                                                 "author VARCHAR (32) NOT NULL,"
+                                                 ");";
+    if (!sql.exec(str_requests))
+    {
+        qDebug() << "[ERROR] Не удается создать таблицу с программами: " << db.lastError().text();
         return;
     }
     db.commit();
-    qDebug() << "[INFO] Создана таблица";
+    qDebug() << "[INFO] Создана таблица с программами";
 }
 
+// получение названий программ
 QList<QList<QString>> sql_database::get_apps_name()
 {
-    str_requests = "SELECT login, app_name, app_price, app_description FROM " + name_table + ";";
+    str_requests = "SELECT app_name, app_price, app_description, author FROM " + app_table + ";";
     if (!sql.exec(str_requests))
     {
-        qDebug() << "[ERROR] Не удается получить данные для списка программ: " << db.lastError().text();
+        qDebug() << "[ERROR] Не удается получить названия программ: " << db.lastError().text();
         return {{"ERROR"}};
     }
     QList<QList<QString>> list_apps_name = {};
 
     QSqlRecord get_data = sql.record();
-    QString app_name, app_price, app_description, login;
+    QString app_name, app_price, app_description, author;
     while (sql.next())
     {
         app_name = sql.value(get_data.indexOf("app_name")).toString();
         app_price = sql.value(get_data.indexOf("app_price")).toString();
         app_description = sql.value(get_data.indexOf("app_description")).toString();
-        login = sql.value(get_data.indexOf("login")).toString();
-        list_apps_name.push_back({app_name, app_price, app_description, login});
+        author = sql.value(get_data.indexOf("author")).toString();
+        list_apps_name.push_back({app_name, app_price, app_description, author});
     }
 
     return list_apps_name;
 }
 
+// добавление пользователя в БД при регистрации
 QString sql_database::register_new_user(QString user_login, QString user_password)
 {
-    str_requests = "SELECT id FROM " + name_table + " WHERE login = ('%1');";
+    str_requests = "SELECT id FROM " + user_table + " WHERE login = ('%1');";
     if (!sql.exec(str_requests.arg(user_login)))
     {
         qDebug() << "[ERROR] Не удалось сделать проверку на существование такого же пользователя:" << db.lastError().text();
@@ -74,7 +88,7 @@ QString sql_database::register_new_user(QString user_login, QString user_passwor
         return "NOT";
     else
     {
-        str_requests = "SELECT id FROM " + name_table;
+        str_requests = "SELECT id FROM " + user_table;
         sql.exec(str_requests);
         if (!sql.exec(str_requests))
         {
@@ -93,7 +107,7 @@ QString sql_database::register_new_user(QString user_login, QString user_passwor
                 break;
         }
 
-        str_requests = "INSERT INTO " + name_table + " (id, login, password) VALUES(%1, '%2', '%3');";
+        str_requests = "INSERT INTO " + user_table + " (id, login, password) VALUES(%1, '%2', '%3');";
         if (!sql.exec(str_requests.arg(user_id).arg(user_login).arg(user_password)))
         {
             qDebug() << "[ERROR] Не получается создать запись при регистрации: " << db.lastError().text();
@@ -104,18 +118,25 @@ QString sql_database::register_new_user(QString user_login, QString user_passwor
     }
 }
 
+// проверка данных при авторизации
 QString sql_database::check_login_user(QString user_login, QString user_password)
 {
-    str_requests = "SELECT id FROM " + name_table + " WHERE login = ('%1') and password = ('%2');";
+    str_requests = "SELECT id, login FROM " + user_table + " WHERE login = ('%1') or email = ('%1') or number_phone = ('%1') and password = ('%2');";
     if (!sql.exec(str_requests.arg(user_login).arg(user_password)))
     {
         qDebug() << "[ERROR] Не удается получить данные для авторизации" << db.lastError().text();
         return "ERROR";
     }
 
+    QSqlRecord get_data = sql.record();
     int count_users = 0;
     while (sql.next())
+    {
         count_users++;
+        user_name_login = sql.value(get_data.indexOf("login")).toString();
+    }
+    qDebug() << user_name_login;
+    qDebug() << count_users;
     if (count_users > 0)
         return "OK";
     else
@@ -124,7 +145,7 @@ QString sql_database::check_login_user(QString user_login, QString user_password
 
 QList<QString> sql_database::get_info_for_profile(QString login)
 {
-    str_requests = "SELECT id, email, number_phone FROM " + name_table + " WHERE login = ('%1');";
+    str_requests = "SELECT id, email, number_phone FROM " + user_table + " WHERE login = ('%1');";
     if (!sql.exec(str_requests.arg(login)))
     {
         qDebug() << "[ERROR] Не удается получить данные для профиля: " << db.lastError().text();
@@ -144,7 +165,7 @@ QList<QString> sql_database::get_info_for_profile(QString login)
 
 QString sql_database::delete_user_from_db(QString login)
 {
-    str_requests = "DELETE FROM " + name_table + " WHERE login = ('%1');";
+    str_requests = "DELETE FROM " + user_table + " WHERE login = ('%1');";
     if (!sql.exec(str_requests.arg(login)))
     {
         qDebug() << "[ERROR] Ошибка при удалении пользователя: " << db.lastError().text();
@@ -157,7 +178,7 @@ QString sql_database::delete_user_from_db(QString login)
 
 QString sql_database::save_change_in_profile(QList<QString> data_change)
 {
-    str_requests = "UPDATE " + name_table + " SET login = ('%1'), email = ('%2'), number_phone = ('%3') WHERE id = ('%4');";
+    str_requests = "UPDATE " + user_table + " SET login = ('%1'), email = ('%2'), number_phone = ('%3') WHERE id = ('%4');";
     if (!sql.exec(str_requests.arg(data_change.at(1)).arg(data_change.at(2)).arg(data_change.at(3)).arg(data_change.at(0))))
     {
         qDebug() << "[ERROR] Не удается сохранить изменения профиля: " << db.lastError().text();

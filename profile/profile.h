@@ -19,6 +19,7 @@ public:
     QString user_name;
     int status_delete = 0;
     int status_change = 0;
+    int status_out = 0;
 
 private slots:
     void get_info_from_db(QString login);

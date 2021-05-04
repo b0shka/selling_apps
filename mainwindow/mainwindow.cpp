@@ -1,11 +1,11 @@
-#include "mainwindow.h"
+﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "autorization_mainwindow/autorization_mainwindow.h"
+#include "window_login/window_login.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    sql_database database;
     database.first_start();
     get_name_app_from_db();
 }
@@ -15,6 +15,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+// нажатие кнопки при поиске
 void MainWindow::on_pushButton_clicked()
 {
     QString search = ui->lineEdit->text();
@@ -49,15 +50,18 @@ void MainWindow::on_pushButton_clicked()
     }
 }
 
+// нажатие кнопки для авторизации
 void MainWindow::on_pushButton_2_clicked()
 {
     window_login login;
     login.setModal(true);
     login.exec();
+    qDebug() << login.user_name;
     if (login.status_autorization == 1)
-        change_mainwindow(login.username);
+        change_mainwindow(login.user_name);
 }
 
+// открытие информации о программе
 void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 {
     QList<QString> name_app = item->text().split("\t\t\t\t\t");
@@ -69,6 +73,7 @@ void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
     app_information.exec();
 }
 
+// действия для клавиш на клавиатуре
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key())
@@ -86,10 +91,10 @@ void MainWindow::on_lineEdit_returnPressed()
     on_pushButton_clicked();
 }
 
+// получение названий программ из БД
 void MainWindow::get_name_app_from_db()
 {
-    sql_database sql_apps_name;
-    QList<QList<QString>> list_apps_name = sql_apps_name.get_apps_name();
+    QList<QList<QString>> list_apps_name = database.get_apps_name();
 
     try {
         if (list_apps_name.size() == 0)
@@ -97,59 +102,17 @@ void MainWindow::get_name_app_from_db()
         else
         {
             if (list_apps_name.at(0).at(0) != "ERROR")
+            {
                 add_apps_to_listWidget(list_apps_name);
+                list_apps_name.clear();
+            }
         }
     } catch (int a) {
         qDebug() << "[ERROR] Нет записей в БД";
     }
 }
 
-void MainWindow::search_result(QString search)
-{
-    sql_database sql_apps_name;
-    QList<QList<QString>> list_apps_name = sql_apps_name.get_apps_name();
-    QList<QList<QString>> list_result = {};
-
-    for (QList<QString> i : list_apps_name)
-    {
-        if (check_error(search.toLower(), i[0].toLower()) == 1)
-            list_result.push_back(i);
-
-        else if (check_word_in_word(search.toLower(), i[0].toLower()) == 1)
-            list_result.push_back(i);
-    }
-    add_apps_to_listWidget(list_result);
-}
-
-int MainWindow::check_error(QString search, QString name_main)
-{
-    int count = 0;
-    if (name_main.size() == search.size())
-    {
-        for (int j = 0; j < search.size(); j++)
-        {
-            if (name_main[j] != search[j])
-            {
-                count++;
-            }
-        }
-        if (count <= 2)
-            return 1;
-        else
-            return 0;
-    }
-}
-
-int MainWindow::check_word_in_word(QString search, QString name_main)
-{
-    bool result = name_main.contains(search);
-
-    if (result == true)
-        return 1;
-    else
-        return 0;
-}
-
+// добавление программ в listWidget
 void MainWindow::add_apps_to_listWidget(QList<QList<QString>> list_result)
 {
     ui->listWidget->clear();
@@ -168,6 +131,51 @@ void MainWindow::add_apps_to_listWidget(QList<QList<QString>> list_result)
         ui->listWidget->addItem(item);
     }
     list_result.clear();
+}
+
+// поиск программ в listWidget
+void MainWindow::search_result(QString search)
+{
+    QList<QList<QString>> list_apps_name = database.get_apps_name();
+    QList<QList<QString>> list_result = {};
+
+    for (QList<QString> i : list_apps_name)
+    {
+        if (check_error(search.toLower(), i[0].toLower()) == 1 || check_error(search.toLower(), i[1].toLower()) == 1 || check_error(search.toLower(), i[2].toLower()) == 1 || check_error(search.toLower(), i[3].toLower()) == 1)
+            list_result.push_back(i);
+
+        else if (check_word_in_word(search.toLower(), i[0].toLower()) == 1 || check_word_in_word(search.toLower(), i[1].toLower()) == 1 || check_word_in_word(search.toLower(), i[2].toLower()) == 1 || check_word_in_word(search.toLower(), i[3].toLower()) == 1)
+            list_result.push_back(i);
+    }
+    add_apps_to_listWidget(list_result);
+    list_apps_name.clear();
+    list_result.clear();
+}
+
+int MainWindow::check_error(QString search, QString name_main)
+{
+    int count = 0;
+    for (int j = 0; j < search.size(); j++)
+    {
+        if (name_main[j] != search[j])
+        {
+            count++;
+        }
+    }
+    if (count <= 2)
+        return 1;
+    else
+        return 0;
+}
+
+int MainWindow::check_word_in_word(QString search, QString name_main)
+{
+    bool result = name_main.contains(search);
+
+    if (result == true)
+        return 1;
+    else
+        return 0;
 }
 
 void MainWindow::change_mainwindow(QString login)

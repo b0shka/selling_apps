@@ -1,6 +1,5 @@
 #include "profile.h"
 #include "ui_profile.h"
-#include "../autorization_mainwindow/autorization_mainwindow.h"
 
 profile::profile(QString login, QWidget *parent) :
     QDialog(parent),
@@ -83,5 +82,6 @@ void profile::on_pushButton_2_clicked()
 
 void profile::on_pushButton_3_clicked()
 {
-
+    close();
+    status_out = 1;
 }

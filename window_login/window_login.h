@@ -1,4 +1,4 @@
-#ifndef WINDOW_LOGIN_H
+﻿#ifndef WINDOW_LOGIN_H
 #define WINDOW_LOGIN_H
 
 #include <QDialog>
@@ -17,7 +17,7 @@ public:
     explicit window_login(QWidget *parent = nullptr);
     ~window_login();
     int status_autorization = 0;
-    QString username;
+    QString user_name;
 
 private slots:
     void on_pushButton_clicked();
@@ -26,6 +26,7 @@ private slots:
 private:
     Ui::window_login *ui;
     QString password;
+    QString username;
 };
 
 #endif // WINDOW_LOGIN_H

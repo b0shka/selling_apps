@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include <QListWidgetItem>
 #include <QKeyEvent>
-#include "window_login/window_login.h"
 #include "about_app/about_app.h"
 #include "sql_database/sql_database.h"
 
@@ -43,6 +42,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QString name_autorizate_user = "";
+    sql_database database;
 };
 #endif // MAINWINDOW_H

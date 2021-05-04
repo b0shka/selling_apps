@@ -1,8 +1,7 @@
-#ifndef SQL_DATABASE_H
+﻿#ifndef SQL_DATABASE_H
 #define SQL_DATABASE_H
 
 #include <QWidget>
-#include <iostream>
 #include <QDebug>
 #include <QSqlDatabase>
 #include <QSqlQuery>
@@ -13,9 +12,12 @@ using namespace std;
 
 class sql_database
 {
+public:
+    QString user_name_login;
+
 public slots:
     void first_start();
-    void create_new_table();
+    void create_table();
     QList<QList<QString>> get_apps_name();
     QString register_new_user(QString user_login, QString user_password);
     QString check_login_user(QString user_login, QString user_password);
@@ -26,7 +28,8 @@ public slots:
 private:
     QSqlDatabase db;
     QSqlQuery sql;
-    QString name_table = "users";
+    QString user_table = "users";
+    QString app_table = "apps";
     QString str_requests;
 };
 

@@ -1,4 +1,4 @@
-#include "autorization_mainwindow.h"
+﻿#include "autorization_mainwindow.h"
 #include "ui_autorization_mainwindow.h"
 #include "../profile/profile.h"
 
@@ -16,6 +16,7 @@ autorization_mainwindow::~autorization_mainwindow()
 
 void autorization_mainwindow::autorizate(QString login)
 {
+    qDebug() << login;
     user_name = login;
     ui->label->setText(login);
     ui->pushButton_2->setText(login.at(0));
@@ -73,6 +74,12 @@ void autorization_mainwindow::on_pushButton_2_clicked()
         ui->label->setText(profile_window.user_name);
         ui->pushButton_2->setText(profile_window.user_name.at(0));
         user_name = profile_window.user_name;
+    }
+    else if (profile_window.status_out == 1)
+    {
+        close();
+        auto mainwindow = new MainWindow();
+        mainwindow->show();
     }
 }
 

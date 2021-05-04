@@ -1,6 +1,5 @@
-#include "window_login.h"
+﻿#include "window_login.h"
 #include "ui_window_login.h"
-#include "../mainwindow/mainwindow.h"
 
 window_login::window_login(QWidget *parent) : QDialog(parent), ui(new Ui::window_login)
 {
@@ -72,8 +71,9 @@ void window_login::on_pushButton_clicked()
             status_autorization = 1;
             qDebug() << "[INFO] Авторизация пользователя";
             close();
+            user_name = accessing_db.user_name_login;
         }
-        else if (result_login == "NOT")
+        if (result_login == "NOT")
         {
             ui->label_3->setStyleSheet(lock_style_label);
             ui->label_3->setText("Не верный login или password");
