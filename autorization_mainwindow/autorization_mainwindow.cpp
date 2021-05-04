@@ -65,6 +65,14 @@ void autorization_mainwindow::on_pushButton_2_clicked()
     if (profile_window.status_delete == 1)
     {
         close();
+        auto mainwindow = new MainWindow();
+        mainwindow->show();
+    }
+    else if (profile_window.status_change == 1)
+    {
+        ui->label->setText(profile_window.user_name);
+        ui->pushButton_2->setText(profile_window.user_name.at(0));
+        user_name = profile_window.user_name;
     }
 }
 

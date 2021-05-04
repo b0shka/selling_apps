@@ -7,7 +7,7 @@ profile::profile(QString login, QWidget *parent) :
     ui(new Ui::profile)
 {
     ui->setupUi(this);
-    ui->label->setText(login);
+    ui->lineEdit->setText(login);
     user_name = login;
     get_info_from_db(login);
 }
@@ -19,11 +19,13 @@ profile::~profile()
 
 void profile::get_info_from_db(QString login)
 {
-    sql_database user_info;
     QList<QString> data = user_info.get_info_for_profile(login);
     if (data.at(0) != "ERROR")
     {
+        user_id = data.at(0);
         ui->label_2->setText(data.at(0));
+        ui->lineEdit_2->setText(data.at(1));
+        ui->lineEdit_3->setText(data.at(2));
     }
 }
 
@@ -41,4 +43,45 @@ void profile::on_pushButton_clicked()
             status_delete = 1;
         }
     }
+}
+
+void profile::on_pushButton_2_clicked()
+{
+    QString lock_style = "padding:2px 5px;"
+                         "height: 28px;"
+                         "color: white;"
+                         "background-color: #2a2a2a;"
+                         "border-radius: 5px;"
+                         "border: 2px solid #f5a2a2;"
+                         "font-size: 14px;";
+    QString default_style = "padding:2px 5px;"
+                            "height: 28px;"
+                            "color: white;"
+                            "background-color: #2a2a2a;"
+                            "border-radius: 5px;"
+                            "border: none;"
+                            "font-size: 14px;";
+
+    QString new_login = ui->lineEdit->text();
+
+    if (new_login == "")
+        ui->lineEdit->setStyleSheet(lock_style);
+    else
+    {
+        QString email = ui->lineEdit_2->text();
+        QString number_phone = ui->lineEdit_3->text();
+        QString result_save = user_info.save_change_in_profile({user_id, new_login, email, number_phone});
+        if (result_save != "ERROR")
+        {
+            QMessageBox::information(this, "Уведомление", "Данные сохранены");
+            status_change = 1;
+            user_name = new_login;
+            close();
+        }
+    }
+}
+
+void profile::on_pushButton_3_clicked()
+{
+
 }

@@ -21,6 +21,7 @@ public slots:
     QString check_login_user(QString user_login, QString user_password);
     QList<QString> get_info_for_profile(QString login);
     QString delete_user_from_db(QString login);
+    QString save_change_in_profile(QList<QString> data_change);
 
 private:
     QSqlDatabase db;

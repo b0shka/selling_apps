@@ -91,8 +91,17 @@ void MainWindow::get_name_app_from_db()
     sql_database sql_apps_name;
     QList<QList<QString>> list_apps_name = sql_apps_name.get_apps_name();
 
-    if (list_apps_name.at(0).at(0) != "ERROR")
-        add_apps_to_listWidget(list_apps_name);
+    try {
+        if (list_apps_name.size() == 0)
+            throw 1;
+        else
+        {
+            if (list_apps_name.at(0).at(0) != "ERROR")
+                add_apps_to_listWidget(list_apps_name);
+        }
+    } catch (int a) {
+        qDebug() << "[ERROR] Нет записей в БД";
+    }
 }
 
 void MainWindow::search_result(QString search)
