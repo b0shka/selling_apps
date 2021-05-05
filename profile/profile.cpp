@@ -1,4 +1,4 @@
-#include "profile.h"
+﻿#include "profile.h"
 #include "ui_profile.h"
 
 profile::profile(QString login, QWidget *parent) :
@@ -46,27 +46,14 @@ void profile::on_pushButton_clicked()
 
 void profile::on_pushButton_2_clicked()
 {
-    QString lock_style = "padding:2px 5px;"
-                         "height: 28px;"
-                         "color: white;"
-                         "background-color: #2a2a2a;"
-                         "border-radius: 5px;"
-                         "border: 2px solid #f5a2a2;"
-                         "font-size: 14px;";
-    QString default_style = "padding:2px 5px;"
-                            "height: 28px;"
-                            "color: white;"
-                            "background-color: #2a2a2a;"
-                            "border-radius: 5px;"
-                            "border: none;"
-                            "font-size: 14px;";
-
     QString new_login = ui->lineEdit->text();
 
     if (new_login == "")
-        ui->lineEdit->setStyleSheet(lock_style);
+        ui->lineEdit->setStyleSheet(data.lock_style_other_color);
     else
     {
+        ui->lineEdit->setStyleSheet(data.default_style_other_color);
+
         QString email = ui->lineEdit_2->text();
         QString number_phone = ui->lineEdit_3->text();
         QString result_save = user_info.save_change_in_profile({user_id, new_login, email, number_phone});

@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "../sql_database/sql_database.h"
+#include "../main_data/main_data.h"
 
 namespace Ui {
 class add_app;
@@ -22,6 +23,7 @@ private slots:
 private:
     Ui::add_app *ui;
     sql_database database;
+    main_data data;
     QString user_name;
 };
 

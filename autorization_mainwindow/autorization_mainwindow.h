@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "../mainwindow/mainwindow.h"
+#include "../main_data/main_data.h"
 
 namespace Ui {
 class autorization_mainwindow;
@@ -25,6 +26,7 @@ private slots:
     // функции для кнопок
     void on_pushButton_clicked();
     void on_pushButton_2_clicked();
+    void on_pushButton_3_clicked();
     void on_pushButton_4_clicked();
     void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
     void keyPressEvent(QKeyEvent *event);
@@ -39,6 +41,7 @@ private slots:
 
 private:
     Ui::autorization_mainwindow *ui;
+    main_data data;
 };
 
 #endif // AUTORIZATION_MAINWINDOW_H

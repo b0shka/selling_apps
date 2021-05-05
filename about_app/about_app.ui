@@ -145,6 +145,27 @@ color: silver;</string>
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QPushButton" name="pushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>390</x>
+     <y>375</y>
+     <width>206</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">padding: 2px;
+font-size: 14px;
+height: 28px;
+color: white;
+background-color: #404040;
+border-radius: 5px;</string>
+   </property>
+   <property name="text">
+    <string>Дабавить в избранное</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

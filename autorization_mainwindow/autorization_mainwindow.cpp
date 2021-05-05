@@ -17,7 +17,6 @@ autorization_mainwindow::~autorization_mainwindow()
 
 void autorization_mainwindow::autorizate(QString login)
 {
-    qDebug() << login;
     user_name = login;
     ui->label->setText(login);
     ui->pushButton_2->setText(login.at(0));
@@ -28,30 +27,15 @@ void autorization_mainwindow::on_pushButton_clicked()
 {
     QString search = ui->lineEdit->text();
 
-    QString lock_style = "padding:2px 5px;"
-                         "height: 28px;"
-                         "color: white;"
-                         "background-color: #2a2a2a;"
-                         "border-radius: 5px;"
-                         "border: 2px solid #f5a2a2;"
-                         "font-size: 14px;";
-    QString default_style = "padding:2px 5px;"
-                            "height: 28px;"
-                            "color: white;"
-                            "background-color: #2a2a2a;"
-                            "border-radius: 5px;"
-                            "border: none;"
-                            "font-size: 14px;";
-
     if (search == "")
     {
-        ui->lineEdit->setStyleSheet(lock_style);
+        ui->lineEdit->setStyleSheet(data.lock_style);
         ui->listWidget->clear();
         get_name_app_from_db();
     }
     else
     {
-        ui->lineEdit->setStyleSheet(default_style);
+        ui->lineEdit->setStyleSheet(data.default_style);
         ui->listWidget->clear();
         search_result(search);
         ui->lineEdit->setText("");
@@ -82,6 +66,11 @@ void autorization_mainwindow::on_pushButton_2_clicked()
         auto mainwindow = new MainWindow();
         mainwindow->show();
     }
+}
+
+void autorization_mainwindow::on_pushButton_3_clicked()
+{
+    on_pushButton_4_clicked();
 }
 
 void autorization_mainwindow::on_pushButton_4_clicked()
@@ -136,13 +125,15 @@ void autorization_mainwindow::search_result(QString search)
 
     for (QList<QString> i : list_apps_name)
     {
-        if (check_error(search.toLower(), i[0].toLower()) == 1)
+        if (check_error(search.toLower(), i[0].toLower()) == 1 || check_error(search.toLower(), i[1].toLower()) == 1 || check_error(search.toLower(), i[2].toLower()) == 1 || check_error(search.toLower(), i[3].toLower()) == 1)
             list_result.push_back(i);
 
-        else if (check_word_in_word(search.toLower(), i[0].toLower()) == 1)
+        else if (check_word_in_word(search.toLower(), i[0].toLower()) == 1 || check_word_in_word(search.toLower(), i[1].toLower()) == 1 || check_word_in_word(search.toLower(), i[2].toLower()) == 1 || check_word_in_word(search.toLower(), i[3].toLower()) == 1)
             list_result.push_back(i);
     }
     add_apps_to_listWidget(list_result);
+    list_apps_name.clear();
+    list_result.clear();
 }
 
 int autorization_mainwindow::check_error(QString search, QString name_main)

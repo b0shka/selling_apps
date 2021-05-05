@@ -20,6 +20,7 @@ SOURCES += \
     add_app/add_app.cpp \
 	autorization_mainwindow/autorization_mainwindow.cpp \
 	main.cpp \
+    main_data/main_data.cpp \
 	mainwindow/mainwindow.cpp \
 	profile/profile.cpp \
 	sql_database/sql_database.cpp \
@@ -30,6 +31,7 @@ HEADERS += \
 	about_app/about_app.h \
     add_app/add_app.h \
 	autorization_mainwindow/autorization_mainwindow.h \
+    main_data/main_data.h \
 	mainwindow/mainwindow.h \
 	profile/profile.h \
 	sql_database/sql_database.h \

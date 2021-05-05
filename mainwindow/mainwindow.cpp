@@ -20,30 +20,15 @@ void MainWindow::on_pushButton_clicked()
 {
     QString search = ui->lineEdit->text();
 
-    QString lock_style = "padding:2px 5px;"
-                         "height: 28px;"
-                         "color: white;"
-                         "background-color: #2a2a2a;"
-                         "border-radius: 5px;"
-                         "border: 2px solid #f5a2a2;"
-                         "font-size: 14px;";
-    QString default_style = "padding:2px 5px;"
-                            "height: 28px;"
-                            "color: white;"
-                            "background-color: #2a2a2a;"
-                            "border-radius: 5px;"
-                            "border: none;"
-                            "font-size: 14px;";
-
     if (search == "")
     {
-        ui->lineEdit->setStyleSheet(lock_style);
+        ui->lineEdit->setStyleSheet(data.lock_style);
         ui->listWidget->clear();
         get_name_app_from_db();
     }
     else
     {
-        ui->lineEdit->setStyleSheet(default_style);
+        ui->lineEdit->setStyleSheet(data.default_style);
         ui->listWidget->clear();
         search_result(search);
         ui->lineEdit->setText("");

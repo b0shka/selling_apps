@@ -8,8 +8,6 @@
 #include <QSqlError>
 #include <QSqlRecord>
 
-using namespace std;
-
 class sql_database
 {
 public:
@@ -25,6 +23,7 @@ public slots:
     QString delete_user_from_db(QString login);
     QString save_change_in_profile(QList<QString> data_change);
     QString add_new_app(QList<QString> param_app);
+    int generate_id(QString name_table);
 
 private:
     QSqlDatabase db;

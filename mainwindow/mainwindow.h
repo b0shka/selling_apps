@@ -1,4 +1,4 @@
-#ifndef MAINWINDOW_H
+﻿#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QMainWindow>
@@ -6,6 +6,7 @@
 #include <QKeyEvent>
 #include "about_app/about_app.h"
 #include "sql_database/sql_database.h"
+#include "../main_data/main_data.h"
 
 using namespace std;
 
@@ -43,5 +44,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     sql_database database;
+    main_data data;
 };
 #endif // MAINWINDOW_H

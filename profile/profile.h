@@ -1,9 +1,10 @@
-#ifndef PROFILE_H
+﻿#ifndef PROFILE_H
 #define PROFILE_H
 
 #include <QDialog>
 #include <QMessageBox>
 #include "../sql_database/sql_database.h"
+#include "../main_data/main_data.h"
 
 namespace Ui {
 class profile;
@@ -31,6 +32,7 @@ private:
     Ui::profile *ui;
     QString user_id;
     sql_database user_info;
+    main_data data;
 };
 
 #endif // PROFILE_H

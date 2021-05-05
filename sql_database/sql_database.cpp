@@ -86,42 +86,29 @@ QString sql_database::register_new_user(QString user_login, QString user_passwor
 
     if (count_users > 0)
         return "NOT";
-    else
-    {
-        str_requests = "SELECT id FROM " + user_table;
-        sql.exec(str_requests);
-        if (!sql.exec(str_requests))
-        {
-            qDebug() << "[ERROR] Не удается получить данные из БД для генерации id: " << db.lastError().text();
-            return "ERROR";
-        }
-        QSqlRecord get_data = sql.record();
-        int user_id = 1;
-        int check_id;
-        while (sql.next())
-        {
-            check_id = sql.value(get_data.indexOf("id")).toInt();
-            if (user_id == check_id)
-                user_id++;
-            else
-                break;
-        }
 
-        str_requests = "INSERT INTO " + user_table + " (id, login, password) VALUES(%1, '%2', '%3');";
-        if (!sql.exec(str_requests.arg(user_id).arg(user_login).arg(user_password)))
-        {
-            qDebug() << "[ERROR] Не получается создать запись при регистрации: " << db.lastError().text();
-            return "ERROR";
-        }
-        db.commit();
-        return "OK";
+    int user_id = generate_id(user_table);
+
+    if (user_id == 0)
+    {
+        qDebug() << "[ERROR] Не удается сгенерировать id: " << db.lastError().text();
+        return "ERROR";
     }
+
+    str_requests = "INSERT INTO " + user_table + " (id, login, password) VALUES(%1, '%2', '%3');";
+    if (!sql.exec(str_requests.arg(user_id).arg(user_login).arg(user_password)))
+    {
+        qDebug() << "[ERROR] Не получается создать запись при регистрации: " << db.lastError().text();
+        return "ERROR";
+    }
+    db.commit();
+    return "OK";
 }
 
 // проверка данных при авторизации
 QString sql_database::check_login_user(QString user_login, QString user_password)
 {
-    str_requests = "SELECT id, login FROM " + user_table + " WHERE login = ('%1') or email = ('%1') or number_phone = ('%1') and password = ('%2');";
+    str_requests = "SELECT id, login FROM " + user_table + " WHERE (login = ('%1') or email = ('%1') or number_phone = ('%1')) and password = ('%2');";
     if (!sql.exec(str_requests.arg(user_login).arg(user_password)))
     {
         qDebug() << "[ERROR] Не удается получить данные для авторизации" << db.lastError().text();
@@ -189,23 +176,12 @@ QString sql_database::save_change_in_profile(QList<QString> data_change)
 
 QString sql_database::add_new_app(QList<QString> param_app)
 {
-    str_requests = "SELECT id FROM " + app_table;
-    sql.exec(str_requests);
-    if (!sql.exec(str_requests))
+    int app_id = generate_id(app_table);
+
+    if (app_id == 0)
     {
-        qDebug() << "[ERROR] Не удается получить данные из БД для генерации id: " << db.lastError().text();
+        qDebug() << "[ERROR] Не удается сгенерировать id: " << db.lastError().text();
         return "ERROR";
-    }
-    QSqlRecord get_data = sql.record();
-    int app_id = 1;
-    int check_id;
-    while (sql.next())
-    {
-        check_id = sql.value(get_data.indexOf("id")).toInt();
-        if (app_id == check_id)
-            app_id++;
-        else
-            break;
     }
 
     str_requests = "INSERT INTO " + app_table + " (id, app_name, app_price, app_description, author) VALUES(%1, '%2', '%3', '%4', '%5');";
@@ -216,4 +192,28 @@ QString sql_database::add_new_app(QList<QString> param_app)
     }
     db.commit();
     return "OK";
+}
+
+int sql_database::generate_id(QString name_table)
+{
+    str_requests = "SELECT id FROM " + name_table;
+    sql.exec(str_requests);
+    if (!sql.exec(str_requests))
+    {
+        qDebug() << "[ERROR] Не удается получить данные из БД для генерации id: " << db.lastError().text();
+        return 0;
+    }
+    QSqlRecord get_data = sql.record();
+    int new_id = 1;
+    int check_id;
+    while (sql.next())
+    {
+        check_id = sql.value(get_data.indexOf("id")).toInt();
+        if (new_id == check_id)
+            new_id++;
+        else
+            break;
+    }
+
+    return new_id;
 }
