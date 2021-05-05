@@ -3,7 +3,6 @@
 
 #include <QDialog>
 #include "../mainwindow/mainwindow.h"
-#include "../main_data/main_data.h"
 
 namespace Ui {
 class autorization_mainwindow;
@@ -37,6 +36,7 @@ private slots:
     void search_result(QString search);
     int check_error(QString search, QString name_main);
     int check_word_in_word(QString search, QString name_main);
+    int check_no_name(QString search, QString name_main);
     void add_apps_to_listWidget(QList<QList<QString>> list_result);
 
 private:

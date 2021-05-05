@@ -126,10 +126,10 @@ void MainWindow::search_result(QString search)
 
     for (QList<QString> i : list_apps_name)
     {
-        if (check_error(search.toLower(), i[0].toLower()) == 1 || check_error(search.toLower(), i[1].toLower()) == 1 || check_error(search.toLower(), i[2].toLower()) == 1 || check_error(search.toLower(), i[3].toLower()) == 1)
+        if (check_error(search.toLower(), i[0].toLower()) == 1)
             list_result.push_back(i);
 
-        else if (check_word_in_word(search.toLower(), i[0].toLower()) == 1 || check_word_in_word(search.toLower(), i[1].toLower()) == 1 || check_word_in_word(search.toLower(), i[2].toLower()) == 1 || check_word_in_word(search.toLower(), i[3].toLower()) == 1)
+        else if (check_word_in_word(search.toLower(), i[0].toLower()) == 1 || check_word_in_word_no_name(search.toLower(), i[1].toLower()) == 1 || check_word_in_word_no_name(search.toLower(), i[2].toLower()) == 1 || check_word_in_word_no_name(search.toLower(), i[3].toLower()) == 1)
             list_result.push_back(i);
     }
     add_apps_to_listWidget(list_result);
@@ -161,6 +161,20 @@ int MainWindow::check_word_in_word(QString search, QString name_main)
         return 1;
     else
         return 0;
+}
+
+int MainWindow::check_word_in_word_no_name(QString search, QString name_main)
+{
+    if (search.size() == name_main.size())
+    {
+        bool result = name_main.contains(search);
+
+        if (result == true)
+            return 1;
+        else
+            return 0;
+    }
+    return 0;
 }
 
 void MainWindow::change_mainwindow(QString login)
