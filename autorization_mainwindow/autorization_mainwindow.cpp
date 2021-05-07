@@ -49,20 +49,34 @@ void autorization_mainwindow::on_pushButton_2_clicked()
 
     if (g_status_delete == 1)
     {
+        g_status_delete = 0;
         close();
         auto mainwindow = new MainWindow();
         mainwindow->show();
     }
     else if (g_status_change == 1)
     {
+        g_status_change = 0;
         ui->label->setText(g_user_name);
         ui->pushButton_2->setText(g_user_name.at(0));
     }
     else if (g_status_out == 1)
     {
+        g_status_out = 0;
+        g_status_autorization = 0;
         close();
         auto mainwindow = new MainWindow();
         mainwindow->show();
+    }
+    if (g_status_delete_app == 1)
+    {
+        get_name_app_from_db();
+        g_status_delete_app = 0;
+    }
+    else if (g_status_change_app == 1)
+    {
+        get_name_app_from_db();
+        g_status_change_app = 0;
     }
 }
 
@@ -114,6 +128,27 @@ void autorization_mainwindow::get_name_app_from_db()
 
     add_apps_to_listWidget(list_apps_name);
 }
+
+void autorization_mainwindow::add_apps_to_listWidget(QList<QList<QString>> list_result)
+{
+    ui->listWidget->clear();
+    for (QList<QString> i : list_result)
+    {
+        QListWidgetItem *item = new QListWidgetItem;
+        QString title_app;
+        if (i[0].size() < 9)
+            title_app = i[0] + "\t\t\t\t\t\t\t" + i[1];
+        else if (i[0].size() < 22)
+            title_app = i[0] + "\t\t\t\t\t\t" + i[1];
+        else
+            title_app = i[0] + "\t\t\t\t\t" + i[1];
+        item->setText(title_app);
+        item->setToolTip(i[2] + ";" + i[3]);
+        ui->listWidget->addItem(item);
+    }
+    list_result.clear();
+}
+
 
 void autorization_mainwindow::search_result(QString search)
 {
@@ -172,24 +207,4 @@ int autorization_mainwindow::check_no_name(QString search, QString name_main)
             return 0;
     }
     return 0;
-}
-
-void autorization_mainwindow::add_apps_to_listWidget(QList<QList<QString>> list_result)
-{
-    ui->listWidget->clear();
-    for (QList<QString> i : list_result)
-    {
-        QListWidgetItem *item = new QListWidgetItem;
-        QString title_app;
-        if (i[0].size() < 9)
-            title_app = i[0] + "\t\t\t\t\t\t\t" + i[1];
-        else if (i[0].size() < 22)
-            title_app = i[0] + "\t\t\t\t\t\t" + i[1];
-        else
-            title_app = i[0] + "\t\t\t\t\t" + i[1];
-        item->setText(title_app);
-        item->setToolTip(i[2] + ";" + i[3]);
-        ui->listWidget->addItem(item);
-    }
-    list_result.clear();
 }

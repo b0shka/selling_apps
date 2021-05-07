@@ -42,7 +42,6 @@ void MainWindow::on_pushButton_2_clicked()
     login.setModal(true);
     login.exec();
 
-    qDebug() << g_status_autorization;
     if (g_status_autorization == 1)
         change_mainwindow();
 }

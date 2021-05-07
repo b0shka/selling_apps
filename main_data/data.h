@@ -17,5 +17,7 @@ extern int g_status_autorization;
 extern int g_status_delete;
 extern int g_status_change;
 extern int g_status_out;
+extern int g_status_delete_app;
+extern int g_status_change_app;
 
 #endif // DATA_H

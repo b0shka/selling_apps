@@ -217,3 +217,71 @@ int sql_database::generate_id(QString name_table)
 
     return new_id;
 }
+
+QList<QString> sql_database::get_apps_for_list_profile(QString login)
+{
+    str_requests = "SELECT app_name FROM " + app_table + " WHERE author = ('%1');";
+    if (!sql.exec(str_requests.arg(login)))
+    {
+        qDebug() << "[ERROR] Не удается получить названия программ из профиля: " << db.lastError().text();
+        return {{"ERROR"}};
+    }
+    QList<QString> list_apps_name;
+
+    QSqlRecord get_data = sql.record();
+    QString app_name;
+    while (sql.next())
+    {
+        app_name = sql.value(get_data.indexOf("app_name")).toString();
+        list_apps_name.push_back(app_name);
+    }
+
+    return list_apps_name;
+}
+
+QList<QString> sql_database::get_all_info_app_list_profile(QList<QString> param_app)
+{
+    str_requests = "SELECT app_price, app_description FROM " + app_table + " WHERE app_name = ('%1') and author = ('%2');";
+    if (!sql.exec(str_requests.arg(param_app[0]).arg(param_app[1])))
+    {
+        qDebug() << "[ERROR] Не удается получить информацию о программе из профиля: " << db.lastError().text();
+        return {{"ERROR"}};
+    }
+    QList<QString> list_apps_name;
+
+    QSqlRecord get_data = sql.record();
+    QString app_price, app_description;
+    while (sql.next())
+    {
+        app_price = sql.value(get_data.indexOf("app_price")).toString();
+        app_description = sql.value(get_data.indexOf("app_description")).toString();
+        list_apps_name = {app_price, app_description};
+    }
+
+    return list_apps_name;
+}
+
+QString sql_database::delete_app_from_db(QString name_app)
+{
+    str_requests = "DELETE FROM " + app_table + " WHERE app_name = ('%1') and author = ('%2');";
+    if (!sql.exec(str_requests.arg(name_app).arg(g_user_name)))
+    {
+        qDebug() << "[ERROR] Ошибка при удалении программы: " << db.lastError().text();
+        return "ERROR";
+    }
+    db.commit();
+    qDebug() << "[INFO] Программа успешно удалена";
+    return "Success";
+}
+
+QString sql_database::save_change_app(QList<QString> data_change)
+{
+    str_requests = "UPDATE " + app_table + " SET app_name = ('%1'), app_price = ('%2'), app_description = ('%3') WHERE app_name = ('%4') and author = ('%5');";
+    if (!sql.exec(str_requests.arg(data_change.at(1)).arg(data_change.at(2)).arg(data_change.at(3)).arg(data_change.at(0)).arg(g_user_name)))
+    {
+        qDebug() << "[ERROR] Не удается сохранить изменения программы: " << db.lastError().text();
+        return "ERROR";
+    }
+    db.commit();
+    return "Successs";
+}

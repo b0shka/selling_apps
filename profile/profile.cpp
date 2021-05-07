@@ -1,5 +1,6 @@
 ﻿#include "profile.h"
 #include "ui_profile.h"
+#include "../user_apps/user_apps.h"
 
 profile::profile(QWidget *parent) :
     QDialog(parent),
@@ -70,4 +71,12 @@ void profile::on_pushButton_3_clicked()
 {
     close();
     g_status_out = 1;
+}
+
+void profile::on_pushButton_4_clicked()
+{
+    close();
+    user_apps list_apps;
+    list_apps.setModal(true);
+    list_apps.exec();
 }
