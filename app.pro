@@ -19,8 +19,9 @@ SOURCES += \
 	about_app/about_app.cpp \
     add_app/add_app.cpp \
 	autorization_mainwindow/autorization_mainwindow.cpp \
+    developper_app/developper_app.cpp \
 	main.cpp \
-    main_data/main_data.cpp \
+    main_data/data.cpp \
 	mainwindow/mainwindow.cpp \
 	profile/profile.cpp \
 	sql_database/sql_database.cpp \
@@ -31,7 +32,8 @@ HEADERS += \
 	about_app/about_app.h \
     add_app/add_app.h \
 	autorization_mainwindow/autorization_mainwindow.h \
-    main_data/main_data.h \
+    developper_app/developper_app.h \
+    main_data/data.h \
 	mainwindow/mainwindow.h \
 	profile/profile.h \
 	sql_database/sql_database.h \
@@ -42,6 +44,7 @@ FORMS += \
 	about_app/about_app.ui \
     add_app/add_app.ui \
 	autorization_mainwindow/autorization_mainwindow.ui \
+    developper_app/developper_app.ui \
 	mainwindow/mainwindow.ui \
 	profile/profile.ui \
     window_login/window_login.ui \

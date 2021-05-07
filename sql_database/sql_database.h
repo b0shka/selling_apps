@@ -7,12 +7,10 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QSqlRecord>
+#include "../main_data/data.h"
 
 class sql_database
 {
-public:
-    QString user_name_login;
-
 public slots:
     void first_start();
     void create_table();

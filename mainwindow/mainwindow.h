@@ -6,7 +6,7 @@
 #include <QKeyEvent>
 #include "about_app/about_app.h"
 #include "sql_database/sql_database.h"
-#include "../main_data/main_data.h"
+#include "../main_data/data.h"
 
 using namespace std;
 
@@ -24,7 +24,7 @@ public:
 
 public slots:
     // для работы с авторизацией
-    void change_mainwindow(QString login);
+    void change_mainwindow();
 
 private slots:
     // функции для кнопок
@@ -45,6 +45,5 @@ private slots:
 private:
     Ui::MainWindow *ui;
     sql_database database;
-    main_data data;
 };
 #endif // MAINWINDOW_H

@@ -18,48 +18,47 @@ void window_login::on_pushButton_clicked()
 
     if (username == "" && password == "")
     {
-        ui->lineEdit->setStyleSheet(data.lock_style_other_color);
-        ui->lineEdit_2->setStyleSheet(data.lock_style_other_color);
+        ui->lineEdit->setStyleSheet(lock_style_other_color);
+        ui->lineEdit_2->setStyleSheet(lock_style_other_color);
     }
     else if (username == "" || password == "")
     {
         if (username == "")
         {
-            ui->lineEdit->setStyleSheet(data.lock_style_other_color);
-            ui->lineEdit_2->setStyleSheet(data.default_style_other_color);
+            ui->lineEdit->setStyleSheet(lock_style_other_color);
+            ui->lineEdit_2->setStyleSheet(default_style_other_color);
         }
         else
         {
-            ui->lineEdit->setStyleSheet(data.default_style_other_color);
-            ui->lineEdit_2->setStyleSheet(data.lock_style_other_color);
+            ui->lineEdit->setStyleSheet(default_style_other_color);
+            ui->lineEdit_2->setStyleSheet(lock_style_other_color);
         }
     }
     else
     {
-        ui->lineEdit->setStyleSheet(data.default_style_other_color);
-        ui->lineEdit_2->setStyleSheet(data.default_style_other_color);
+        ui->lineEdit->setStyleSheet(default_style_other_color);
+        ui->lineEdit_2->setStyleSheet(default_style_other_color);
 
         sql_database accessing_db;
         QString result_login = accessing_db.check_login_user(username, password);
         if (result_login == "OK")
         {
-            ui->label_3->setStyleSheet(data.success_style_label);
+            ui->label_3->setStyleSheet(success_style_label);
             ui->label_3->setText("Вы успешно авторизировались!");
             ui->lineEdit->setText("");
             ui->lineEdit_2->setText("");
-            status_autorization = 1;
+            g_status_autorization = 1;
             qDebug() << "[INFO] Авторизация пользователя";
             close();
-            user_name = accessing_db.user_name_login;
         }
         if (result_login == "NOT")
         {
-            ui->label_3->setStyleSheet(data.lock_style_label);
+            ui->label_3->setStyleSheet(lock_style_label);
             ui->label_3->setText("Не верный login или password");
         }
         else if (result_login == "ERROR")
         {
-            ui->label_3->setStyleSheet(data.error_style_label);
+            ui->label_3->setStyleSheet(error_style_label);
             ui->label_3->setText("Ошибка на стороне сервера");
         }
     }

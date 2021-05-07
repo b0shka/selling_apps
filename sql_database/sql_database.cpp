@@ -120,7 +120,7 @@ QString sql_database::check_login_user(QString user_login, QString user_password
     while (sql.next())
     {
         count_users++;
-        user_name_login = sql.value(get_data.indexOf("login")).toString();
+        g_user_name = sql.value(get_data.indexOf("login")).toString();
     }
 
     if (count_users > 0)

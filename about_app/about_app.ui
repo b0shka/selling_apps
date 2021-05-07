@@ -103,29 +103,6 @@ color: silver;</string>
     <string>Разработчик:</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_5">
-   <property name="geometry">
-    <rect>
-     <x>125</x>
-     <y>380</y>
-     <width>251</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>-1</pointsize>
-     <italic>true</italic>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font-size: 14px;
-color: silver;</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_6">
    <property name="geometry">
     <rect>
@@ -164,6 +141,32 @@ border-radius: 5px;</string>
    </property>
    <property name="text">
     <string>Дабавить в избранное</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>125</x>
+     <y>380</y>
+     <width>256</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+	font-size: 14px;
+	color: silver;
+	background-color: #2a2a2a;
+	border: none;
+	text-align: left;
+}
+
+QPushButton::hover {
+	color: white;
+}</string>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
  </widget>

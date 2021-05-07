@@ -15,11 +15,10 @@ autorization_mainwindow::~autorization_mainwindow()
     delete ui;
 }
 
-void autorization_mainwindow::autorizate(QString login)
+void autorization_mainwindow::autorizate()
 {
-    user_name = login;
-    ui->label->setText(login);
-    ui->pushButton_2->setText(login.at(0));
+    ui->label->setText(g_user_name);
+    ui->pushButton_2->setText(g_user_name.at(0));
     get_name_app_from_db();
 }
 
@@ -29,13 +28,13 @@ void autorization_mainwindow::on_pushButton_clicked()
 
     if (search == "")
     {
-        ui->lineEdit->setStyleSheet(data.lock_style);
+        ui->lineEdit->setStyleSheet(lock_style);
         ui->listWidget->clear();
         get_name_app_from_db();
     }
     else
     {
-        ui->lineEdit->setStyleSheet(data.default_style);
+        ui->lineEdit->setStyleSheet(default_style);
         ui->listWidget->clear();
         search_result(search);
         ui->lineEdit->setText("");
@@ -44,23 +43,22 @@ void autorization_mainwindow::on_pushButton_clicked()
 
 void autorization_mainwindow::on_pushButton_2_clicked()
 {
-    profile profile_window(user_name);
+    profile profile_window;
     profile_window.setModal(true);
     profile_window.exec();
 
-    if (profile_window.status_delete == 1)
+    if (g_status_delete == 1)
     {
         close();
         auto mainwindow = new MainWindow();
         mainwindow->show();
     }
-    else if (profile_window.status_change == 1)
+    else if (g_status_change == 1)
     {
-        ui->label->setText(profile_window.user_name);
-        ui->pushButton_2->setText(profile_window.user_name.at(0));
-        user_name = profile_window.user_name;
+        ui->label->setText(g_user_name);
+        ui->pushButton_2->setText(g_user_name.at(0));
     }
-    else if (profile_window.status_out == 1)
+    else if (g_status_out == 1)
     {
         close();
         auto mainwindow = new MainWindow();
@@ -75,7 +73,7 @@ void autorization_mainwindow::on_pushButton_3_clicked()
 
 void autorization_mainwindow::on_pushButton_4_clicked()
 {
-    add_app new_app(user_name);
+    add_app new_app;
     new_app.setModal(true);
     new_app.exec();
     get_name_app_from_db();
@@ -139,20 +137,17 @@ void autorization_mainwindow::search_result(QString search)
 int autorization_mainwindow::check_error(QString search, QString name_main)
 {
     int count = 0;
-    if (name_main.size() == search.size())
+    for (int j = 0; j < search.size(); j++)
     {
-        for (int j = 0; j < search.size(); j++)
-        {
-            if (name_main[j] != search[j])
-            {
-                count++;
-            }
-        }
-        if (count <= 2)
-            return 1;
-        else
-            return 0;
+        if (name_main[j] != search[j])
+            count++;
     }
+    if (count <= 1)
+        return 1;
+    else if (count <= 2 && (name_main.size() - search.size()) < 5)
+        return 1;
+    else
+        return 0;
 }
 
 int autorization_mainwindow::check_word_in_word(QString search, QString name_main)

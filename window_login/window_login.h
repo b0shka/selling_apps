@@ -4,7 +4,7 @@
 #include <QDialog>
 #include "../window_register/window_registration.h"
 #include "../sql_database/sql_database.h"
-#include "../main_data/main_data.h"
+#include "../main_data/data.h"
 
 namespace Ui {
 class window_login;
@@ -17,8 +17,6 @@ class window_login : public QDialog
 public:
     explicit window_login(QWidget *parent = nullptr);
     ~window_login();
-    int status_autorization = 0;
-    QString user_name;
 
 private slots:
     void on_pushButton_clicked();
@@ -28,7 +26,6 @@ private:
     Ui::window_login *ui;
     QString password;
     QString username;
-    main_data data;
 };
 
 #endif // WINDOW_LOGIN_H

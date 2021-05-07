@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include "../sql_database/sql_database.h"
-#include "../main_data/main_data.h"
+#include "../main_data/data.h"
 
 namespace Ui {
 class add_app;
@@ -14,7 +14,7 @@ class add_app : public QDialog
     Q_OBJECT
 
 public:
-    explicit add_app(QString user_name, QWidget *parent = nullptr);
+    explicit add_app(QWidget *parent = nullptr);
     ~add_app();
 
 private slots:
@@ -23,8 +23,6 @@ private slots:
 private:
     Ui::add_app *ui;
     sql_database database;
-    main_data data;
-    QString user_name;
 };
 
 #endif // ADD_APP_H

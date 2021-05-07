@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include "../sql_database/sql_database.h"
-#include "../main_data/main_data.h"
+#include "../main_data/data.h"
 
 namespace Ui {
 class window_registration;
@@ -22,7 +22,6 @@ private slots:
 
 private:
     Ui::window_registration *ui;
-    main_data data;
 };
 
 #endif // WINDOW_REGISTRATION_H

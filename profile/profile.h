@@ -4,7 +4,7 @@
 #include <QDialog>
 #include <QMessageBox>
 #include "../sql_database/sql_database.h"
-#include "../main_data/main_data.h"
+#include "../main_data/data.h"
 
 namespace Ui {
 class profile;
@@ -15,12 +15,8 @@ class profile : public QDialog
     Q_OBJECT
 
 public:
-    explicit profile(QString login, QWidget *parent = nullptr);
+    explicit profile(QWidget *parent = nullptr);
     ~profile();
-    QString user_name;
-    int status_delete = 0;
-    int status_change = 0;
-    int status_out = 0;
 
 private slots:
     void get_info_from_db(QString login);
@@ -30,9 +26,7 @@ private slots:
 
 private:
     Ui::profile *ui;
-    QString user_id;
     sql_database user_info;
-    main_data data;
 };
 
 #endif // PROFILE_H

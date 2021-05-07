@@ -22,13 +22,13 @@ void MainWindow::on_pushButton_clicked()
 
     if (search == "")
     {
-        ui->lineEdit->setStyleSheet(data.lock_style);
+        ui->lineEdit->setStyleSheet(lock_style);
         ui->listWidget->clear();
         get_name_app_from_db();
     }
     else
     {
-        ui->lineEdit->setStyleSheet(data.default_style);
+        ui->lineEdit->setStyleSheet(default_style);
         ui->listWidget->clear();
         search_result(search);
         ui->lineEdit->setText("");
@@ -41,9 +41,10 @@ void MainWindow::on_pushButton_2_clicked()
     window_login login;
     login.setModal(true);
     login.exec();
-    qDebug() << login.user_name;
-    if (login.status_autorization == 1)
-        change_mainwindow(login.user_name);
+
+    qDebug() << g_status_autorization;
+    if (g_status_autorization == 1)
+        change_mainwindow();
 }
 
 // открытие информации о программе
@@ -143,11 +144,11 @@ int MainWindow::check_error(QString search, QString name_main)
     for (int j = 0; j < search.size(); j++)
     {
         if (name_main[j] != search[j])
-        {
             count++;
-        }
     }
-    if (count <= 2)
+    if (count <= 1)
+        return 1;
+    else if (count <= 2 && (name_main.size() - search.size()) < 5)
         return 1;
     else
         return 0;
@@ -177,11 +178,11 @@ int MainWindow::check_word_in_word_no_name(QString search, QString name_main)
     return 0;
 }
 
-void MainWindow::change_mainwindow(QString login)
+void MainWindow::change_mainwindow()
 {
     close();
     autorization_mainwindow autorization_window;
-    autorization_window.autorizate(login);
+    autorization_window.autorizate();
     autorization_window.setModal(false);
     autorization_window.exec();
 }
