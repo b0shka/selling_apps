@@ -19,7 +19,7 @@ public:
     ~profile();
 
 private slots:
-    void get_info_from_db(QString login);
+    void get_info_from_db();
     void on_pushButton_clicked();
     void on_pushButton_2_clicked();
     void on_pushButton_3_clicked();

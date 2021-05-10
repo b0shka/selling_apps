@@ -41,9 +41,9 @@ border-radius: 5px;</string>
   <widget class="QLineEdit" name="lineEdit">
    <property name="geometry">
     <rect>
-     <x>125</x>
+     <x>130</x>
      <y>55</y>
-     <width>201</width>
+     <width>196</width>
      <height>31</height>
     </rect>
    </property>
@@ -96,7 +96,7 @@ border-radius: 5px;</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">font-size: 16px;</string>
+    <string notr="true">font-size: 15px;</string>
    </property>
    <property name="text">
     <string>Название</string>
@@ -105,9 +105,9 @@ border-radius: 5px;</string>
   <widget class="QLineEdit" name="lineEdit_2">
    <property name="geometry">
     <rect>
-     <x>125</x>
+     <x>130</x>
      <y>240</y>
-     <width>201</width>
+     <width>196</width>
      <height>31</height>
     </rect>
    </property>
@@ -137,7 +137,7 @@ border-radius: 5px;</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">font-size: 16px;</string>
+    <string notr="true">font-size: 15px;</string>
    </property>
    <property name="text">
     <string>Описание</string>
@@ -160,7 +160,7 @@ border-radius: 5px;</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">font-size: 16px;</string>
+    <string notr="true">font-size: 15px;</string>
    </property>
    <property name="text">
     <string>Цена</string>
@@ -169,9 +169,9 @@ border-radius: 5px;</string>
   <widget class="QTextEdit" name="textEdit">
    <property name="geometry">
     <rect>
-     <x>125</x>
+     <x>130</x>
      <y>100</y>
-     <width>196</width>
+     <width>191</width>
      <height>131</height>
     </rect>
    </property>
@@ -195,6 +195,47 @@ border-radius: 5px;</string>
    </property>
    <property name="text">
     <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>285</y>
+     <width>106</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 15px;</string>
+   </property>
+   <property name="text">
+    <string>Технологии</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_3">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>280</y>
+     <width>196</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">padding: 2px;
+font-size: 14px;
+height: 28px;
+color: white;
+background-color: #404040;
+border-radius: 5px;</string>
    </property>
   </widget>
  </widget>

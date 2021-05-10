@@ -15,7 +15,7 @@ class user_apps : public QDialog
     Q_OBJECT
 
 public:
-    explicit user_apps(QWidget *parent = nullptr);
+    explicit user_apps(QString login, QWidget *parent = nullptr);
     ~user_apps();
 
 private slots:
@@ -25,6 +25,7 @@ private slots:
 private:
     Ui::user_apps *ui;
     sql_database database;
+    QString login;
 };
 
 #endif // USER_APPS_H

@@ -4,7 +4,7 @@
 void sql_database::first_start()
 {
     db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("./server.db");
+    db.setDatabaseName("server.db");
     sql = QSqlQuery(db);
     if (!db.open())
     {
@@ -16,34 +16,45 @@ void sql_database::first_start()
 
 void sql_database::create_table()
 {
-    str_requests = "CREATE TABLE IF NOT EXIST " + user_table + " ("
-                                                  "id integer PRIMARY KEY NOT NULL,"
-                                                  "login VARCHAR (40) NOT NULL,"
-                                                  "password TEXT NOT NULL,"
-                                                  "email TEXT,"
-                                                  "number_phone VARCHAR (20)"
-                                                  ");";
-    if (!sql.exec(str_requests))
+    str_requests = "SELECT name FROM sqlite_master WHERE type = 'table';";
+    sql.exec(str_requests);
+    int count_table = 0;
+    while (sql.next())
+        count_table++;
+    if (count_table == 0)
     {
-        qDebug() << "[ERROR] Не удается создать таблицу с пользователями: " << db.lastError().text();
-        return;
-    }
-    qDebug() << "[INFO] Создана таблица с пользователями";
+        str_requests = "CREATE TABLE " + user_table + " ("
+                                                      "id integer PRIMARY KEY NOT NULL,"
+                                                      "login VARCHAR (40) NOT NULL,"
+                                                      "password TEXT NOT NULL,"
+                                                      "email TEXT,"
+                                                      "number_phone VARCHAR (20)"
+                                                      ");";
+        if (!sql.exec(str_requests))
+        {
+            qDebug() << "[ERROR] Не удается создать таблицу с пользователями: " << db.lastError().text();
+            return;
+        }
+        qDebug() << "[INFO] Создана таблица с пользователями";
+        db.commit();
 
-    str_requests = "CREATE TABLE IF NOT EXIST " + app_table + " ("
-                                                 "id integer PRIMARY KEY NOT NULL,"
-                                                 "app_name VARCHAR (32) NOT NULL,"
-                                                 "app_price VARCHAR (20),"
-                                                 "app_description TEXT,"
-                                                 "author VARCHAR (32) NOT NULL,"
-                                                 ");";
-    if (!sql.exec(str_requests))
-    {
-        qDebug() << "[ERROR] Не удается создать таблицу с программами: " << db.lastError().text();
-        return;
+        str_requests = "CREATE TABLE " + app_table + " ("
+                                                     "id integer PRIMARY KEY NOT NULL,"
+                                                     "app_name VARCHAR (32) NOT NULL,"
+                                                     "app_price VARCHAR (20),"
+                                                     "app_description TEXT,"
+                                                     "app_technologes TEXT,"
+                                                     "app_star integer,"
+                                                     "author VARCHAR (40) NOT NULL"
+                                                     ");";
+        if (!sql.exec(str_requests))
+        {
+            qDebug() << "[ERROR] Не удается создать таблицу с программами: " << db.lastError().text();
+            return;
+        }
+        db.commit();
+        qDebug() << "[INFO] Создана таблица с программами";
     }
-    db.commit();
-    qDebug() << "[INFO] Создана таблица с программами";
 }
 
 // получение названий программ
@@ -65,6 +76,7 @@ QList<QList<QString>> sql_database::get_apps_name()
         app_price = sql.value(get_data.indexOf("app_price")).toString();
         app_description = sql.value(get_data.indexOf("app_description")).toString();
         author = sql.value(get_data.indexOf("author")).toString();
+
         list_apps_name.push_back({app_name, app_price, app_description, author});
     }
 
@@ -184,8 +196,8 @@ QString sql_database::add_new_app(QList<QString> param_app)
         return "ERROR";
     }
 
-    str_requests = "INSERT INTO " + app_table + " (id, app_name, app_price, app_description, author) VALUES(%1, '%2', '%3', '%4', '%5');";
-    if (!sql.exec(str_requests.arg(app_id).arg(param_app.at(0)).arg(param_app.at(1)).arg(param_app.at(2)).arg(param_app.at(3))))
+    str_requests = "INSERT INTO " + app_table + " (id, app_name, app_price, app_description, app_technologes, author) VALUES(%1, '%2', '%3', '%4', '%5', '%6');";
+    if (!sql.exec(str_requests.arg(app_id).arg(param_app.at(0)).arg(param_app.at(1)).arg(param_app.at(2)).arg(param_app.at(3)).arg(param_app.at(4))))
     {
         qDebug() << "[ERROR] Ошибка при добавлении новой программы в БД";
         return "ERROR";
@@ -241,8 +253,8 @@ QList<QString> sql_database::get_apps_for_list_profile(QString login)
 
 QList<QString> sql_database::get_all_info_app_list_profile(QList<QString> param_app)
 {
-    str_requests = "SELECT app_price, app_description FROM " + app_table + " WHERE app_name = ('%1') and author = ('%2');";
-    if (!sql.exec(str_requests.arg(param_app[0]).arg(param_app[1])))
+    str_requests = "SELECT app_price, app_description, app_technologes FROM " + app_table + " WHERE app_name = ('%1') and author = ('%2');";
+    if (!sql.exec(str_requests.arg(param_app[0]).arg(param_app.last())))
     {
         qDebug() << "[ERROR] Не удается получить информацию о программе из профиля: " << db.lastError().text();
         return {{"ERROR"}};
@@ -250,12 +262,13 @@ QList<QString> sql_database::get_all_info_app_list_profile(QList<QString> param_
     QList<QString> list_apps_name;
 
     QSqlRecord get_data = sql.record();
-    QString app_price, app_description;
+    QString app_price, app_description, app_technologes;
     while (sql.next())
     {
         app_price = sql.value(get_data.indexOf("app_price")).toString();
         app_description = sql.value(get_data.indexOf("app_description")).toString();
-        list_apps_name = {app_price, app_description};
+        app_technologes = sql.value(get_data.indexOf("app_technologes")).toString();
+        list_apps_name = {app_price, app_description, app_technologes};
     }
 
     return list_apps_name;
@@ -284,4 +297,46 @@ QString sql_database::save_change_app(QList<QString> data_change)
     }
     db.commit();
     return "Successs";
+}
+
+QString sql_database::get_count_apps(QString login)
+{
+    str_requests = "SELECT app_name FROM " + app_table + " WHERE author = ('%1');";
+    if (!sql.exec(str_requests.arg(login)))
+    {
+        qDebug() << "[ERROR] Не удалось получить список программ для подсчета их количества" << db.lastError().text();
+        return "ERROR";
+    }
+    int count = 0;
+    while (sql.next())
+        count++;
+
+    return QString::number(count);
+}
+
+QString sql_database::add_start_to_app(QString login, QString app_name)
+{
+    str_requests = "SELECT app_star FROM " + app_table + " WHERE app_name = ('%1') and author = ('%2');";
+    if (!sql.exec(str_requests.arg(app_name).arg(login)))
+    {
+        qDebug() << "[ERROR] Не удается получить количество звезд программы" << db.lastError().text();
+        return "ERROR";
+    }
+
+    QSqlRecord get_data = sql.record();
+    int count_star;
+    while (sql.next())
+        count_star = sql.value(get_data.indexOf("app_star")).toInt();
+
+    count_star++;
+
+    str_requests = "UPDATE " + app_table + " SET app_star = (%1) WHERE app_name = ('%2') and author = ('%3');";
+    if (!sql.exec(str_requests.arg(count_star).arg(app_name).arg(login)))
+    {
+        qDebug() << "[ERROR] Не удается обность количество звезд программы " << db.lastError().text();
+        return "ERROR";
+    }
+
+    db.commit();
+    return "Success";
 }

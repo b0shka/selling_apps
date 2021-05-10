@@ -175,7 +175,7 @@ border-radius: 5px;</string>
 color: white;</string>
    </property>
    <property name="text">
-    <string>Login</string>
+    <string>Имя</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_5">
@@ -199,7 +199,7 @@ color: white;</string>
 color: white;</string>
    </property>
    <property name="text">
-    <string>Email</string>
+    <string>Почта</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_2">
@@ -259,7 +259,7 @@ border-radius: 5px;</string>
 color: white;</string>
    </property>
    <property name="text">
-    <string>Number</string>
+    <string>Номер</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_3">
@@ -302,6 +302,108 @@ border-radius: 5px;</string>
    </property>
    <property name="text">
     <string>Мои программы</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_7">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>190</y>
+     <width>206</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 15px;
+color: white;</string>
+   </property>
+   <property name="text">
+    <string>Количество программ</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_8">
+   <property name="geometry">
+    <rect>
+     <x>235</x>
+     <y>190</y>
+     <width>51</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 16px;
+color: white;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_9">
+   <property name="geometry">
+    <rect>
+     <x>235</x>
+     <y>225</y>
+     <width>51</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 16px;
+color: white;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_10">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>225</y>
+     <width>206</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size: 15px;
+color: white;</string>
+   </property>
+   <property name="text">
+    <string>Количество звёзд</string>
    </property>
   </widget>
  </widget>

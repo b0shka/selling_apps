@@ -51,7 +51,7 @@ void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 {
     QList<QString> name_app = item->text().split("\t\t\t\t\t");
     QList<QString> description = item->toolTip().split(";");
-    QList<QString> param_app = {name_app[0], name_app[1].replace("\t", ""), description[0], description[1]};
+    QList<QString> param_app = {name_app[0], description[1]};
 
     about_app app_information(param_app);
     app_information.setModal(true);

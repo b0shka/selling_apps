@@ -18,6 +18,7 @@ void add_app::on_pushButton_clicked()
     QString name_app = ui->lineEdit->text();
     QString description_app = ui->textEdit->toPlainText();
     QString price_app = ui->lineEdit_2->text();
+    QString tech_app = ui->lineEdit_3->text();
 
     if (name_app == "" || price_app == "")
     {
@@ -35,7 +36,7 @@ void add_app::on_pushButton_clicked()
         ui->lineEdit->setStyleSheet(default_style_other_color);
         ui->lineEdit_2->setStyleSheet(default_style_other_color);
 
-        QList<QString> param_app = {name_app, price_app, description_app, g_user_name};
+        QList<QString> param_app = {name_app, price_app, description_app, tech_app, g_user_name};
         QString result_add_app = database.add_new_app(param_app);
 
         if (result_add_app == "OK")

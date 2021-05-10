@@ -83,7 +83,7 @@ background-color: #2a2a2a;</string>
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>15</x>
      <y>380</y>
      <width>101</width>
      <height>21</height>
@@ -109,7 +109,7 @@ color: silver;</string>
      <x>20</x>
      <y>80</y>
      <width>566</width>
-     <height>286</height>
+     <height>211</height>
     </rect>
    </property>
    <property name="text">
@@ -125,9 +125,9 @@ color: silver;</string>
   <widget class="QPushButton" name="pushButton_2">
    <property name="geometry">
     <rect>
-     <x>390</x>
+     <x>385</x>
      <y>375</y>
-     <width>206</width>
+     <width>91</width>
      <height>31</height>
     </rect>
    </property>
@@ -140,13 +140,13 @@ background-color: #404040;
 border-radius: 5px;</string>
    </property>
    <property name="text">
-    <string>Дабавить в избранное</string>
+    <string>Звезда</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>125</x>
+     <x>115</x>
      <y>380</y>
      <width>256</width>
      <height>21</height>
@@ -167,6 +167,62 @@ QPushButton::hover {
    </property>
    <property name="text">
     <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>295</y>
+     <width>96</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size:15px;</string>
+   </property>
+   <property name="text">
+    <string>Технологии</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_7">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>320</y>
+     <width>566</width>
+     <height>46</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_3">
+   <property name="geometry">
+    <rect>
+     <x>480</x>
+     <y>375</y>
+     <width>121</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">padding: 2px;
+font-size: 14px;
+height: 28px;
+color: white;
+background-color: #404040;
+border-radius: 5px;</string>
+   </property>
+   <property name="text">
+    <string>Избранное</string>
    </property>
   </widget>
  </widget>

@@ -46,6 +46,7 @@ void autorization_mainwindow::on_pushButton_2_clicked()
     profile profile_window;
     profile_window.setModal(true);
     profile_window.exec();
+    g_status_now_profile = 0;
 
     if (g_status_delete == 1)
     {
@@ -97,7 +98,7 @@ void autorization_mainwindow::on_listWidget_itemDoubleClicked(QListWidgetItem *i
 {
     QList<QString> name_app = item->text().split("\t\t\t\t\t");
     QList<QString> description = item->toolTip().split(";");
-    QList<QString> param_app = {name_app[0], name_app[1].replace("\t", ""), description[0], description[1]};
+    QList<QString> param_app = {name_app[0], description[1]};
 
     about_app app_information(param_app);
     app_information.setModal(true);

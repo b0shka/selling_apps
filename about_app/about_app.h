@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "../developper_app/developper_app.h"
+#include "../sql_database/sql_database.h"
 
 namespace Ui {
 class about_app;
@@ -19,8 +20,11 @@ public:
 private slots:
     void on_pushButton_clicked();
 
+    void on_pushButton_2_clicked();
+
 private:
     Ui::about_app *ui;
+    sql_database database;
 };
 
 #endif // ABOUT_APP_H

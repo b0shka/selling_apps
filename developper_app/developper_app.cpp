@@ -1,5 +1,6 @@
 ﻿#include "developper_app.h"
 #include "ui_developper_app.h"
+#include "../user_apps/user_apps.h"
 
 developper_app::developper_app(QString login , QWidget *parent) :
     QDialog(parent),
@@ -25,9 +26,16 @@ void developper_app::get_info_from_db(QString login)
         ui->label_8->setText(data.at(1));
         ui->label_9->setText(data.at(2));
     }
+
+    QString count_app = developer_info.get_count_apps(login);
+    if (count_app != "ERROR")
+        ui->label_10->setText(count_app);
 }
 
 void developper_app::on_pushButton_2_clicked()
 {
-
+    close();
+    user_apps app_dev(user_name_dev);
+    app_dev.setModal(true);
+    app_dev.exec();
 }

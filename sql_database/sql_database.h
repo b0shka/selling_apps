@@ -26,6 +26,8 @@ public slots:
     QList<QString> get_all_info_app_list_profile(QList<QString> param_app);
     QString delete_app_from_db(QString name_app);
     QString save_change_app(QList<QString> data_change);
+    QString get_count_apps(QString login);
+    QString add_start_to_app(QString login, QString app_name);
 
 private:
     QSqlDatabase db;

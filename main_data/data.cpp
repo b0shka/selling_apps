@@ -41,6 +41,20 @@ QString success_style_label = "font-size: 14px;"
 QString error_style_label = "font-size: 14px;"
                     "color: #ffc552";
 
+QString lock_style_button = "padding: 2px;"
+                            "font-size: 14px;"
+                            "height: 28px;"
+                            "color: white;"
+                            "background-color: #3b3a3b;"
+                            "border-radius: 5px;";
+
+QString default_style_button = "padding: 2px;"
+                               "font-size: 14px;"
+                               "height: 28px;"
+                               "color: white;"
+                               "background-color: #404040;"
+                               "border-radius: 5px;";
+
 QString g_user_name = "";
 
 int g_status_autorization = 0;
@@ -49,3 +63,4 @@ int g_status_change = 0;
 int g_status_out = 0;
 int g_status_delete_app = 0;
 int g_status_change_app = 0;
+int g_status_now_profile = 0;
