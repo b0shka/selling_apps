@@ -46,6 +46,15 @@ void MainWindow::on_pushButton_2_clicked()
         change_mainwindow();
 }
 
+void MainWindow::on_pushButton_3_clicked()
+{
+    filter_search change_filter;
+    change_filter.setModal(true);
+    change_filter.exec();
+
+    get_name_app_from_db();
+}
+
 // открытие информации о программе
 void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 {
@@ -103,17 +112,85 @@ void MainWindow::add_apps_to_listWidget(QList<QList<QString>> list_result)
     ui->listWidget->clear();
     for (QList<QString> i : list_result)
     {
-        QListWidgetItem *item = new QListWidgetItem;
-        QString title_app;
-        if (i[0].size() < 9)
-            title_app = i[0] + "\t\t\t\t\t\t\t" + i[1];
-        else if (i[0].size() < 22)
-            title_app = i[0] + "\t\t\t\t\t\t" + i[1];
+        if (g_max_price != 0)
+        {
+            if (g_technloges != "")
+            {
+                QList<QString> description_app = (database.get_all_info_app_list_profile({i[0], i[3]})).at(2).split(";");
+                for (QString j : description_app)
+                {
+                    if (i[1].toInt() >= g_min_price && check_word_in_word(j, g_technloges) == 1)
+                    {
+                        QListWidgetItem *item = new QListWidgetItem;
+                        QString title_app;
+                        if (i[0].size() < 9)
+                            title_app = i[0] + "\t\t\t\t\t\t\t" + i[1];
+                        else if (i[0].size() < 22)
+                            title_app = i[0] + "\t\t\t\t\t\t" + i[1];
+                        else
+                            title_app = i[0] + "\t\t\t\t\t" + i[1];
+                        item->setText(title_app);
+                        item->setToolTip(i[2] + ";" + i[3]);
+                        ui->listWidget->addItem(item);
+                    }
+                }
+            }
+            else
+            {
+                if (i[1].toInt() <= g_max_price && i[1].toInt() >= g_min_price)
+                {
+                    QListWidgetItem *item = new QListWidgetItem;
+                    QString title_app;
+                    if (i[0].size() < 9)
+                        title_app = i[0] + "\t\t\t\t\t\t\t" + i[1];
+                    else if (i[0].size() < 22)
+                        title_app = i[0] + "\t\t\t\t\t\t" + i[1];
+                    else
+                        title_app = i[0] + "\t\t\t\t\t" + i[1];
+                    item->setText(title_app);
+                    item->setToolTip(i[2] + ";" + i[3]);
+                    ui->listWidget->addItem(item);
+                }
+            }
+        }
+        else if (g_technloges != "")
+        {
+            QList<QString> description_app = (database.get_all_info_app_list_profile({i[0], i[3]})).at(2).split(";");
+            for (QString j : description_app)
+            {
+                if (i[1].toInt() >= g_min_price && check_word_in_word(j, g_technloges) == 1)
+                {
+                    QListWidgetItem *item = new QListWidgetItem;
+                    QString title_app;
+                    if (i[0].size() < 9)
+                        title_app = i[0] + "\t\t\t\t\t\t\t" + i[1];
+                    else if (i[0].size() < 22)
+                        title_app = i[0] + "\t\t\t\t\t\t" + i[1];
+                    else
+                        title_app = i[0] + "\t\t\t\t\t" + i[1];
+                    item->setText(title_app);
+                    item->setToolTip(i[2] + ";" + i[3]);
+                    ui->listWidget->addItem(item);
+                }
+            }
+        }
         else
-            title_app = i[0] + "\t\t\t\t\t" + i[1];
-        item->setText(title_app);
-        item->setToolTip(i[2] + ";" + i[3]);
-        ui->listWidget->addItem(item);
+        {
+            if (i[1].toInt() >= g_min_price)
+            {
+                QListWidgetItem *item = new QListWidgetItem;
+                QString title_app;
+                if (i[0].size() < 9)
+                    title_app = i[0] + "\t\t\t\t\t\t\t" + i[1];
+                else if (i[0].size() < 22)
+                    title_app = i[0] + "\t\t\t\t\t\t" + i[1];
+                else
+                    title_app = i[0] + "\t\t\t\t\t" + i[1];
+                item->setText(title_app);
+                item->setToolTip(i[2] + ";" + i[3]);
+                ui->listWidget->addItem(item);
+            }
+        }
     }
     list_result.clear();
 }

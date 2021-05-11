@@ -40,6 +40,7 @@ private slots:
 
 private:
     Ui::autorization_mainwindow *ui;
+    sql_database database;
 };
 
 #endif // AUTORIZATION_MAINWINDOW_H

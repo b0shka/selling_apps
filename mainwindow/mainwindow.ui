@@ -127,6 +127,27 @@ border-radius: 5px;</string>
       <string>Войти</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="pushButton_3">
+     <property name="geometry">
+      <rect>
+       <x>305</x>
+       <y>10</y>
+       <width>91</width>
+       <height>36</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">padding: 2px;
+font-size: 14px;
+height: 28px;
+color: white;
+background-color: #2a2a2a;
+border-radius: 5px;</string>
+     </property>
+     <property name="text">
+      <string>Фильтры</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QListWidget" name="listWidget">
     <property name="geometry">

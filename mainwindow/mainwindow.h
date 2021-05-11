@@ -7,6 +7,7 @@
 #include "about_app/about_app.h"
 #include "sql_database/sql_database.h"
 #include "../main_data/data.h"
+#include "../filter_search/filter_search.h"
 
 using namespace std;
 
@@ -30,6 +31,7 @@ private slots:
     // функции для кнопок
     void on_pushButton_clicked();
     void on_pushButton_2_clicked();
+    void on_pushButton_3_clicked();
     void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
     void keyPressEvent(QKeyEvent *event);
     void on_lineEdit_returnPressed();
@@ -41,6 +43,7 @@ private slots:
     int check_word_in_word(QString search, QString name_main);
     int check_word_in_word_no_name(QString search, QString name_main);
     void add_apps_to_listWidget(QList<QList<QString>> list_result);
+
 
 private:
     Ui::MainWindow *ui;

@@ -23,4 +23,8 @@ extern int g_status_delete_app;
 extern int g_status_change_app;
 extern int g_status_now_profile;
 
+extern int g_max_price;
+extern int g_min_price;
+extern QString g_technloges;
+
 #endif // DATA_H

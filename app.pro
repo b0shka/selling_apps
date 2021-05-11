@@ -21,6 +21,7 @@ SOURCES += \
     add_app/add_app.cpp \
 	autorization_mainwindow/autorization_mainwindow.cpp \
     developper_app/developper_app.cpp \
+    filter_search/filter_search.cpp \
 	main.cpp \
     main_data/data.cpp \
 	mainwindow/mainwindow.cpp \
@@ -36,6 +37,7 @@ HEADERS += \
     add_app/add_app.h \
 	autorization_mainwindow/autorization_mainwindow.h \
     developper_app/developper_app.h \
+    filter_search/filter_search.h \
     main_data/data.h \
 	mainwindow/mainwindow.h \
 	profile/profile.h \
@@ -50,6 +52,7 @@ FORMS += \
     add_app/add_app.ui \
 	autorization_mainwindow/autorization_mainwindow.ui \
     developper_app/developper_app.ui \
+    filter_search/filter_search.ui \
 	mainwindow/mainwindow.ui \
 	profile/profile.ui \
     user_apps/user_apps.ui \

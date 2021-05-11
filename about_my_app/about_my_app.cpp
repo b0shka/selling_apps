@@ -47,7 +47,8 @@ void about_my_app::on_pushButton_2_clicked()
 
         QString new_price = ui->lineEdit_2->text();
         QString new_description = ui->textEdit->toPlainText();
-        QString result_save = database.save_change_app({app_name, new_name, new_price, new_description});
+        QString app_technologes = ui->lineEdit_3->text();
+        QString result_save = database.save_change_app({app_name, new_name, new_price, new_description, app_technologes});
         if (result_save != "ERROR")
         {
             QMessageBox::information(this, "Уведомление", "Данные сохранены");

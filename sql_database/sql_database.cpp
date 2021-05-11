@@ -290,8 +290,9 @@ QString sql_database::delete_app_from_db(QString name_app)
 
 QString sql_database::save_change_app(QList<QString> data_change)
 {
-    str_requests = "UPDATE " + app_table + " SET app_name = ('%1'), app_price = ('%2'), app_description = ('%3') WHERE app_name = ('%4') and author = ('%5');";
-    if (!sql.exec(str_requests.arg(data_change.at(1)).arg(data_change.at(2)).arg(data_change.at(3)).arg(data_change.at(0)).arg(g_user_name)))
+    qDebug() << data_change;
+    str_requests = "UPDATE " + app_table + " SET app_name = ('%1'), app_price = ('%2'), app_description = ('%3'), app_technologes = ('%4') WHERE app_name = ('%5') and author = ('%6');";
+    if (!sql.exec(str_requests.arg(data_change.at(1)).arg(data_change.at(2)).arg(data_change.at(3)).arg(data_change.at(4)).arg(data_change.at(0)).arg(g_user_name)))
     {
         qDebug() << "[ERROR] Не удается сохранить изменения программы: " << db.lastError().text();
         return "ERROR";

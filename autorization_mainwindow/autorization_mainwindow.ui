@@ -181,9 +181,9 @@ color: white;</string>
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>310</x>
+      <x>305</x>
       <y>10</y>
-      <width>101</width>
+      <width>91</width>
       <height>36</height>
      </rect>
     </property>
@@ -196,7 +196,7 @@ background-color: #2a2a2a;
 border-radius: 5px;</string>
     </property>
     <property name="text">
-     <string>Добавить</string>
+     <string>Фильтры</string>
     </property>
    </widget>
   </widget>
