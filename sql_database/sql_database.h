@@ -28,6 +28,10 @@ public slots:
     QString save_change_app(QList<QString> data_change);
     QString get_count_apps(QString login);
     QString add_start_to_app(QString login, QString app_name);
+    QString add_id_users_star_app(QString login, QString app_name, QString new_id);
+    int get_id_user(QString login);
+    QString get_list_id_star_app(QString login, QString app_name);
+    QString check_id_in_id_star_app(QString login, QString app_name, QString user_id);
 
 private:
     QSqlDatabase db;

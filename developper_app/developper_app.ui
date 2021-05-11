@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>324</width>
-    <height>419</height>
+    <height>416</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -167,33 +167,12 @@ color: white;</string>
     <string>Номер:</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
-   <property name="geometry">
-    <rect>
-     <x>175</x>
-     <y>380</y>
-     <width>146</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">padding: 2px;
-font-size: 14px;
-height: 28px;
-color: white;
-background-color: #404040;
-border-radius: 5px;</string>
-   </property>
-   <property name="text">
-    <string>Поставить звезду</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="pushButton_2">
    <property name="geometry">
     <rect>
      <x>10</x>
      <y>380</y>
-     <width>156</width>
+     <width>111</width>
      <height>31</height>
     </rect>
    </property>
@@ -206,15 +185,15 @@ background-color: #404040;
 border-radius: 5px;</string>
    </property>
    <property name="text">
-    <string>Список программ</string>
+    <string>Программы</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_3">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>340</y>
-     <width>311</width>
+     <x>130</x>
+     <y>380</y>
+     <width>191</width>
      <height>31</height>
     </rect>
    </property>

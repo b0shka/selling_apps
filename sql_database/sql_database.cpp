@@ -45,6 +45,7 @@ void sql_database::create_table()
                                                      "app_description TEXT,"
                                                      "app_technologes TEXT,"
                                                      "app_star integer,"
+                                                     "id_users_star TEXT,"
                                                      "author VARCHAR (40) NOT NULL"
                                                      ");";
         if (!sql.exec(str_requests))
@@ -319,7 +320,7 @@ QString sql_database::add_start_to_app(QString login, QString app_name)
     str_requests = "SELECT app_star FROM " + app_table + " WHERE app_name = ('%1') and author = ('%2');";
     if (!sql.exec(str_requests.arg(app_name).arg(login)))
     {
-        qDebug() << "[ERROR] Не удается получить количество звезд программы" << db.lastError().text();
+        qDebug() << "[ERROR] Не удается получить количество звезд программы " << db.lastError().text();
         return "ERROR";
     }
 
@@ -339,4 +340,70 @@ QString sql_database::add_start_to_app(QString login, QString app_name)
 
     db.commit();
     return "Success";
+}
+
+QString sql_database::add_id_users_star_app(QString login, QString app_name, QString new_id)
+{
+    QString list_user = get_list_id_star_app(login, app_name);
+
+    if (list_user.size() > 0)
+        list_user.push_back(";" + new_id);
+    else
+        list_user.push_back(new_id);
+
+    str_requests = "UPDATE " + app_table + " SET id_users_star = ('%1') WHERE app_name = ('%2') and author = ('%3');";
+    if(!sql.exec(str_requests.arg(list_user).arg(app_name).arg(login)))
+    {
+        qDebug() << "[ERROR] Не удается обновить вписов id пользователей поставивших звезду программе " << db.lastError().text();
+        return "ERROR";
+    }
+
+    db.commit();
+    return "Success";
+}
+
+int sql_database::get_id_user(QString login)
+{
+    str_requests = "SELECT id FROM " + user_table + " WHERE login = ('%1');";
+    if (!sql.exec(str_requests.arg(login)))
+    {
+        qDebug() << "[ERROR] Не удается получить id пользователя " << db.lastError().text();
+        return 0;
+    }
+
+    QSqlRecord get_data = sql.record();
+    int user_id;
+    while (sql.next())
+        user_id = sql.value(get_data.indexOf("id")).toInt();
+
+    return user_id;
+}
+
+QString sql_database::get_list_id_star_app(QString login, QString app_name)
+{
+    str_requests = "SELECT id_users_star FROM " + app_table + " WHERE app_name = ('%1') and author = ('%2');";
+    if (!sql.exec(str_requests.arg(app_name).arg(login)))
+    {
+        qDebug() << "[ERROR] Не удается получить id пользователей поставивших звезду программе " << db.lastError().text();
+        return "ERROR";
+    }
+
+    QSqlRecord get_data = sql.record();
+    QString list_user;
+    while (sql.next())
+        list_user = sql.value(get_data.indexOf("id_users_star")).toString();
+
+    return list_user;
+}
+
+QString sql_database::check_id_in_id_star_app(QString login, QString app_name, QString user_id)
+{
+    QString list_user = get_list_id_star_app(login, app_name);
+
+    bool result = list_user.contains(user_id);
+
+    if (result == true)
+        return "OK";
+    else
+        return "NOT";
 }

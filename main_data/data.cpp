@@ -45,7 +45,7 @@ QString lock_style_button = "padding: 2px;"
                             "font-size: 14px;"
                             "height: 28px;"
                             "color: white;"
-                            "background-color: #3b3a3b;"
+                            "background-color: #949494;"
                             "border-radius: 5px;";
 
 QString default_style_button = "padding: 2px;"

@@ -46,6 +46,7 @@ void add_app::on_pushButton_clicked()
             ui->lineEdit->clear();
             ui->lineEdit_2->clear();
             ui->textEdit->clear();
+            ui->lineEdit_3->clear();
         }
         else if (result_add_app == "ERROR")
         {
