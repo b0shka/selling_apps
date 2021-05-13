@@ -37,6 +37,7 @@ private slots:
     int check_word_in_word(QString search, QString name_main);
     int check_no_name(QString search, QString name_main);
     void add_apps_to_listWidget(QList<QList<QString>> list_result);
+    void layout_title_app(QList<QString> data_app);
 
 private:
     Ui::autorization_mainwindow *ui;

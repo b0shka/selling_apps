@@ -95,12 +95,17 @@ border: none;</string>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">padding: 2px;
-font-size: 14px;
-height: 28px;
-color: white;
-background-color: #2a2a2a;
-border-radius: 5px;</string>
+      <string notr="true">QPushButton {
+	padding: 2px;
+	font-size: 14px;
+	height: 28px;
+	color: white;
+	background-color: #2a2a2a;
+	border-radius: 5px;
+}
+QPushButton::hover {
+	background-color: #949494;
+}</string>
      </property>
      <property name="text">
       <string>Поиск</string>
@@ -116,12 +121,17 @@ border-radius: 5px;</string>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">padding: 2px;
-font-size: 14px;
-height: 28px;
-color: white;
-background-color: #2a2a2a;
-border-radius: 5px;</string>
+      <string notr="true">QPushButton {
+	padding: 2px;
+	font-size: 14px;
+	height: 28px;
+	color: white;
+	background-color: #2a2a2a;
+	border-radius: 5px;
+}
+QPushButton::hover {
+	background-color: #949494;
+}</string>
      </property>
      <property name="text">
       <string>Войти</string>
@@ -137,12 +147,17 @@ border-radius: 5px;</string>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">padding: 2px;
-font-size: 14px;
-height: 28px;
-color: white;
-background-color: #2a2a2a;
-border-radius: 5px;</string>
+      <string notr="true">QPushButton {
+	padding: 2px;
+	font-size: 14px;
+	height: 28px;
+	color: white;
+	background-color: #2a2a2a;
+	border-radius: 5px;
+}
+QPushButton::hover {
+	background-color: #949494;
+}</string>
      </property>
      <property name="text">
       <string>Фильтры</string>

@@ -42,11 +42,17 @@ background-color: #2a2a2a;</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: #404040;
-border-radius: 5px;
-padding:2px 5px;
-font-size: 14px;
-color: white;</string>
+    <string notr="true">QPushButton {
+	padding: 2px;
+	font-size: 14px;
+	height: 28px;
+	color: white;
+	background-color: #404040;
+	border-radius: 5px;
+}
+QPushButton::hover {
+	background-color: #949494;
+}</string>
    </property>
    <property name="text">
     <string>Войти</string>
@@ -143,11 +149,17 @@ color: white;</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: #404040;
-border-radius: 5px;
-padding:2px 5px;
-font-size: 14px;
-color: white;</string>
+    <string notr="true">QPushButton {
+	padding: 2px;
+	font-size: 14px;
+	height: 28px;
+	color: white;
+	background-color: #404040;
+	border-radius: 5px;
+}
+QPushButton::hover {
+	background-color: #949494;
+}</string>
    </property>
    <property name="text">
     <string>Зарегистрироваться</string>

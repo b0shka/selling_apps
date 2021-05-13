@@ -171,6 +171,15 @@ QString sql_database::delete_user_from_db(QString login)
         return "ERROR";
     }
     db.commit();
+
+    str_requests = "DELETE FROM " + app_table + " WHERE author = ('%1');";
+    if (!sql.exec(str_requests.arg(login)))
+    {
+        qDebug() << "[ERROR] Не получается удалить все программы пользователя при удалении аккаунта " << db.lastError().text();
+        return "ERROR";
+    }
+    db.commit();
+
     qDebug() << "[INFO] Пользователь успешно удален";
     return "Success";
 }
@@ -407,4 +416,37 @@ QString sql_database::check_id_in_id_star_app(QString login, QString app_name, Q
         return "OK";
     else
         return "NOT";
+}
+
+QString sql_database::get_all_star_for_profile(QString login)
+{
+    str_requests = "SELECT app_star FROM " + app_table + " WHERE author = ('%1');";
+    if (!sql.exec(str_requests.arg(login)))
+    {
+        qDebug() << "[ERROR] Не удается получить количество звезд с одного профиля " << db.lastError().text();
+        return "ERROR";
+    }
+
+    QSqlRecord get_data = sql.record();
+    int count_star = 0;
+    while (sql.next())
+        count_star += sql.value(get_data.indexOf("app_star")).toInt();
+
+    return QString::number(count_star);
+}
+
+void sql_database::get_max_price_app()
+{
+    str_requests = "SELECT app_price FROM " + app_table + " ;";
+    if (!sql.exec(str_requests))
+        qDebug() << "[ERROR] Не удалется получить все цены программ для определения g_max_price " << db.lastError().text();
+
+    QSqlRecord get_data = sql.record();
+    QString app_price;
+    while (sql.next())
+    {
+        app_price = sql.value(get_data.indexOf("app_price")).toString();
+        if (app_price.toInt() > g_max_price)
+            g_max_price = app_price.toInt();
+    }
 }

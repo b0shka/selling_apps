@@ -112,12 +112,17 @@ border: none;</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">padding: 2px;
-font-size: 14px;
-height: 28px;
-color: white;
-background-color: #2a2a2a;
-border-radius: 5px;</string>
+     <string notr="true">QPushButton {
+	padding: 2px;
+	font-size: 14px;
+	height: 28px;
+	color: white;
+	background-color: #2a2a2a;
+	border-radius: 5px;
+}
+QPushButton::hover {
+	background-color: #949494;
+}</string>
     </property>
     <property name="text">
      <string>Поиск</string>
@@ -140,12 +145,18 @@ border-radius: 5px;</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">padding: 2px;
-font-size: 18px;
-height: 28px;
-color: black;
-background-color: #6accc1;
-border-radius: 18px;</string>
+     <string notr="true">QPushButton {
+	padding: 2px;
+	font-size: 18px;
+	height: 28px;
+	color: black;
+	background-color: #6accc1;
+	border-radius: 18px;
+}
+
+QPushButton::hover {
+	background-color: #55ada3;
+}</string>
     </property>
     <property name="text">
      <string/>
@@ -188,12 +199,17 @@ color: white;</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">padding: 2px;
-font-size: 14px;
-height: 28px;
-color: white;
-background-color: #2a2a2a;
-border-radius: 5px;</string>
+     <string notr="true">QPushButton {
+	padding: 2px;
+	font-size: 14px;
+	height: 28px;
+	color: white;
+	background-color: #2a2a2a;
+	border-radius: 5px;
+}
+QPushButton::hover {
+	background-color: #949494;
+}</string>
     </property>
     <property name="text">
      <string>Фильтры</string>
@@ -217,12 +233,18 @@ border-radius: 5px;</string>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">padding: 2px;
-font-size: 18px;
-height: 28px;
-color: black;
-background-color: #6accc1;
-border-radius: 18px;</string>
+    <string notr="true">QPushButton {
+	padding: 2px;
+	font-size: 18px;
+	height: 28px;
+	color: black;
+	background-color: #6accc1;
+	border-radius: 18px;
+}
+
+QPushButton::hover {
+	background-color: #55ada3;
+}</string>
    </property>
    <property name="text">
     <string>+</string>

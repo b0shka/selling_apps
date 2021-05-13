@@ -68,3 +68,4 @@ int g_status_now_profile = 0;
 int g_max_price = 0;
 int g_min_price = 0;
 QString g_technloges = "";
+QString g_description = "";

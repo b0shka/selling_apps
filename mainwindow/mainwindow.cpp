@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     ui->setupUi(this);
     database.first_start();
+    database.get_max_price_app();
     get_name_app_from_db();
 }
 
@@ -112,87 +113,101 @@ void MainWindow::add_apps_to_listWidget(QList<QList<QString>> list_result)
     ui->listWidget->clear();
     for (QList<QString> i : list_result)
     {
-        if (g_max_price != 0)
+        if (g_technloges != "")
         {
-            if (g_technloges != "")
+            if (g_description != "")
             {
-                QList<QString> description_app = (database.get_all_info_app_list_profile({i[0], i[3]})).at(2).split(";");
-                for (QString j : description_app)
+                if (i[1].toInt() >= g_min_price && i[1].toInt() <= g_max_price && check_word_in_word(g_description, i[2]) == 1)
+                    layout_title_app(i);
+                else
                 {
-                    if (i[1].toInt() >= g_min_price && check_word_in_word(j, g_technloges) == 1)
+                    QList<QString> word_g_description = g_description.split(" ");
+
+                    for (QString j : word_g_description)
                     {
-                        QListWidgetItem *item = new QListWidgetItem;
-                        QString title_app;
-                        if (i[0].size() < 9)
-                            title_app = i[0] + "\t\t\t\t\t\t\t" + i[1];
-                        else if (i[0].size() < 22)
-                            title_app = i[0] + "\t\t\t\t\t\t" + i[1];
-                        else
-                            title_app = i[0] + "\t\t\t\t\t" + i[1];
-                        item->setText(title_app);
-                        item->setToolTip(i[2] + ";" + i[3]);
-                        ui->listWidget->addItem(item);
+                        if (i[1].toInt() >= g_min_price && i[1].toInt() <= g_max_price && check_word_in_word(j, i[2]) == 1)
+                        {
+                            layout_title_app(i);
+                            break;
+                        }
                     }
                 }
             }
             else
             {
-                if (i[1].toInt() <= g_max_price && i[1].toInt() >= g_min_price)
+                QList<QString> description_app = (database.get_all_info_app_list_profile({i[0], i[3]})).at(2).split(";");
+                if ((g_technloges.split(";")).size() > 1)
                 {
-                    QListWidgetItem *item = new QListWidgetItem;
-                    QString title_app;
-                    if (i[0].size() < 9)
-                        title_app = i[0] + "\t\t\t\t\t\t\t" + i[1];
-                    else if (i[0].size() < 22)
-                        title_app = i[0] + "\t\t\t\t\t\t" + i[1];
-                    else
-                        title_app = i[0] + "\t\t\t\t\t" + i[1];
-                    item->setText(title_app);
-                    item->setToolTip(i[2] + ";" + i[3]);
-                    ui->listWidget->addItem(item);
+                    int add_status = 0;
+                    for (QString tech : g_technloges.split(";"))
+                    {
+                        for (QString j : description_app)
+                        {
+                            if (i[1].toInt() >= g_min_price && i[1].toInt() <= g_max_price && check_word_in_word(tech.replace(" ", ""), j.replace(" ", "")) == 1)
+                            {
+                                layout_title_app(i);
+                                add_status = 1;
+                            }
+                        }
+                        if (add_status == 1)
+                            break;
+                    }
+                }
+                else
+                {
+                    for (QString j : description_app)
+                    {
+                        if (i[1].toInt() >= g_min_price && i[1].toInt() <= g_max_price && check_word_in_word(g_technloges, j.replace(" ", "")) == 1)
+                        {
+                            layout_title_app(i);
+                            break;
+                        }
+                    }
                 }
             }
         }
-        else if (g_technloges != "")
+        else if (g_description != "")
         {
-            QList<QString> description_app = (database.get_all_info_app_list_profile({i[0], i[3]})).at(2).split(";");
-            for (QString j : description_app)
+            if (i[1].toInt() >= g_min_price && i[1].toInt() <= g_max_price && check_word_in_word(g_description, i[2]) == 1)
+                layout_title_app(i);
+            else
             {
-                if (i[1].toInt() >= g_min_price && check_word_in_word(j, g_technloges) == 1)
+                QList<QString> word_g_description = g_description.split(" ");
+
+                for (QString j : word_g_description)
                 {
-                    QListWidgetItem *item = new QListWidgetItem;
-                    QString title_app;
-                    if (i[0].size() < 9)
-                        title_app = i[0] + "\t\t\t\t\t\t\t" + i[1];
-                    else if (i[0].size() < 22)
-                        title_app = i[0] + "\t\t\t\t\t\t" + i[1];
-                    else
-                        title_app = i[0] + "\t\t\t\t\t" + i[1];
-                    item->setText(title_app);
-                    item->setToolTip(i[2] + ";" + i[3]);
-                    ui->listWidget->addItem(item);
+                    if (i[1].toInt() >= g_min_price && i[1].toInt() <= g_max_price && check_word_in_word(j, i[2]) == 1)
+                    {
+                        layout_title_app(i);
+                        break;
+                    }
                 }
             }
         }
         else
         {
-            if (i[1].toInt() >= g_min_price)
+            if (i[1].toInt() >= g_min_price && i[1].toInt() <= g_max_price)
             {
-                QListWidgetItem *item = new QListWidgetItem;
-                QString title_app;
-                if (i[0].size() < 9)
-                    title_app = i[0] + "\t\t\t\t\t\t\t" + i[1];
-                else if (i[0].size() < 22)
-                    title_app = i[0] + "\t\t\t\t\t\t" + i[1];
-                else
-                    title_app = i[0] + "\t\t\t\t\t" + i[1];
-                item->setText(title_app);
-                item->setToolTip(i[2] + ";" + i[3]);
-                ui->listWidget->addItem(item);
+                layout_title_app(i);
             }
         }
     }
     list_result.clear();
+}
+
+void MainWindow::layout_title_app(QList<QString> data_app)
+{
+    QListWidgetItem *item = new QListWidgetItem;
+    QString title_app;
+    if (data_app[0].size() < 9)
+        title_app = data_app[0] + "\t\t\t\t\t\t\t" + data_app[1];
+    else if (data_app[0].size() < 22)
+        title_app = data_app[0] + "\t\t\t\t\t\t" + data_app[1];
+    else
+        title_app = data_app[0] + "\t\t\t\t\t" + data_app[1];
+    item->setText(title_app);
+    item->setToolTip(data_app[2] + ";" + data_app[3]);
+    ui->listWidget->addItem(item);
 }
 
 // поиск программ в listWidget

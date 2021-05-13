@@ -30,6 +30,10 @@ void developper_app::get_info_from_db(QString login)
     QString count_app = developer_info.get_count_apps(login);
     if (count_app != "ERROR")
         ui->label_10->setText(count_app);
+
+    QString count_star = developer_info.get_all_star_for_profile(login);
+    if (count_app != "ERROR")
+        ui->label_12->setText(count_star);
 }
 
 void developper_app::on_pushButton_2_clicked()

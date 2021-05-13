@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "../main_data/data.h"
+#include "../sql_database/sql_database.h"
 
 namespace Ui {
 class filter_search;
@@ -22,6 +23,7 @@ private slots:
 
 private:
     Ui::filter_search *ui;
+    sql_database database;
 };
 
 #endif // FILTER_SEARCH_H

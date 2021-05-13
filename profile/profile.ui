@@ -125,12 +125,17 @@ color: white;</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">padding: 2px;
-font-size: 14px;
-height: 28px;
-color: white;
-background-color: #404040;
-border-radius: 5px;</string>
+    <string notr="true">QPushButton {
+	padding: 2px;
+	font-size: 14px;
+	height: 28px;
+	color: white;
+	background-color: #404040;
+	border-radius: 5px;
+}
+QPushButton::hover {
+	background-color: #949494;
+}</string>
    </property>
    <property name="text">
     <string>Сохранить изменения</string>
@@ -272,12 +277,17 @@ color: white;</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">padding: 2px;
-font-size: 14px;
-height: 28px;
-color: white;
-background-color: #404040;
-border-radius: 5px;</string>
+    <string notr="true">QPushButton {
+	padding: 2px;
+	font-size: 14px;
+	height: 28px;
+	color: white;
+	background-color: #404040;
+	border-radius: 5px;
+}
+QPushButton::hover {
+	background-color: #949494;
+}</string>
    </property>
    <property name="text">
     <string>Выйти из аккаунта</string>
@@ -293,12 +303,17 @@ border-radius: 5px;</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">padding: 2px;
-font-size: 14px;
-height: 28px;
-color: white;
-background-color: #404040;
-border-radius: 5px;</string>
+    <string notr="true">QPushButton {
+	padding: 2px;
+	font-size: 14px;
+	height: 28px;
+	color: white;
+	background-color: #404040;
+	border-radius: 5px;
+}
+QPushButton::hover {
+	background-color: #949494;
+}</string>
    </property>
    <property name="text">
     <string>Мои программы</string>

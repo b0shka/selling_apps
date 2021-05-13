@@ -26,5 +26,6 @@ extern int g_status_now_profile;
 extern int g_max_price;
 extern int g_min_price;
 extern QString g_technloges;
+extern QString g_description;
 
 #endif // DATA_H

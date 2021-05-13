@@ -32,6 +32,8 @@ public slots:
     int get_id_user(QString login);
     QString get_list_id_star_app(QString login, QString app_name);
     QString check_id_in_id_star_app(QString login, QString app_name, QString user_id);
+    QString get_all_star_for_profile(QString login);
+    void get_max_price_app();
 
 private:
     QSqlDatabase db;
