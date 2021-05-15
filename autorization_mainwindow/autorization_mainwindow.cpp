@@ -2,6 +2,7 @@
 #include "ui_autorization_mainwindow.h"
 #include "../profile/profile.h"
 #include "../add_app/add_app.h"
+#include "../favorite_app/favorite_app.h"
 
 autorization_mainwindow::autorization_mainwindow(QWidget *parent) :
     QDialog(parent),
@@ -17,28 +18,16 @@ autorization_mainwindow::~autorization_mainwindow()
 
 void autorization_mainwindow::autorizate()
 {
-    ui->label->setText(g_user_name);
+    ui->label->setText(g_user_name.split(" ")[0]);
     ui->pushButton_2->setText(g_user_name.at(0));
     get_name_app_from_db();
 }
 
 void autorization_mainwindow::on_pushButton_clicked()
 {
-    QString search = ui->lineEdit->text();
-
-    if (search == "")
-    {
-        ui->lineEdit->setStyleSheet(lock_style);
-        ui->listWidget->clear();
-        get_name_app_from_db();
-    }
-    else
-    {
-        ui->lineEdit->setStyleSheet(default_style);
-        ui->listWidget->clear();
-        search_result(search);
-        ui->lineEdit->setText("");
-    }
+    favorite_app favorite;
+    favorite.setModal(true);
+    favorite.exec();
 }
 
 void autorization_mainwindow::on_pushButton_2_clicked()
@@ -124,13 +113,28 @@ void autorization_mainwindow::keyPressEvent(QKeyEvent *event)
 
 void autorization_mainwindow::on_lineEdit_returnPressed()
 {
-    on_pushButton_clicked();
+    QString search = ui->lineEdit->text();
+
+    if (search == "")
+    {
+        ui->lineEdit->setStyleSheet(lock_style);
+        ui->listWidget->clear();
+        get_name_app_from_db();
+    }
+    else
+    {
+        ui->lineEdit->setStyleSheet(default_style);
+        ui->listWidget->clear();
+        search_result(search);
+        ui->lineEdit->setText("");
+    }
 }
 
 void autorization_mainwindow::get_name_app_from_db()
 {
-    QList<QList<QString>> list_apps_name = database.get_apps_name();
+    database.get_max_price_app();
 
+    QList<QList<QString>> list_apps_name = database.get_apps_name();
     add_apps_to_listWidget(list_apps_name);
 }
 

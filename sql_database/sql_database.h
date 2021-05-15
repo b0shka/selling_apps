@@ -27,13 +27,19 @@ public slots:
     QString delete_app_from_db(QString name_app);
     QString save_change_app(QList<QString> data_change);
     QString get_count_apps(QString login);
-    QString add_start_to_app(QString login, QString app_name);
+    QString add_star_to_app(QString login, QString app_name);
     QString add_id_users_star_app(QString login, QString app_name, QString new_id);
     int get_id_user(QString login);
     QString get_list_id_star_app(QString login, QString app_name);
     QString check_id_in_id_star_app(QString login, QString app_name, QString user_id);
     QString get_all_star_for_profile(QString login);
     void get_max_price_app();
+    QString add_app_to_favorite(QString login, QString app_name);
+    QString get_id_app(QString login, QString app_name);
+    QString get_id_favorite_app();
+    QList<QList<QString>> get_list_favorite_app();
+    QList<QString> get_info_app_id(int app_id);
+    QString check_app_favorite(QString app_id);
 
 private:
     QSqlDatabase db;

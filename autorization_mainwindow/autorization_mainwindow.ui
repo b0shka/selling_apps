@@ -105,9 +105,9 @@ border: none;</string>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>225</x>
+      <x>315</x>
       <y>10</y>
-      <width>76</width>
+      <width>111</width>
       <height>36</height>
      </rect>
     </property>
@@ -125,7 +125,7 @@ QPushButton::hover {
 }</string>
     </property>
     <property name="text">
-     <string>Поиск</string>
+     <string>Избранное</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_2">
@@ -165,9 +165,9 @@ QPushButton::hover {
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>421</x>
+      <x>436</x>
       <y>21</y>
-      <width>181</width>
+      <width>166</width>
       <height>16</height>
      </rect>
     </property>
@@ -192,7 +192,7 @@ color: white;</string>
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>305</x>
+      <x>220</x>
       <y>10</y>
       <width>91</width>
       <height>36</height>

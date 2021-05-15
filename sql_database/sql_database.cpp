@@ -28,7 +28,8 @@ void sql_database::create_table()
                                                       "login VARCHAR (40) NOT NULL,"
                                                       "password TEXT NOT NULL,"
                                                       "email TEXT,"
-                                                      "number_phone VARCHAR (20)"
+                                                      "number_phone VARCHAR (20),"
+                                                      "favorite_app TEXT"
                                                       ");";
         if (!sql.exec(str_requests))
         {
@@ -325,7 +326,7 @@ QString sql_database::get_count_apps(QString login)
     return QString::number(count);
 }
 
-QString sql_database::add_start_to_app(QString login, QString app_name)
+QString sql_database::add_star_to_app(QString login, QString app_name)
 {
     str_requests = "SELECT app_star FROM " + app_table + " WHERE app_name = ('%1') and author = ('%2');";
     if (!sql.exec(str_requests.arg(app_name).arg(login)))
@@ -349,6 +350,15 @@ QString sql_database::add_start_to_app(QString login, QString app_name)
     }
 
     db.commit();
+
+    int user_id = get_id_user(g_user_name);
+    QString result_update_list_star = add_id_users_star_app(login, app_name, QString::number(user_id));
+    if (result_update_list_star == "ERROR")
+    {
+        qDebug() << "[ERROR] Не удается обновить список id которые поставили звезду программе " << db.lastError().text();
+        return "ERROR";
+    }
+
     return "Success";
 }
 
@@ -449,4 +459,112 @@ void sql_database::get_max_price_app()
         if (app_price.toInt() > g_max_price)
             g_max_price = app_price.toInt();
     }
+}
+
+QString sql_database::get_id_app(QString login, QString app_name)
+{
+    str_requests = "SELECT id FROM " + app_table + " WHERE app_name = ('%1') and author = ('%2');";
+    if (!sql.exec(str_requests.arg(app_name).arg(login)))
+        return "ERROR";
+
+    QSqlRecord get_data = sql.record();
+    QString app_id;
+    while (sql.next())
+        app_id = sql.value(get_data.indexOf("id")).toString();
+
+    return app_id;
+}
+
+QString sql_database::add_app_to_favorite(QString login, QString app_name)
+{
+    QString favorite_app = get_id_favorite_app();
+    QString new_favorite_app = get_id_app(login, app_name);
+    if (new_favorite_app == "ERROR")
+    {
+        qDebug() << "[ERROR] Не удается получить id программы " << db.lastError().text();
+        return "ERROR";
+    }
+
+    if (favorite_app.size() > 0)
+        favorite_app.push_back(";" + new_favorite_app);
+    else
+        favorite_app.push_back(new_favorite_app);
+
+    str_requests = "UPDATE " + user_table + " SET favorite_app = ('%1') WHERE login = ('%2');";
+    if (!sql.exec(str_requests.arg(favorite_app).arg(g_user_name)))
+    {
+        qDebug() << "[ERROR] Не удается изменить список избранных программ " << db.lastError().text();
+        return "ERROR";
+    }
+    db.commit();
+    return "Success";
+}
+
+QString sql_database::get_id_favorite_app()
+{
+    str_requests = "SELECT favorite_app FROM " + user_table + " WHERE login = ('%1');";
+    if (!sql.exec(str_requests.arg(g_user_name)))
+    {
+        qDebug() << "[ERROR] Не удается получить id избранных программ " << db.lastError().text();
+        return "ERROR";
+    }
+
+    QSqlRecord get_data = sql.record();
+    QString favorite_app;
+    while (sql.next())
+        favorite_app = sql.value(get_data.indexOf("favorite_app")).toString();
+
+    return favorite_app;
+}
+
+QList<QList<QString>> sql_database::get_list_favorite_app()
+{
+    QList<QString> favorite_app = get_id_favorite_app().split(";");
+    QList<QList<QString>> data_apps = {};
+
+    if (favorite_app.at(0).size() > 0)
+    {
+        for (QString i : favorite_app)
+        {
+            QList<QString> data_app = get_info_app_id(i.toInt());
+            if (data_app.at(0) != "ERROR")
+                data_apps.push_back(data_app);
+        }
+    }
+
+    return data_apps;
+}
+
+QList<QString> sql_database::get_info_app_id(int app_id)
+{
+    str_requests = "SELECT app_name, author FROM " + app_table + " WHERE id = (%1);";
+    if (!sql.exec(str_requests.arg(app_id)))
+    {
+        qDebug() << "[ERROR] Не удается получить информацию о программе для избранного: " << db.lastError().text();
+        return {"ERROR"};
+    }
+
+    QList<QString> list_apps_name;
+    QSqlRecord get_data = sql.record();
+    QString app_name, app_author;
+    while (sql.next())
+    {
+        app_name = sql.value(get_data.indexOf("app_name")).toString();
+        app_author = sql.value(get_data.indexOf("author")).toString();
+        list_apps_name = {app_name, app_author};
+    }
+
+    return list_apps_name;
+}
+
+QString sql_database::check_app_favorite(QString app_id)
+{
+    QString favorite_app = get_id_favorite_app();
+
+    bool result = favorite_app.contains(app_id);
+
+    if (result == true)
+        return "OK";
+    else
+        return "NOT";
 }
