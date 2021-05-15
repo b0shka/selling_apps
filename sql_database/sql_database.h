@@ -41,6 +41,9 @@ public slots:
     QList<QList<QString>> get_list_favorite_app();
     QList<QString> get_info_app_id(int app_id);
     QString check_app_favorite(QString app_id);
+    QString delete_app_to_favorite(QString login, QString app_name);
+    QString delete_app_star(QString login, QString app_name);
+    QString delete_id_users_star_app(QString login, QString app_name, QString delete_id);
 
 private:
     QSqlDatabase db;

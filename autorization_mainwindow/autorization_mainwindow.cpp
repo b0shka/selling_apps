@@ -100,6 +100,8 @@ void autorization_mainwindow::on_listWidget_itemDoubleClicked(QListWidgetItem *i
         about_my_app app_information(param_app);
         app_information.setModal(true);
         app_information.exec();
+
+        get_name_app_from_db();
     }
     else
     {

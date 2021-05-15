@@ -37,4 +37,7 @@ void favorite_app::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
     about_app info_app(param_app);
     info_app.setModal(true);
     info_app.exec();
+
+    QList<QList<QString>> list_apps_name = database.get_list_favorite_app();
+    add_apps_to_listWidget(list_apps_name);
 }

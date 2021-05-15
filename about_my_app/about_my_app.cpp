@@ -6,13 +6,16 @@ about_my_app::about_my_app(QList<QString> param_app, QWidget *parent) :
     ui(new Ui::about_my_app)
 {
     ui->setupUi(this);
-    app_name = param_app[0];
-	ui->lineEdit->setText(param_app[0]);
+    if (param_app[0].size() > 0)
+    {
+        app_name = param_app[0];
+        ui->lineEdit->setText(param_app[0]);
 
-	QList<QString> info_app = database.get_all_info_app_list_profile(param_app);
-	ui->lineEdit_2->setText(info_app[0]);
-	ui->textEdit->setPlainText(info_app[1]);
-    ui->lineEdit_3->setText(info_app[2]);
+        QList<QString> info_app = database.get_all_info_app_list_profile(param_app);
+        ui->lineEdit_2->setText(info_app[0]);
+        ui->textEdit->setPlainText(info_app[1]);
+        ui->lineEdit_3->setText(info_app[2]);
+    }
 }
 
 about_my_app::~about_my_app()

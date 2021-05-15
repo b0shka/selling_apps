@@ -344,7 +344,7 @@ QString sql_database::add_star_to_app(QString login, QString app_name)
     str_requests = "UPDATE " + app_table + " SET app_star = (%1) WHERE app_name = ('%2') and author = ('%3');";
     if (!sql.exec(str_requests.arg(count_star).arg(app_name).arg(login)))
     {
-        qDebug() << "[ERROR] Не удается обность количество звезд программы " << db.lastError().text();
+        qDebug() << "[ERROR] Не удается обновить количество звезд программы " << db.lastError().text();
         return "ERROR";
     }
 
@@ -373,7 +373,7 @@ QString sql_database::add_id_users_star_app(QString login, QString app_name, QSt
     str_requests = "UPDATE " + app_table + " SET id_users_star = ('%1') WHERE app_name = ('%2') and author = ('%3');";
     if(!sql.exec(str_requests.arg(list_user).arg(app_name).arg(login)))
     {
-        qDebug() << "[ERROR] Не удается обновить вписов id пользователей поставивших звезду программе " << db.lastError().text();
+        qDebug() << "[ERROR] Не удается обновить список id пользователей поставивших звезду программе " << db.lastError().text();
         return "ERROR";
     }
 
@@ -450,19 +450,14 @@ void sql_database::get_max_price_app()
     if (!sql.exec(str_requests))
         qDebug() << "[ERROR] Не удалется получить все цены программ для определения g_max_price " << db.lastError().text();
 
-    if (sql.next() == false)
-        g_max_price = 0;
-    else
-    {
-        QSqlRecord get_data = sql.record();
-        QString app_price;
+    QSqlRecord get_data = sql.record();
+    QString app_price;
 
-        while (sql.next())
-        {
-            app_price = sql.value(get_data.indexOf("app_price")).toString();
-            if (app_price.toInt() > g_max_price)
-                g_max_price = app_price.toInt();
-        }
+    while (sql.next())
+    {
+        app_price = sql.value(get_data.indexOf("app_price")).toString();
+        if (app_price.toInt() > g_max_price)
+            g_max_price = app_price.toInt();
     }
 }
 
@@ -596,4 +591,83 @@ QString sql_database::check_app_favorite(QString app_id)
         return "OK";
     else
         return "NOT";
+}
+
+
+QString sql_database::delete_app_to_favorite(QString login, QString app_name)
+{
+    QString app_id = get_id_app(login, app_name);
+    QString favorite_app = get_id_favorite_app();
+
+    bool result = favorite_app.contains(";");
+    if (result == true)
+        favorite_app.remove(";" + app_id);
+    else
+        favorite_app.remove(app_id);
+
+    str_requests = "UPDATE " + user_table + " SET favorite_app = ('%1');";
+    if (!sql.exec(str_requests.arg(favorite_app)))
+    {
+        qDebug() << "[ERROR] Не получается удалить программу из избранного " << db.lastError().text();
+        return "ERROR";
+    }
+
+    db.commit();
+    return "Success";
+}
+
+QString sql_database::delete_app_star(QString login, QString app_name)
+{
+    str_requests = "SELECT app_star FROM " + app_table + " WHERE app_name = ('%1') and author = ('%2');";
+    if (!sql.exec(str_requests.arg(app_name).arg(login)))
+    {
+        qDebug() << "[ERROR] Не удается получить количество звезд программы " << db.lastError().text();
+        return "ERROR";
+    }
+
+    QSqlRecord get_data = sql.record();
+    int count_star;
+    while (sql.next())
+        count_star = sql.value(get_data.indexOf("app_star")).toInt();
+
+    count_star--;
+
+    str_requests = "UPDATE " + app_table + " SET app_star = (%1) WHERE app_name = ('%2') and author = ('%3');";
+    if (!sql.exec(str_requests.arg(count_star).arg(app_name).arg(login)))
+    {
+        qDebug() << "[ERROR] Не удается обновить количество звезд программы " << db.lastError().text();
+        return "ERROR";
+    }
+
+    db.commit();
+
+    int user_id = get_id_user(g_user_name);
+    QString result_update_list_star = delete_id_users_star_app(login, app_name, QString::number(user_id));
+    if (result_update_list_star == "ERROR")
+    {
+        qDebug() << "[ERROR] Не удается обновить список id которые поставили звезду программе " << db.lastError().text();
+        return "ERROR";
+    }
+    return "Success";
+}
+
+QString sql_database::delete_id_users_star_app(QString login, QString app_name, QString delete_id)
+{
+    QString list_user = get_list_id_star_app(login, app_name);
+
+    bool result = list_user.contains(";");
+    if (result == true)
+        list_user.remove(";" + delete_id);
+    else
+        list_user.remove(delete_id);
+
+    str_requests = "UPDATE " + app_table + " SET id_users_star = ('%1') WHERE app_name = ('%2') and author = ('%3');";
+    if(!sql.exec(str_requests.arg(list_user).arg(app_name).arg(login)))
+    {
+        qDebug() << "[ERROR] Не удается обновить список id пользователей поставивших звезду программе " << db.lastError().text();
+        return "ERROR";
+    }
+
+    db.commit();
+    return "Success";
 }

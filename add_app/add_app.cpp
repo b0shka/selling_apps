@@ -47,6 +47,8 @@ void add_app::on_pushButton_clicked()
             ui->lineEdit_2->clear();
             ui->textEdit->clear();
             ui->lineEdit_3->clear();
+            database.get_max_price_app();
+            database.get_min_price_app();
         }
         else if (result_add_app == "ERROR")
         {

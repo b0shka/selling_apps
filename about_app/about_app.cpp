@@ -5,6 +5,9 @@ about_app::about_app(QList<QString> param_app, QWidget *parent) : QDialog(parent
 {
     ui->setupUi(this);
 
+    ui->pushButton_4->setHidden(true);
+    ui->pushButton_5->setHidden(true);
+
     ui->label->setText(param_app[0]);
     ui->pushButton->setText(param_app[1]);
 
@@ -17,22 +20,25 @@ about_app::about_app(QList<QString> param_app, QWidget *parent) : QDialog(parent
     QString check_id_star = database.check_id_in_id_star_app(ui->pushButton->text(), ui->label->text(), QString::number(user_id));
     QString app_id = database.get_id_app(param_app[1], param_app[0]);
     QString check_id_app_favorite = database.check_app_favorite(app_id);
+
     if (g_status_autorization == 0)
     {
         ui->pushButton_2->setHidden(true);
         ui->pushButton_3->setHidden(true);
+        ui->pushButton_4->setHidden(true);
+        ui->pushButton_5->setHidden(true);
     }
     else
     {
         if (check_id_star == "OK")
         {
-            ui->pushButton_2->setEnabled(false);
-            ui->pushButton_2->setStyleSheet(lock_style_button);
+            ui->pushButton_2->setHidden(true);
+            ui->pushButton_5->setHidden(false);
         }
         if (check_id_app_favorite == "OK")
         {
-            ui->pushButton_3->setEnabled(false);
-            ui->pushButton_3->setStyleSheet(lock_style_button);
+            ui->pushButton_3->setHidden(true);
+            ui->pushButton_4->setHidden(false);
         }
     }
 }
@@ -58,8 +64,8 @@ void about_app::on_pushButton_2_clicked()
 
         if (result_star == "Success")
         {
-            ui->pushButton_2->setEnabled(false);
-            ui->pushButton_2->setStyleSheet(lock_style_button);
+            ui->pushButton_2->setHidden(true);
+            ui->pushButton_5->setHidden(false);
         }
     }
 }
@@ -72,8 +78,36 @@ void about_app::on_pushButton_3_clicked()
 
         if (result_favorite == "Success")
         {
-            ui->pushButton_3->setEnabled(false);
-            ui->pushButton_3->setStyleSheet(lock_style_button);
+            ui->pushButton_3->setHidden(true);
+            ui->pushButton_4->setHidden(false);
+        }
+    }
+}
+
+void about_app::on_pushButton_4_clicked()
+{
+    if (g_status_autorization == 1)
+    {
+        QString result_delete_favorite = database.delete_app_to_favorite(ui->pushButton->text(), ui->label->text());
+
+        if (result_delete_favorite == "Success")
+        {
+            ui->pushButton_4->setHidden(true);
+            ui->pushButton_3->setHidden(false);
+        }
+    }
+}
+
+void about_app::on_pushButton_5_clicked()
+{
+    if (g_status_autorization == 1)
+    {
+        QString result_star = database.delete_app_star(ui->pushButton->text(), ui->label->text());
+
+        if (result_star == "Success")
+        {
+            ui->pushButton_5->setHidden(true);
+            ui->pushButton_2->setHidden(false);
         }
     }
 }
