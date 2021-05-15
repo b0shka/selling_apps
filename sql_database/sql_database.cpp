@@ -300,7 +300,6 @@ QString sql_database::delete_app_from_db(QString name_app)
 
 QString sql_database::save_change_app(QList<QString> data_change)
 {
-    qDebug() << data_change;
     str_requests = "UPDATE " + app_table + " SET app_name = ('%1'), app_price = ('%2'), app_description = ('%3'), app_technologes = ('%4') WHERE app_name = ('%5') and author = ('%6');";
     if (!sql.exec(str_requests.arg(data_change.at(1)).arg(data_change.at(2)).arg(data_change.at(3)).arg(data_change.at(4)).arg(data_change.at(0)).arg(g_user_name)))
     {
@@ -451,14 +450,44 @@ void sql_database::get_max_price_app()
     if (!sql.exec(str_requests))
         qDebug() << "[ERROR] Не удалется получить все цены программ для определения g_max_price " << db.lastError().text();
 
-    QSqlRecord get_data = sql.record();
-    QString app_price;
-    while (sql.next())
+    if (sql.next() == false)
+        g_max_price = 0;
+    else
     {
-        app_price = sql.value(get_data.indexOf("app_price")).toString();
-        if (app_price.toInt() > g_max_price)
-            g_max_price = app_price.toInt();
+        QSqlRecord get_data = sql.record();
+        QString app_price;
+
+        while (sql.next())
+        {
+            app_price = sql.value(get_data.indexOf("app_price")).toString();
+            if (app_price.toInt() > g_max_price)
+                g_max_price = app_price.toInt();
+        }
     }
+}
+
+void sql_database::get_min_price_app()
+{
+    str_requests = "SELECT app_price FROM " + app_table + " ;";
+    if (!sql.exec(str_requests))
+        qDebug() << "[ERROR] Не удалется получить все цены программ для определения g_min_price " << db.lastError().text();
+
+    QSqlRecord get_data = sql.record();
+    QList<QString> app_price;
+    while (sql.next())
+        app_price.push_back(sql.value(get_data.indexOf("app_price")).toString());
+
+    if (app_price.size() > 0)
+    {
+        g_min_price = app_price[0].toInt();
+        for (QString i : app_price)
+        {
+            if (i.toInt() < g_min_price)
+                g_min_price = i.toInt();
+        }
+    }
+    else
+        g_min_price = 0;
 }
 
 QString sql_database::get_id_app(QString login, QString app_name)

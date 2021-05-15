@@ -34,6 +34,7 @@ public slots:
     QString check_id_in_id_star_app(QString login, QString app_name, QString user_id);
     QString get_all_star_for_profile(QString login);
     void get_max_price_app();
+    void get_min_price_app();
     QString add_app_to_favorite(QString login, QString app_name);
     QString get_id_app(QString login, QString app_name);
     QString get_id_favorite_app();

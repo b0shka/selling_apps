@@ -2,6 +2,7 @@
 #include "ui_autorization_mainwindow.h"
 #include "../profile/profile.h"
 #include "../add_app/add_app.h"
+#include "../about_my_app/about_my_app.h"
 #include "../favorite_app/favorite_app.h"
 
 autorization_mainwindow::autorization_mainwindow(QWidget *parent) :
@@ -94,9 +95,18 @@ void autorization_mainwindow::on_listWidget_itemDoubleClicked(QListWidgetItem *i
     QList<QString> description = item->toolTip().split(";");
     QList<QString> param_app = {name_app[0], description[1]};
 
-    about_app app_information(param_app);
-    app_information.setModal(true);
-    app_information.exec();
+    if (description[1] == g_user_name)
+    {
+        about_my_app app_information(param_app);
+        app_information.setModal(true);
+        app_information.exec();
+    }
+    else
+    {
+        about_app app_information(param_app);
+        app_information.setModal(true);
+        app_information.exec();
+    }
 }
 
 void autorization_mainwindow::keyPressEvent(QKeyEvent *event)
@@ -132,10 +142,22 @@ void autorization_mainwindow::on_lineEdit_returnPressed()
 
 void autorization_mainwindow::get_name_app_from_db()
 {
-    database.get_max_price_app();
-
     QList<QList<QString>> list_apps_name = database.get_apps_name();
-    add_apps_to_listWidget(list_apps_name);
+
+    try {
+        if (list_apps_name.size() == 0)
+            throw 1;
+        else
+        {
+            if (list_apps_name.at(0).at(0) != "ERROR")
+            {
+                add_apps_to_listWidget(list_apps_name);
+                list_apps_name.clear();
+            }
+        }
+    } catch (int a) {
+        qDebug() << "[ERROR] Нет записей в БД";
+    }
 }
 
 void autorization_mainwindow::add_apps_to_listWidget(QList<QList<QString>> list_result)
@@ -261,18 +283,22 @@ void autorization_mainwindow::search_result(QString search)
 
 int autorization_mainwindow::check_error(QString search, QString name_main)
 {
-    int count = 0;
-    for (int j = 0; j < search.size(); j++)
+    if (search.size() > 4)
     {
-        if (name_main[j] != search[j])
-            count++;
+        int count = 0;
+        for (int j = 0; j < search.size(); j++)
+        {
+            if (name_main[j] != search[j])
+                count++;
+        }
+        if (count <= 1)
+            return 1;
+        else if (count <= 2 && (name_main.size() - search.size()) < 5)
+            return 1;
+        else
+            return 0;
     }
-    if (count <= 1)
-        return 1;
-    else if (count <= 2 && (name_main.size() - search.size()) < 5)
-        return 1;
-    else
-        return 0;
+    return 0;
 }
 
 int autorization_mainwindow::check_word_in_word(QString search, QString name_main)

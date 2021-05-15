@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this);
     database.first_start();
     database.get_max_price_app();
+    database.get_min_price_app();
     get_name_app_from_db();
 }
 
@@ -231,18 +232,22 @@ void MainWindow::search_result(QString search)
 
 int MainWindow::check_error(QString search, QString name_main)
 {
-    int count = 0;
-    for (int j = 0; j < search.size(); j++)
+    if (search.size() > 4)
     {
-        if (name_main[j] != search[j])
-            count++;
+        int count = 0;
+        for (int j = 0; j < search.size(); j++)
+        {
+            if (name_main[j] != search[j])
+                count++;
+        }
+        if (count <= 1)
+            return 1;
+        else if (count <= 2 && (name_main.size() - search.size()) < 5)
+            return 1;
+        else
+            return 0;
     }
-    if (count <= 1)
-        return 1;
-    else if (count <= 2 && (name_main.size() - search.size()) < 5)
-        return 1;
-    else
-        return 0;
+    return 0;
 }
 
 int MainWindow::check_word_in_word(QString search, QString name_main)

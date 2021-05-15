@@ -39,24 +39,24 @@ void user_apps::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
         about_my_app info_app(param_app);
         info_app.setModal(true);
         info_app.exec();
+
+        if (g_status_change_app == 1)
+        {
+            QList<QString> list_apps_name = database.get_apps_for_list_profile(login);
+            add_apps_to_listWidget(list_apps_name);
+            list_apps_name.clear();
+        }
+        else if (g_status_delete_app == 1)
+        {
+            QList<QString> list_apps_name = database.get_apps_for_list_profile(login);
+            add_apps_to_listWidget(list_apps_name);
+            list_apps_name.clear();
+        }
     }
     else
     {
         about_app info_app(param_app);
         info_app.setModal(true);
         info_app.exec();
-    }
-
-    if (g_status_change_app == 1)
-    {
-        QList<QString> list_apps_name = database.get_apps_for_list_profile(login);
-        add_apps_to_listWidget(list_apps_name);
-        list_apps_name.clear();
-    }
-    else if (g_status_delete_app == 1)
-    {
-        QList<QString> list_apps_name = database.get_apps_for_list_profile(login);
-        add_apps_to_listWidget(list_apps_name);
-        list_apps_name.clear();
     }
 }
