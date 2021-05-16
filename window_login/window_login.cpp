@@ -1,5 +1,6 @@
 ﻿#include "window_login.h"
 #include "ui_window_login.h"
+#include <QCryptographicHash>
 
 window_login::window_login(QWidget *parent) : QDialog(parent), ui(new Ui::window_login)
 {
@@ -39,8 +40,10 @@ void window_login::on_pushButton_clicked()
         ui->lineEdit->setStyleSheet(default_style_other_color);
         ui->lineEdit_2->setStyleSheet(default_style_other_color);
 
+        QString crypt_password = QCryptographicHash::hash(password.toUtf8(),QCryptographicHash::Md5).toHex();
+
         sql_database accessing_db;
-        QString result_login = accessing_db.check_login_user(username, password);
+        QString result_login = accessing_db.check_login_user(username, crypt_password);
         if (result_login == "OK")
         {
             ui->label_3->setStyleSheet(success_style_label);

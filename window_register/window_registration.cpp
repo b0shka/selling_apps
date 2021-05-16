@@ -1,5 +1,6 @@
 ﻿#include "window_registration.h"
 #include "ui_window_registration.h"
+#include <QCryptographicHash>
 
 window_registration::window_registration(QWidget *parent) :
     QDialog(parent),
@@ -49,8 +50,10 @@ void window_registration::on_pushButton_clicked()
         }
         else
         {
+            QString crypt_password = QCryptographicHash::hash(password.toUtf8(),QCryptographicHash::Md5).toHex();
+
             sql_database accessing_db;
-            QString result_register = accessing_db.register_new_user(username, password);
+            QString result_register = accessing_db.register_new_user(username, crypt_password);
             if (result_register == "OK")
             {
                 ui->label_2->setStyleSheet(success_style_label);
