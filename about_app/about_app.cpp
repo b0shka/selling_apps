@@ -1,5 +1,6 @@
 ﻿#include "about_app.h"
 #include "ui_about_app.h"
+#include "../chat/chat.h"
 
 about_app::about_app(QList<QString> param_app, QWidget *parent) : QDialog(parent), ui(new Ui::about_app)
 {
@@ -110,4 +111,11 @@ void about_app::on_pushButton_5_clicked()
             ui->pushButton_2->setHidden(false);
         }
     }
+}
+
+void about_app::on_pushButton_6_clicked()
+{
+    chat chat_dev;
+    chat_dev.setModal(true);
+    chat_dev.exec();
 }

@@ -84,7 +84,7 @@ background-color: #2a2a2a;</string>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>380</y>
+     <y>345</y>
      <width>101</width>
      <height>21</height>
     </rect>
@@ -109,7 +109,7 @@ color: silver;</string>
      <x>20</x>
      <y>80</y>
      <width>566</width>
-     <height>211</height>
+     <height>171</height>
     </rect>
    </property>
    <property name="text">
@@ -125,9 +125,9 @@ color: silver;</string>
   <widget class="QPushButton" name="pushButton_2">
    <property name="geometry">
     <rect>
-     <x>295</x>
+     <x>275</x>
      <y>375</y>
-     <width>116</width>
+     <width>131</width>
      <height>31</height>
     </rect>
    </property>
@@ -152,8 +152,8 @@ QPushButton::hover {
    <property name="geometry">
     <rect>
      <x>110</x>
-     <y>380</y>
-     <width>181</width>
+     <y>345</y>
+     <width>296</width>
      <height>21</height>
     </rect>
    </property>
@@ -178,7 +178,7 @@ QPushButton::hover {
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>295</y>
+     <y>255</y>
      <width>96</width>
      <height>21</height>
     </rect>
@@ -194,7 +194,7 @@ QPushButton::hover {
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>320</y>
+     <y>280</y>
      <width>566</width>
      <height>46</height>
     </rect>
@@ -212,9 +212,9 @@ QPushButton::hover {
   <widget class="QPushButton" name="pushButton_3">
    <property name="geometry">
     <rect>
-     <x>415</x>
+     <x>410</x>
      <y>375</y>
-     <width>186</width>
+     <width>191</width>
      <height>31</height>
     </rect>
    </property>
@@ -238,9 +238,9 @@ QPushButton::hover {
   <widget class="QPushButton" name="pushButton_4">
    <property name="geometry">
     <rect>
-     <x>415</x>
+     <x>410</x>
      <y>375</y>
-     <width>186</width>
+     <width>191</width>
      <height>31</height>
     </rect>
    </property>
@@ -264,9 +264,9 @@ QPushButton::hover {
   <widget class="QPushButton" name="pushButton_5">
    <property name="geometry">
     <rect>
-     <x>295</x>
+     <x>275</x>
      <y>375</y>
-     <width>116</width>
+     <width>131</width>
      <height>31</height>
     </rect>
    </property>
@@ -285,6 +285,32 @@ QPushButton::hover {
    </property>
    <property name="text">
     <string>Убрать звезду</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_6">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>375</y>
+     <width>261</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+	padding: 2px;
+	font-size: 14px;
+	height: 28px;
+	color: white;
+	background-color: #404040;
+	border-radius: 5px;
+}
+QPushButton::hover {
+	background-color: #949494;
+}</string>
+   </property>
+   <property name="text">
+    <string>Написать разработчику</string>
    </property>
   </widget>
  </widget>

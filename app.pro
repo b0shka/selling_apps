@@ -20,6 +20,9 @@ SOURCES += \
     about_my_app/about_my_app.cpp \
     add_app/add_app.cpp \
 	autorization_mainwindow/autorization_mainwindow.cpp \
+    chat/chat.cpp \
+    chat/server.cpp \
+    chat/thread.cpp \
     developper_app/developper_app.cpp \
     favorite_app/favorite_app.cpp \
     filter_search/filter_search.cpp \
@@ -37,6 +40,9 @@ HEADERS += \
     about_my_app/about_my_app.h \
     add_app/add_app.h \
 	autorization_mainwindow/autorization_mainwindow.h \
+    chat/chat.h \
+    chat/server.h \
+    chat/thread.h \
     developper_app/developper_app.h \
     favorite_app/favorite_app.h \
     filter_search/filter_search.h \
@@ -53,6 +59,7 @@ FORMS += \
     about_my_app/about_my_app.ui \
     add_app/add_app.ui \
 	autorization_mainwindow/autorization_mainwindow.ui \
+    chat/chat.ui \
     developper_app/developper_app.ui \
     favorite_app/favorite_app.ui \
     filter_search/filter_search.ui \
