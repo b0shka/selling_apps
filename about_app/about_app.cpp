@@ -117,5 +117,8 @@ void about_app::on_pushButton_6_clicked()
 {
     chat chat_dev;
     chat_dev.setModal(true);
+	chat_dev.connection();
     chat_dev.exec();
+	
+	chat_dev.disconnection();
 }

@@ -21,8 +21,7 @@ SOURCES += \
     add_app/add_app.cpp \
 	autorization_mainwindow/autorization_mainwindow.cpp \
     chat/chat.cpp \
-    chat/server.cpp \
-    chat/thread.cpp \
+	chat/client.cpp \
     developper_app/developper_app.cpp \
     favorite_app/favorite_app.cpp \
     filter_search/filter_search.cpp \
@@ -41,8 +40,7 @@ HEADERS += \
     add_app/add_app.h \
 	autorization_mainwindow/autorization_mainwindow.h \
     chat/chat.h \
-    chat/server.h \
-    chat/thread.h \
+	chat/client.h \
     developper_app/developper_app.h \
     favorite_app/favorite_app.h \
     filter_search/filter_search.h \

@@ -10,18 +10,25 @@
 #include <string>
 #include <string.h>
 #include <thread>
+#include <chrono>
 
-#define PORT 1111
+#define PORT 10000
+#define IP "127.0.0.1"
 #define BUFFER 1024
 
 using namespace std;
 
-int main();
-int connect_handler();
-int message_handler();
+class Server
+{
+public:
+    void start_server();
+    void connect_handler();
+    void message_handler();
 
-int client, server;
-sockaddr_in hint;
-char buffer[BUFFER];
+private:
+    int client, server;
+    sockaddr_in hint;
+    char buffer[BUFFER];
+};
 
 #endif // SERVER_H
