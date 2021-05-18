@@ -8,10 +8,10 @@
 #include <netdb.h>
 #include <unistd.h>
 #include <arpa/inet.h>
-#include <thread>
 #include <chrono>
+#include <QThread>
 
-#define PORT 10000
+#define PORT 7777
 #define IP "127.0.0.1"
 #define BUFFER 1024
 
@@ -19,8 +19,8 @@ class Client
 {
 public:
 	void conect_server();
-	void send_mesage(QString message);
-	void disconnect_server();
+	void send_message(QString message);
+	void read_message();
 	
 private:
 	int client;

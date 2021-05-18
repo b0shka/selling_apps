@@ -64,6 +64,7 @@ int g_status_out = 0;
 int g_status_delete_app = 0;
 int g_status_change_app = 0;
 int g_status_now_profile = 0;
+int g_status_online = 0;
 
 int g_max_price = 0;
 int g_min_price = 0;

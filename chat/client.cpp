@@ -1,13 +1,9 @@
 ﻿#include "client.h"
+#include "../main_data/data.h"
 
 void Client::conect_server()
 {
 	client = socket(AF_INET, SOCK_STREAM, 0);
-	if (client < 0)
-	{
-		qDebug() << "[ERROR] Socket can't a create";
-		return;
-	}
 
 	hint.sin_family = AF_INET;
 	hint.sin_port = htons(PORT);
@@ -16,10 +12,12 @@ void Client::conect_server()
 	connect(client, (sockaddr*)&hint, sizeof(hint));
 
 	recv(client, buffer, BUFFER, 0);
-	qDebug() << "[INFO] Connection success";
+	qDebug() << buffer;
+	g_status_online = 1;
+	QThread read_msg;
 }
 
-void Client::send_mesage(QString message)
+void Client::send_message(QString message)
 {
 	if (message != "")
 	{
@@ -31,10 +29,7 @@ void Client::send_mesage(QString message)
 	}
 }
 
-void Client::disconnect_server()
+void Client::read_message()
 {
-	QString message = "[INFO] Client disconnect";
-	QByteArray text_char = message.toLatin1();
-	strcpy(buffer, text_char.data());
-	send(client, buffer, BUFFER, 0);
+	
 }

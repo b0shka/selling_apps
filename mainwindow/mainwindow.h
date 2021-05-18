@@ -8,6 +8,7 @@
 #include "sql_database/sql_database.h"
 #include "../main_data/data.h"
 #include "../filter_search/filter_search.h"
+#include "../chat/client.h"
 
 using namespace std;
 

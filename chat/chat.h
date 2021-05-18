@@ -2,7 +2,10 @@
 #define CHAT_H
 
 #include <QDialog>
+#include <QTime>
+#include <QListWidgetItem>
 #include "client.h"
+#include "../main_data/data.h"
 
 namespace Ui {
 class chat;
@@ -15,14 +18,10 @@ class chat : public QDialog
 public:
     explicit chat(QWidget *parent = nullptr);
     ~chat();
-	QString message = "";
-	
-public slots:
-	void connection();
-	void disconnection();
 	
 private slots:
 	void on_pushButton_clicked();
+	void add_message_to_listwidget(QString message);
 	
 private:
     Ui::chat *ui;

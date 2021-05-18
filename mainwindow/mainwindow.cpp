@@ -10,6 +10,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     database.get_max_price_app();
     database.get_min_price_app();
     get_name_app_from_db();
+	/*Client client;
+	if (g_status_online == 0)
+		client.conect_server();*/
 }
 
 MainWindow::~MainWindow()
