@@ -11,10 +11,8 @@
 #include <string.h>
 #include <thread>
 #include <chrono>
-#include <vector>
-#include <algorithm>
 
-#define PORT 7777
+#define PORT 6767
 #define IP "127.0.0.1"
 #define BUFFER 1024
 
@@ -26,13 +24,12 @@ class Server
 public:
     void start_server();
     void connect_handler();
-    void message_handler();
+    void message_handler(int client_socket);
 
 private:
     int client, server;
     sockaddr_in hint;
     char buffer[BUFFER];
-    vector<int> list_client;
 };
 
 #endif // SERVER_H

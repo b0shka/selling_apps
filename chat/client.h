@@ -1,17 +1,14 @@
 ﻿#ifndef CLIENT_H
 #define CLIENT_H
 
-#include <QWidget>
 #include <QDebug>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>
 #include <unistd.h>
 #include <arpa/inet.h>
-#include <chrono>
-#include <QThread>
 
-#define PORT 7777
+#define PORT 6767
 #define IP "127.0.0.1"
 #define BUFFER 1024
 

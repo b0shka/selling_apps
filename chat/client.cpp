@@ -14,7 +14,6 @@ void Client::conect_server()
 	recv(client, buffer, BUFFER, 0);
 	qDebug() << buffer;
 	g_status_online = 1;
-	QThread read_msg;
 }
 
 void Client::send_message(QString message)
@@ -31,5 +30,6 @@ void Client::send_message(QString message)
 
 void Client::read_message()
 {
-	
+	qDebug() << "hello";
+	//read_msg.start();
 }

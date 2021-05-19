@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QTime>
 #include <QListWidgetItem>
+#include <QThread>
 #include "client.h"
 #include "../main_data/data.h"
 
@@ -22,6 +23,7 @@ public:
 private slots:
 	void on_pushButton_clicked();
 	void add_message_to_listwidget(QString message);
+	void read_message();
 	
 private:
     Ui::chat *ui;

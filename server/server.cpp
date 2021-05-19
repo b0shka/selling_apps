@@ -24,46 +24,40 @@ void Server::connect_handler()
 	{
 		client = accept(server, (sockaddr*)&hint, &size);
 		
-		auto result_search = find(list_client.begin(), list_client.end(), client);
-		if (list_client.size() == 0 || result_search != list_client.end())
+		memset(host, 0, NI_MAXHOST);
+		memset(svc, 0, NI_MAXSERV);
+		memset(buffer, 0, BUFFER);
+
+		int result = getnameinfo((sockaddr*)&hint,
+								sizeof(hint),
+								host,
+								NI_MAXHOST,
+								svc,
+								NI_MAXSERV,
+								0);
+
+		if (result)
+			cout << "[INFO] " << host << " connected on " << svc << endl;
+		else
 		{
-			list_client.push_back(client);
-
-			memset(host, 0, NI_MAXHOST);
-			memset(svc, 0, NI_MAXSERV);
-			memset(buffer, 0, BUFFER);
-
-			int result = getnameinfo((sockaddr*)&hint,
-									sizeof(hint),
-									host,
-									NI_MAXHOST,
-									svc,
-									NI_MAXSERV,
-									0);
-
-			if (result)
-				cout << "[INFO] " << host << " connected on " << svc << endl;
-			else
-			{
-				inet_ntop(AF_INET, &hint.sin_addr, host, NI_MAXHOST);
-				cout << "[INFO] " << host << " connected on " << ntohs(hint.sin_port) << endl;
-			}
-
-			strcpy(buffer, "[INFO] Server connect");
-			send(client, buffer, BUFFER, 0);
-
-			thread message_hand(&Server::message_handler, this);
-			message_hand.join();
+			inet_ntop(AF_INET, &hint.sin_addr, host, NI_MAXHOST);
+			cout << "[INFO] " << host << " connected on " << ntohs(hint.sin_port) << endl;
 		}
+
+		strcpy(buffer, "[INFO] Server connect");
+		send(client, buffer, BUFFER, 0);
+
+		thread message_hand(&Server::message_handler, this, client);
+		message_hand.detach();
 	}
 }
 
-void Server::message_handler()
+void Server::message_handler(int client_socket)
 {
-	while (client > 0)
+	while (true)
 	{
-		int bytes = recv(client, buffer, BUFFER, 0);
-		if (bytes == 0)
+		int bytes = recv(client_socket, buffer, BUFFER, 0);
+		if (bytes <= 0)
 		{
 			cout << "[INFO] Client disconnect" << endl;
 			break;
@@ -72,8 +66,8 @@ void Server::message_handler()
 		if (message.size() > 0)
 		{
 			cout << "Client: " << message << endl;
-			send(client, buffer, bytes, 0);
+			send(client_socket, buffer, bytes, 0);
 		}
 	}
-	close(client);
+	close(client_socket);
 }
