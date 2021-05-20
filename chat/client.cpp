@@ -24,22 +24,28 @@ void Client::send_message(QString message)
 {
 	if (message != "")
 	{
+		//qDebug() << message << id_socket;
 		QByteArray text_char = message.toLatin1();
 		strcpy(buffer, text_char.data());
 		send(client, buffer, BUFFER, 0);
-		
-		recv(client, buffer, BUFFER, 0);
 	}
 }
 
 void Client::read_message()
 {
-	qDebug() << "hello";
-	//read_msg.start();
+	while (g_status_online == 1)
+	{
+		recv(client, buffer, BUFFER, 0);
+		if (strlen(buffer) != 1)
+		{
+			qDebug() << buffer;
+		}
+	}
 }
 
 void Client::disconnect()
 {
 	strcpy(buffer, "[INFO] Close chat");
 	send(client, buffer, BUFFER, 0);
+	QThread::sleep(1);
 }

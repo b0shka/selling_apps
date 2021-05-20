@@ -278,7 +278,6 @@ void MainWindow::change_mainwindow()
 {
     close();
     autorization_mainwindow autorization_window;
-    autorization_window.autorizate();
     autorization_window.setModal(false);
     autorization_window.exec();
 }

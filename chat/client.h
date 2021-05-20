@@ -2,6 +2,7 @@
 #define CLIENT_H
 
 #include <QDebug>
+#include <QThread>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>

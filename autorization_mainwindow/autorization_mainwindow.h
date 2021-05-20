@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "../mainwindow/mainwindow.h"
 #include "../chat/client.h"
+#include "../chat/thread_chat.h"
 
 namespace Ui {
 class autorization_mainwindow;
@@ -16,11 +17,7 @@ class autorization_mainwindow : public QDialog
 public:
     explicit autorization_mainwindow(QWidget *parent = nullptr);
     ~autorization_mainwindow();
-
-public slots:
-    // функции для авторизации
-    void autorizate();
-
+	
 private slots:
     // функции для кнопок
     void on_pushButton_clicked();
@@ -44,6 +41,7 @@ private:
     Ui::autorization_mainwindow *ui;
     sql_database database;
 	Client client;
+	thread_chat read_msg;
 };
 
 #endif // AUTORIZATION_MAINWINDOW_H
