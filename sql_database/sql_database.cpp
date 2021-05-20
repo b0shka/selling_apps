@@ -29,7 +29,11 @@ void sql_database::create_table()
                                                       "password TEXT NOT NULL,"
                                                       "email TEXT,"
                                                       "number_phone VARCHAR (20),"
-                                                      "favorite_app TEXT"
+                                                      "favorite_app TEXT,"
+													  "status_online integer,"
+													  "id_socket integer,"
+													  "all_message TEXT,"
+													  "new_message TEXT"
                                                       ");";
         if (!sql.exec(str_requests))
         {
@@ -669,5 +673,46 @@ QString sql_database::delete_id_users_star_app(QString login, QString app_name, 
     }
 
     db.commit();
-    return "Success";
+	return "Success";
+}
+
+void sql_database::change_status_online(QString login)
+{
+	str_requests = "UPDATE " + user_table + " SET status_online = ('%1') WHERE login = ('%2');";
+	if (!sql.exec(str_requests.arg(g_status_online).arg(login)))
+	{
+		qDebug() << "[ERROR] Не удается изменить статус online " << db.lastError().text();
+		return;
+	}
+	
+	db.commit();
+}
+
+void sql_database::add_client_id(int client, QString login)
+{
+	str_requests = "UPDATE " + user_table + " SET id_socket = ('%1') WHERE login = ('%2');";
+	if (!sql.exec(str_requests.arg(client).arg(login)))
+	{
+		qDebug() << "[ERROR] Не удалось добавить client в id_socket " << db.lastError().text();
+		return;
+	}
+	
+	db.commit();
+}
+
+int sql_database::get_id_socket_user(QString login)
+{
+	str_requests = "SELECT id_socket FROM " + user_table + " WHERE login = ('%1');";
+	if (!sql.exec(str_requests.arg(login)))
+	{
+		qDebug() << "[ERROR] Не удается получить id_socket " << db.lastError().text();
+		return 0;
+	}
+	
+	QSqlRecord get_data = sql.record();
+    int id_socket;
+    while (sql.next())
+        id_socket = sql.value(get_data.indexOf("id_socket")).toInt();
+	
+	return id_socket;
 }

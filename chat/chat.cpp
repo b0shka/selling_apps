@@ -1,20 +1,15 @@
 ﻿#include "chat.h"
 #include "ui_chat.h"
 
-chat::chat(QWidget *parent) :
+chat::chat(QString login_dev, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::chat)
 {
     ui->setupUi(this);
-	if (g_status_online == 0)
-	{
-		client.conect_server();
-		QThread *read_msg;
-		connect(this, SIGNAL(read_message()), read_msg, SLOT(read_message()));
-		//read_msg->start();
-		//connect(&read_msg, SIGNAL(started()), this, SLOT(read_message()));
-		qDebug() << "test";
-	}
+	
+	ui->label_7->setText(login_dev.split(" ")[0]);
+	ui->pushButton_2->setText(login_dev.at(0));
+	client.id_socket = database.get_id_socket_user(ui->label_7->text());
 }
 
 chat::~chat()
@@ -31,6 +26,14 @@ void chat::on_pushButton_clicked()
 		add_message_to_listwidget(message);
 		ui->lineEdit_3->clear();
 	}
+}
+
+void chat::on_pushButton_2_clicked()
+{
+	close();
+    developper_app profile_developer(ui->label_7->text());
+    profile_developer.setModal(true);
+    profile_developer.exec();
 }
 
 void chat::add_message_to_listwidget(QString message)

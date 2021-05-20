@@ -44,6 +44,9 @@ public slots:
     QString delete_app_to_favorite(QString login, QString app_name);
     QString delete_app_star(QString login, QString app_name);
     QString delete_id_users_star_app(QString login, QString app_name, QString delete_id);
+	void change_status_online(QString login);
+	void add_client_id(int client, QString login);
+	int get_id_socket_user(QString login);
 
 private:
     QSqlDatabase db;

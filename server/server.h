@@ -12,7 +12,7 @@
 #include <thread>
 #include <chrono>
 
-#define PORT 6767
+#define PORT 2222
 #define IP "127.0.0.1"
 #define BUFFER 1024
 

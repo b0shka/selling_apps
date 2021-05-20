@@ -28,6 +28,7 @@ about_app::about_app(QList<QString> param_app, QWidget *parent) : QDialog(parent
         ui->pushButton_3->setHidden(true);
         ui->pushButton_4->setHidden(true);
         ui->pushButton_5->setHidden(true);
+		ui->pushButton_6->setHidden(true);
     }
     else
     {
@@ -41,6 +42,7 @@ about_app::about_app(QList<QString> param_app, QWidget *parent) : QDialog(parent
             ui->pushButton_3->setHidden(true);
             ui->pushButton_4->setHidden(false);
         }
+		ui->pushButton_6->setHidden(false);
     }
 }
 
@@ -115,7 +117,7 @@ void about_app::on_pushButton_5_clicked()
 
 void about_app::on_pushButton_6_clicked()
 {
-    chat chat_dev;
+    chat chat_dev(ui->pushButton->text());
     chat_dev.setModal(true);
     chat_dev.exec();
 }

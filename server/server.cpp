@@ -36,15 +36,17 @@ void Server::connect_handler()
 								NI_MAXSERV,
 								0);
 
+		recv(client, buffer, BUFFER, 0);
 		if (result)
-			cout << "[INFO] " << host << " connected on " << svc << endl;
+			cout << "[" << buffer << "] " << host << " connected on " << svc << endl;
 		else
 		{
 			inet_ntop(AF_INET, &hint.sin_addr, host, NI_MAXHOST);
-			cout << "[INFO] " << host << " connected on " << ntohs(hint.sin_port) << endl;
+			cout << "[" << buffer << "] " << host << " connected on " << ntohs(hint.sin_port) << endl;
 		}
 
-		strcpy(buffer, "[INFO] Server connect");
+		string message_start = "[INFO] Server connect;" + to_string(client);
+		strcpy(buffer, message_start.c_str());
 		send(client, buffer, BUFFER, 0);
 
 		thread message_hand(&Server::message_handler, this, client);
@@ -57,12 +59,13 @@ void Server::message_handler(int client_socket)
 	while (true)
 	{
 		int bytes = recv(client_socket, buffer, BUFFER, 0);
-		if (bytes <= 0)
+		string message = string(buffer, 0, bytes-1);
+		if (bytes <= 0 || message == "[INFO] Close chat")
 		{
 			cout << "[INFO] Client disconnect" << endl;
 			break;
 		}
-		string message = string(buffer, 0, bytes-1);
+
 		if (message.size() > 0)
 		{
 			cout << "Client: " << message << endl;
