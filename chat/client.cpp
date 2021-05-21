@@ -1,4 +1,5 @@
 ﻿#include "client.h"
+#include "chat.h"
 
 void Client::conect_server()
 {
@@ -17,35 +18,31 @@ void Client::conect_server()
 	qDebug() << QString(buffer).split(";")[0].toLatin1().data();
 	database.add_client_id(QString(buffer).split(";")[1].toInt(), g_user_name);
 	
+	database.add_id_server(client, g_user_name);
+	
 	g_status_online = 1;
 }
 
 void Client::send_message(QString message)
 {
-	if (message != "")
-	{
-		//qDebug() << message << id_socket;
-		QByteArray text_char = message.toLatin1();
-		strcpy(buffer, text_char.data());
-		send(client, buffer, BUFFER, 0);
-	}
+	QByteArray text_char = message.toLatin1();
+	strcpy(buffer, text_char.data());
+	send(client, buffer, BUFFER, 0);
 }
 
 void Client::read_message()
 {
+	int client_socket = database.get_id_server(g_user_name);
 	while (g_status_online == 1)
 	{
-		recv(client, buffer, BUFFER, 0);
-		if (strlen(buffer) != 1)
-		{
-			qDebug() << buffer;
-		}
+		recv(client_socket, buffer, BUFFER, 0);
+		qDebug() << buffer;
 	}
 }
 
 void Client::disconnect()
 {
+	g_status_online = 0;
 	strcpy(buffer, "[INFO] Close chat");
 	send(client, buffer, BUFFER, 0);
-	QThread::sleep(1);
 }

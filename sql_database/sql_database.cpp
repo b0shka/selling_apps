@@ -31,6 +31,7 @@ void sql_database::create_table()
                                                       "number_phone VARCHAR (20),"
                                                       "favorite_app TEXT,"
 													  "status_online integer,"
+													  "id_server integer,"
 													  "id_socket integer,"
 													  "all_message TEXT,"
 													  "new_message TEXT"
@@ -715,4 +716,33 @@ int sql_database::get_id_socket_user(QString login)
         id_socket = sql.value(get_data.indexOf("id_socket")).toInt();
 	
 	return id_socket;
+}
+
+void sql_database::add_id_server(int id_socket, QString login)
+{
+	str_requests = "UPDATE " + user_table + " SET id_server = ('%1') WHERE login = ('%2');";
+	if (!sql.exec(str_requests.arg(id_socket).arg(login)))
+	{
+		qDebug() << "[ERROR] Не удается обновить id_server " << db.lastError().text();
+		return;
+	}
+	
+	db.commit();
+}
+
+int sql_database::get_id_server(QString login)
+{
+	str_requests = "SELECT id_server FROM " + user_table + " WHERE login = ('%1');";
+	if (!sql.exec(str_requests.arg(login)))
+	{
+		qDebug() << "[ERROR] Не удается получить id_server " << db.lastError().text();
+		return 0;
+	}
+	
+	QSqlRecord get_data = sql.record();
+    int id_server;
+    while (sql.next())
+        id_server = sql.value(get_data.indexOf("id_server")).toInt();
+	
+	return id_server;
 }

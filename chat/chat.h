@@ -19,11 +19,13 @@ class chat : public QDialog
 public:
     explicit chat(QString login_dev, QWidget *parent = nullptr);
     ~chat();
-	void add_message_to_listwidget(QString message);
+	//void start(QString login_dev);
+	void add_message_from_server(QString message);
 	
 private slots:
 	void on_pushButton_clicked();
 	void on_pushButton_2_clicked();
+	void add_message_to_listwidget(QString message);
 	
 private:
     Ui::chat *ui;

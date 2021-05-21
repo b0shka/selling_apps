@@ -11,7 +11,7 @@
 #include "../main_data/data.h"
 #include "../sql_database/sql_database.h"
 
-#define PORT 2222
+#define PORT 3333
 #define IP "127.0.0.1"
 #define BUFFER 1024
 
@@ -22,7 +22,7 @@ public:
 	void send_message(QString message);
 	void read_message();
 	void disconnect();
-	int id_socket;
+	//int id_socket;
 	
 private:
 	int client;

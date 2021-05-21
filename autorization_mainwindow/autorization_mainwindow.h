@@ -3,8 +3,6 @@
 
 #include <QDialog>
 #include "../mainwindow/mainwindow.h"
-#include "../chat/client.h"
-#include "../chat/thread_chat.h"
 
 namespace Ui {
 class autorization_mainwindow;
@@ -40,8 +38,6 @@ private slots:
 private:
     Ui::autorization_mainwindow *ui;
     sql_database database;
-	Client client;
-	thread_chat read_msg;
 };
 
 #endif // AUTORIZATION_MAINWINDOW_H

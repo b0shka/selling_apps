@@ -1,6 +1,5 @@
 ﻿#include "chat.h"
 #include "ui_chat.h"
-#include "thread_chat.h"
 
 chat::chat(QString login_dev, QWidget *parent) :
     QDialog(parent),
@@ -11,20 +10,32 @@ chat::chat(QString login_dev, QWidget *parent) :
 	ui->label_7->setText(login_dev.split(" ")[0]);
 	ui->pushButton_2->setText(login_dev.at(0));
 	
-	client.id_socket = database.get_id_socket_user(ui->label_7->text());
+	//client.id_socket = database.get_id_socket_user(ui->label_7->text());
 	client.conect_server();
 	database.change_status_online(g_user_name);
-
+	
 	read_msg.start();
 }
 
 chat::~chat()
 {
     delete ui;
-	g_status_online = 0;
-	database.change_status_online(g_user_name);
 	client.disconnect();
+	//database.change_status_online(g_user_name);
+	read_msg.wait();
 }
+
+/*void chat::start(QString login_dev)
+{
+	ui->label_7->setText(login_dev.split(" ")[0]);
+	ui->pushButton_2->setText(login_dev.at(0));
+	
+	//client.id_socket = database.get_id_socket_user(ui->label_7->text());
+	//client.conect_server();
+	//database.change_status_online(g_user_name);
+	
+	read_msg.start();
+}*/
 	
 void chat::on_pushButton_clicked()
 {
@@ -50,6 +61,14 @@ void chat::add_message_to_listwidget(QString message)
 	QTime time = QTime::currentTime();
 	QListWidgetItem *item = new QListWidgetItem;
 	item->setTextAlignment(2);
+    item->setText("(" + time.toString("hh:mm") + ") " + message);
+	ui->listWidget->addItem(item);
+}
+
+void chat::add_message_from_server(QString message)
+{
+	QTime time = QTime::currentTime();
+	QListWidgetItem *item = new QListWidgetItem;
     item->setText("(" + time.toString("hh:mm") + ") " + message);
 	ui->listWidget->addItem(item);
 }

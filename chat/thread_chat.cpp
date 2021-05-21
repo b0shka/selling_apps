@@ -1,4 +1,5 @@
 ﻿#include "thread_chat.h"
+#include "client.h"
 
 thread_chat::thread_chat()
 {
@@ -7,5 +8,6 @@ thread_chat::thread_chat()
 
 void thread_chat::run()
 {
-	client.read_message();
+	Client client_f;
+	client_f.read_message();
 }

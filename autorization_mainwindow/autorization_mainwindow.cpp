@@ -13,21 +13,11 @@ autorization_mainwindow::autorization_mainwindow(QWidget *parent) :
 	ui->label->setText(g_user_name.split(" ")[0]);
     ui->pushButton_2->setText(g_user_name.at(0));
     get_name_app_from_db();
-	//client.conect_server();
-	//database.change_status_online(g_user_name);
-	
-	//read_msg.start();
 }
 
 autorization_mainwindow::~autorization_mainwindow()
 {
     delete ui;
-	/*if (g_status_online != 0)
-	{
-		g_status_online = 0;
-		database.change_status_online(g_user_name);
-		client.disconnect();
-	}*/
 }
 
 void autorization_mainwindow::on_pushButton_clicked()

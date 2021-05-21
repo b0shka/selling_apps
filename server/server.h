@@ -11,8 +11,10 @@
 #include <string.h>
 #include <thread>
 #include <chrono>
+#include <vector>
+#include <algorithm>
 
-#define PORT 2222
+#define PORT 3333
 #define IP "127.0.0.1"
 #define BUFFER 1024
 
@@ -30,6 +32,7 @@ private:
     int client, server;
     sockaddr_in hint;
     char buffer[BUFFER];
+    vector<int> list_client;
 };
 
 #endif // SERVER_H
