@@ -17,9 +17,9 @@ class chat : public QDialog
     Q_OBJECT
 
 public:
-    explicit chat(QString login_dev, QWidget *parent = nullptr);
+    explicit chat(QWidget *parent = nullptr);
     ~chat();
-	//void start(QString login_dev);
+	void start(QString login_dev);
 	void add_message_from_server(QString message);
 	
 private slots:
@@ -32,6 +32,7 @@ private:
 	Client client;
 	sql_database database;
 	thread_chat read_msg;
+	QString login_dev;
 };
 
 #endif // CHAT_H

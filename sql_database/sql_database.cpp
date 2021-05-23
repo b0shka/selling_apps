@@ -746,3 +746,59 @@ int sql_database::get_id_server(QString login)
 	
 	return id_server;
 }
+
+int sql_database::get_status_online(QString login)
+{
+	str_requests = "SELECT status_online FROM " + user_table + " WHERE login = ('%1');";
+	if (!sql.exec(str_requests.arg(login)))
+	{
+		qDebug() << "[ERROR] Не удается получить статус online " << db.lastError().text();
+		return 2;
+	}
+	
+	QSqlRecord get_data = sql.record();
+    int status_online;
+    while (sql.next())
+        status_online = sql.value(get_data.indexOf("status_online")).toInt();
+	
+	return status_online;
+}
+
+void sql_database::add_all_message(QString login, QString message)
+{
+	str_requests = "UPDATE " + user_table + " SET all_message = ('%1') WHERE login = ('%2');";
+	if (!sql.exec(str_requests.arg(message).arg(login)))
+	{
+		qDebug() << "Не удается обновить all_message " << db.lastError().text();
+		return;
+	}
+	
+	db.commit();
+}
+
+void sql_database::add_new_message_to_user(QString login, QString message)
+{
+	str_requests = "SELECT new_message FROM " + user_table + " WHERE login = ('%1');";
+	if (!sql.exec(str_requests.arg(login)))
+	{
+		qDebug() << "[ERROR] Не удается получить new_message " << db.lastError().text();
+		return;
+	}
+	
+	QSqlRecord get_data = sql.record();
+    QString new_message;
+    while (sql.next())
+        new_message = sql.value(get_data.indexOf("new_message")).toString();
+	
+	if (new_message.size() != 0)
+		message = new_message + ";" + message;
+	
+	str_requests = "UPDATE " + user_table + " SET new_message = ('%1') WHERE login = ('%2');";
+	if (!sql.exec(str_requests.arg(message).arg(login)))
+	{
+		qDebug() << "Не удается обновить new_message " << db.lastError().text();
+		return;
+	}
+	
+	db.commit();
+}

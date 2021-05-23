@@ -11,7 +11,7 @@
 #include "../main_data/data.h"
 #include "../sql_database/sql_database.h"
 
-#define PORT 3333
+#define PORT 1111
 #define IP "127.0.0.1"
 #define BUFFER 1024
 
@@ -19,7 +19,7 @@ class Client
 {
 public:
 	void conect_server();
-	void send_message(QString message);
+	void send_message(QString message, QString login);
 	void read_message();
 	void disconnect();
 	//int id_socket;

@@ -1,50 +1,44 @@
 ﻿#include "chat.h"
 #include "ui_chat.h"
 
-chat::chat(QString login_dev, QWidget *parent) :
+chat::chat(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::chat)
 {
     ui->setupUi(this);
-	
-	ui->label_7->setText(login_dev.split(" ")[0]);
-	ui->pushButton_2->setText(login_dev.at(0));
-	
-	//client.id_socket = database.get_id_socket_user(ui->label_7->text());
-	client.conect_server();
-	database.change_status_online(g_user_name);
-	
-	read_msg.start();
 }
 
 chat::~chat()
 {
     delete ui;
 	client.disconnect();
-	//database.change_status_online(g_user_name);
+	database.change_status_online(g_user_name);
 	read_msg.wait();
 }
 
-/*void chat::start(QString login_dev)
+void chat::start(QString login_dev)
 {
+	this->login_dev = login_dev;
 	ui->label_7->setText(login_dev.split(" ")[0]);
 	ui->pushButton_2->setText(login_dev.at(0));
 	
-	//client.id_socket = database.get_id_socket_user(ui->label_7->text());
-	//client.conect_server();
-	//database.change_status_online(g_user_name);
+	client.conect_server();
+	database.change_status_online(g_user_name);
 	
 	read_msg.start();
-}*/
+}
 	
 void chat::on_pushButton_clicked()
 {
 	QString message = ui->lineEdit_3->text();
 	if (message != "")
 	{
-		client.send_message(message);
+		QTime time = QTime::currentTime();
+		message = "(" + time.toString("hh:mm") + ") " + message;
+		client.send_message(message, login_dev);
 		add_message_to_listwidget(message);
 		ui->lineEdit_3->clear();
+		database.add_all_message(g_user_name, message);
 	}
 }
 
@@ -58,10 +52,9 @@ void chat::on_pushButton_2_clicked()
 
 void chat::add_message_to_listwidget(QString message)
 {
-	QTime time = QTime::currentTime();
 	QListWidgetItem *item = new QListWidgetItem;
 	item->setTextAlignment(2);
-    item->setText("(" + time.toString("hh:mm") + ") " + message);
+    item->setText(message);
 	ui->listWidget->addItem(item);
 }
 
@@ -70,5 +63,6 @@ void chat::add_message_from_server(QString message)
 	QTime time = QTime::currentTime();
 	QListWidgetItem *item = new QListWidgetItem;
     item->setText("(" + time.toString("hh:mm") + ") " + message);
+	item->setText(message);
 	ui->listWidget->addItem(item);
 }

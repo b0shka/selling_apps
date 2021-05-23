@@ -23,20 +23,26 @@ void Client::conect_server()
 	g_status_online = 1;
 }
 
-void Client::send_message(QString message)
+void Client::send_message(QString message, QString login)
 {
 	QByteArray text_char = message.toLatin1();
 	strcpy(buffer, text_char.data());
-	send(client, buffer, BUFFER, 0);
+	int status_online = database.get_status_online(login);
+	if (status_online == 1)
+		send(client, buffer, BUFFER, 0);
+	else if (status_online == 0)
+		database.add_new_message_to_user(login, message);
 }
 
 void Client::read_message()
 {
 	int client_socket = database.get_id_server(g_user_name);
+	chat chat_dev;
 	while (g_status_online == 1)
 	{
 		recv(client_socket, buffer, BUFFER, 0);
 		qDebug() << buffer;
+		chat_dev.add_message_from_server(QString(buffer));
 	}
 }
 
