@@ -170,9 +170,9 @@ color: white;</string>
   <widget class="QPushButton" name="pushButton_2">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>205</x>
      <y>380</y>
-     <width>111</width>
+     <width>116</width>
      <height>31</height>
     </rect>
    </property>
@@ -196,16 +196,23 @@ QPushButton::hover {
   <widget class="QPushButton" name="pushButton_3">
    <property name="geometry">
     <rect>
-     <x>130</x>
+     <x>160</x>
      <y>380</y>
-     <width>191</width>
+     <width>41</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton {
 	padding: 2px;
-	font-size: 14px;
+	font-size: 30px;
 	height: 28px;
 	color: white;
 	background-color: #404040;
@@ -216,7 +223,7 @@ QPushButton::hover {
 }</string>
    </property>
    <property name="text">
-    <string>Написать разработчику</string>
+    <string>✉</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_9">

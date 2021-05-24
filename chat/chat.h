@@ -5,7 +5,6 @@
 #include <QTime>
 #include <QListWidgetItem>
 #include "client.h"
-#include "../developper_app/developper_app.h"
 #include "thread_chat.h"
 
 namespace Ui {

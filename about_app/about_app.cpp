@@ -61,58 +61,46 @@ void about_app::on_pushButton_clicked()
 
 void about_app::on_pushButton_2_clicked()
 {
-    if (g_status_autorization == 1)
-    {
-        QString result_star = database.add_star_to_app(ui->pushButton->text(), ui->label->text());
-
-        if (result_star == "Success")
-        {
-            ui->pushButton_2->setHidden(true);
-            ui->pushButton_5->setHidden(false);
-        }
-    }
+	QString result_star = database.add_star_to_app(ui->pushButton->text(), ui->label->text());
+	
+	if (result_star == "Success")
+	{
+		ui->pushButton_2->setHidden(true);
+		ui->pushButton_5->setHidden(false);
+	}
 }
 
 void about_app::on_pushButton_3_clicked()
 {
-    if (g_status_autorization == 1)
-    {
-        QString result_favorite = database.add_app_to_favorite(ui->pushButton->text(), ui->label->text());
-
-        if (result_favorite == "Success")
-        {
-            ui->pushButton_3->setHidden(true);
-            ui->pushButton_4->setHidden(false);
-        }
-    }
+	QString result_favorite = database.add_app_to_favorite(ui->pushButton->text(), ui->label->text());
+	
+	if (result_favorite == "Success")
+	{
+		ui->pushButton_3->setHidden(true);
+		ui->pushButton_4->setHidden(false);
+	}
 }
 
 void about_app::on_pushButton_4_clicked()
 {
-    if (g_status_autorization == 1)
-    {
-        QString result_delete_favorite = database.delete_app_to_favorite(ui->pushButton->text(), ui->label->text());
-
-        if (result_delete_favorite == "Success")
-        {
-            ui->pushButton_4->setHidden(true);
-            ui->pushButton_3->setHidden(false);
-        }
-    }
+	QString result_delete_favorite = database.delete_app_to_favorite(ui->pushButton->text(), ui->label->text());
+	
+	if (result_delete_favorite == "Success")
+	{
+		ui->pushButton_4->setHidden(true);
+		ui->pushButton_3->setHidden(false);
+	}
 }
 
 void about_app::on_pushButton_5_clicked()
 {
-    if (g_status_autorization == 1)
-    {
-        QString result_star = database.delete_app_star(ui->pushButton->text(), ui->label->text());
-
-        if (result_star == "Success")
-        {
-            ui->pushButton_5->setHidden(true);
-            ui->pushButton_2->setHidden(false);
-        }
-    }
+	QString result_star = database.delete_app_star(ui->pushButton->text(), ui->label->text());
+	
+	if (result_star == "Success")
+	{
+		ui->pushButton_5->setHidden(true);
+		ui->pushButton_2->setHidden(false);
+	}
 }
 
 void about_app::on_pushButton_6_clicked()

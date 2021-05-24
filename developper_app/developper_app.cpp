@@ -1,14 +1,19 @@
 ﻿#include "developper_app.h"
 #include "ui_developper_app.h"
 #include "../user_apps/user_apps.h"
+#include "../chat/chat.h"
 
 developper_app::developper_app(QString login , QWidget *parent) :
     QDialog(parent),
     ui(new Ui::developper_app)
 {
     ui->setupUi(this);
-    ui->label_7->setText(login);
+    ui->label_7->setText(login.split(" ")[0]);
     user_name_dev = login;
+	
+	if (g_status_autorization == 0)
+		ui->pushButton_3->setHidden(true);
+	
     get_info_from_db(login);
 }
 
@@ -42,4 +47,13 @@ void developper_app::on_pushButton_2_clicked()
     user_apps app_dev(user_name_dev);
     app_dev.setModal(true);
     app_dev.exec();
+}
+
+void developper_app::on_pushButton_3_clicked()
+{
+	close();
+	chat chat_dev;
+    chat_dev.start(user_name_dev);
+    chat_dev.setModal(true);
+    chat_dev.exec();
 }

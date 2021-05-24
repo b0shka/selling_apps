@@ -45,8 +45,8 @@ void Server::connect_handler()
 			cout << "[" << buffer << "] " << host << " connected on " << ntohs(hint.sin_port) << endl;
 		}
 
-		string message_start = "[INFO] Server connect;" + to_string(client);
-		strcpy(buffer, message_start.c_str());
+		//string message_start = "[INFO] Server connect;" + to_string(client);
+		strcpy(buffer, to_string(client).c_str());
 		send(client, buffer, BUFFER, 0);
 
 		thread message_hand(&Server::message_handler, this, client);
@@ -68,8 +68,23 @@ void Server::message_handler(int client_socket)
 
 		if (message.size() > 0)
 		{
+			string id_client = "";
+
+			for (int i = 0; i < message.size(); i++)
+			{
+				if (message[i] != ';')
+					id_client += message[i];
+				else
+					break;
+			}
+
+			for (int i = 0; i < id_client.size(); i++)
+				message.erase(i, 1);
+			message.erase(message.find(';'), 1);
+
 			cout << "Client: " << message << endl;
-			send(client_socket, buffer, bytes, 0);
+			strcpy(buffer, message.c_str());
+			send(stoi(id_client), buffer, bytes, 0);
 		}
 	}
 	close(client_socket);

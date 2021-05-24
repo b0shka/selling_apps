@@ -19,7 +19,8 @@ public:
 private slots:
     void on_pushButton_2_clicked();
     void get_info_from_db(QString login);
-
+	void on_pushButton_3_clicked();
+	
 private:
     Ui::developper_app *ui;
     sql_database developer_info;

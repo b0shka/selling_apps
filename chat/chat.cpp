@@ -1,5 +1,6 @@
 ﻿#include "chat.h"
 #include "ui_chat.h"
+#include "../developper_app/developper_app.h"
 
 chat::chat(QWidget *parent) :
     QDialog(parent),
@@ -12,8 +13,8 @@ chat::~chat()
 {
     delete ui;
 	client.disconnect();
-	database.change_status_online(g_user_name);
 	read_msg.wait();
+	database.change_status_online(g_user_name);
 }
 
 void chat::start(QString login_dev)

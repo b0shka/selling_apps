@@ -15,8 +15,8 @@ void Client::conect_server()
 	send(client, buffer, BUFFER, 0);
 
 	recv(client, buffer, BUFFER, 0);
-	qDebug() << QString(buffer).split(";")[0].toLatin1().data();
-	database.add_client_id(QString(buffer).split(";")[1].toInt(), g_user_name);
+	//qDebug() << QString(buffer).split(";")[0].toLatin1().data();
+	database.add_client_id(QString(buffer).toInt(), g_user_name);
 	
 	database.add_id_server(client, g_user_name);
 	
@@ -25,11 +25,15 @@ void Client::conect_server()
 
 void Client::send_message(QString message, QString login)
 {
-	QByteArray text_char = message.toLatin1();
-	strcpy(buffer, text_char.data());
 	int status_online = database.get_status_online(login);
 	if (status_online == 1)
+	{
+		int client_id = database.get_id_socket_user(login);
+		message = QString::number(client_id) + ";" + message;
+		QByteArray text_char = message.toLatin1();
+		strcpy(buffer, text_char.data());
 		send(client, buffer, BUFFER, 0);
+	}
 	else if (status_online == 0)
 		database.add_new_message_to_user(login, message);
 }
@@ -37,12 +41,12 @@ void Client::send_message(QString message, QString login)
 void Client::read_message()
 {
 	int client_socket = database.get_id_server(g_user_name);
-	chat chat_dev;
+	//chat chat_dev;
 	while (g_status_online == 1)
 	{
 		recv(client_socket, buffer, BUFFER, 0);
-		qDebug() << buffer;
-		chat_dev.add_message_from_server(QString(buffer));
+		qDebug() << QString(buffer);
+		//chat_dev.add_message_from_server(QString(buffer));
 	}
 }
 

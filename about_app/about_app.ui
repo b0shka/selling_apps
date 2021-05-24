@@ -84,7 +84,7 @@ background-color: #2a2a2a;</string>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>345</y>
+     <y>380</y>
      <width>101</width>
      <height>21</height>
     </rect>
@@ -122,19 +122,26 @@ color: silver;</string>
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="pushButton_5">
    <property name="geometry">
     <rect>
-     <x>275</x>
+     <x>390</x>
      <y>375</y>
-     <width>131</width>
+     <width>36</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton {
 	padding: 2px;
-	font-size: 14px;
+	font-size: 18px;
 	height: 28px;
 	color: white;
 	background-color: #404040;
@@ -145,15 +152,15 @@ QPushButton::hover {
 }</string>
    </property>
    <property name="text">
-    <string>Звезда</string>
+    <string>★</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
      <x>110</x>
-     <y>345</y>
-     <width>296</width>
+     <y>380</y>
+     <width>226</width>
      <height>21</height>
     </rect>
    </property>
@@ -212,9 +219,9 @@ QPushButton::hover {
   <widget class="QPushButton" name="pushButton_3">
    <property name="geometry">
     <rect>
-     <x>410</x>
+     <x>430</x>
      <y>375</y>
-     <width>191</width>
+     <width>171</width>
      <height>31</height>
     </rect>
    </property>
@@ -238,9 +245,9 @@ QPushButton::hover {
   <widget class="QPushButton" name="pushButton_4">
    <property name="geometry">
     <rect>
-     <x>410</x>
+     <x>430</x>
      <y>375</y>
-     <width>191</width>
+     <width>171</width>
      <height>31</height>
     </rect>
    </property>
@@ -261,19 +268,26 @@ QPushButton::hover {
     <string>Убрать из избранного</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_5">
+  <widget class="QPushButton" name="pushButton_2">
    <property name="geometry">
     <rect>
-     <x>275</x>
+     <x>390</x>
      <y>375</y>
-     <width>131</width>
+     <width>36</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton {
 	padding: 2px;
-	font-size: 14px;
+	font-size: 18px;
 	height: 28px;
 	color: white;
 	background-color: #404040;
@@ -284,22 +298,29 @@ QPushButton::hover {
 }</string>
    </property>
    <property name="text">
-    <string>Убрать звезду</string>
+    <string>☆</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_6">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>345</x>
      <y>375</y>
-     <width>261</width>
+     <width>41</width>
      <height>31</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
    <property name="styleSheet">
     <string notr="true">QPushButton {
-	padding: 2px;
-	font-size: 14px;
+	padding-top: 2px;
+	font-size: 30px;
 	height: 28px;
 	color: white;
 	background-color: #404040;
@@ -310,7 +331,7 @@ QPushButton::hover {
 }</string>
    </property>
    <property name="text">
-    <string>Написать разработчику</string>
+    <string>✉</string>
    </property>
   </widget>
  </widget>

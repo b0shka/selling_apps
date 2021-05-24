@@ -78,7 +78,7 @@ color: white;</string>
    <property name="styleSheet">
     <string notr="true">QPushButton {
 	padding: 2px;
-	font-size: 18px;
+	font-size: 22px;
 	height: 28px;
 	color: white;
 	background-color: #404040;
@@ -89,7 +89,7 @@ QPushButton::hover {
 }</string>
    </property>
    <property name="text">
-    <string>&gt;</string>
+    <string>➜</string>
    </property>
   </widget>
   <widget class="QListWidget" name="listWidget">
