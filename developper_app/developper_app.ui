@@ -167,36 +167,10 @@ color: white;</string>
     <string>Номер:</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
-   <property name="geometry">
-    <rect>
-     <x>205</x>
-     <y>380</y>
-     <width>116</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton {
-	padding: 2px;
-	font-size: 14px;
-	height: 28px;
-	color: white;
-	background-color: #404040;
-	border-radius: 5px;
-}
-QPushButton::hover {
-	background-color: #949494;
-}</string>
-   </property>
-   <property name="text">
-    <string>Программы</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="pushButton_3">
    <property name="geometry">
     <rect>
-     <x>160</x>
+     <x>275</x>
      <y>380</y>
      <width>41</width>
      <height>31</height>
@@ -298,30 +272,6 @@ color: white;</string>
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="label_10">
-   <property name="geometry">
-    <rect>
-     <x>235</x>
-     <y>175</y>
-     <width>51</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>-1</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font-size: 15px;
-color: white;</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_11">
    <property name="geometry">
     <rect>
@@ -375,7 +325,7 @@ color: white;</string>
     <rect>
      <x>235</x>
      <y>205</y>
-     <width>51</width>
+     <width>76</width>
      <height>21</height>
     </rect>
    </property>
@@ -389,6 +339,39 @@ color: white;</string>
    <property name="styleSheet">
     <string notr="true">font-size: 15px;
 color: white;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>235</x>
+     <y>175</y>
+     <width>76</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+	font-size: 16px;
+	color: white;
+	background-color: #2a2a2a;
+	border: none;
+	text-align: left;
+}
+
+QPushButton::hover {
+	color: silver;
+}</string>
    </property>
    <property name="text">
     <string/>

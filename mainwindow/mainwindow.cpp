@@ -201,11 +201,11 @@ void MainWindow::layout_title_app(QList<QString> data_app)
     QListWidgetItem *item = new QListWidgetItem;
     QString title_app;
     if (data_app[0].size() < 9)
-        title_app = data_app[0] + "\t\t\t\t\t\t\t" + data_app[1];
+        title_app = data_app[0] + "\t\t\t\t\t\t\t" + data_app[1] + " ₽";
     else if (data_app[0].size() < 22)
-        title_app = data_app[0] + "\t\t\t\t\t\t" + data_app[1];
+        title_app = data_app[0] + "\t\t\t\t\t\t" + data_app[1] + " ₽";
     else
-        title_app = data_app[0] + "\t\t\t\t\t" + data_app[1];
+        title_app = data_app[0] + "\t\t\t\t\t" + data_app[1] + " ₽";
     item->setText(title_app);
     item->setToolTip(data_app[2] + ";" + data_app[3]);
     ui->listWidget->addItem(item);

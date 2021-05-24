@@ -34,7 +34,7 @@ void developper_app::get_info_from_db(QString login)
 
     QString count_app = developer_info.get_count_apps(login);
     if (count_app != "ERROR")
-        ui->label_10->setText(count_app);
+        ui->pushButton_2->setText(count_app);
 
     QString count_star = developer_info.get_all_star_for_profile(login);
     if (count_app != "ERROR")
@@ -52,8 +52,8 @@ void developper_app::on_pushButton_2_clicked()
 void developper_app::on_pushButton_3_clicked()
 {
 	close();
-	chat chat_dev;
-    chat_dev.start(user_name_dev);
+	chat chat_dev(user_name_dev);
+    //chat_dev.start(user_name_dev);
     chat_dev.setModal(true);
     chat_dev.exec();
 }

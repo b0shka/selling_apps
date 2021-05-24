@@ -52,6 +52,9 @@ public slots:
 	int get_status_online(QString login);
 	void add_all_message(QString login, QString message);
 	void add_new_message_to_user(QString login, QString message);
+	void start_dialog(QString login, QString login_dev);
+	QString get_dialogs(QString login);
+	QString get_correspondence(QString login);
 
 private:
     QSqlDatabase db;

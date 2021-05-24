@@ -22,6 +22,7 @@ private slots:
     void on_pushButton_2_clicked();
     void on_pushButton_3_clicked();
     void on_pushButton_4_clicked();
+	void on_pushButton_5_clicked();
     void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
     void keyPressEvent(QKeyEvent *event);
     void on_lineEdit_returnPressed();
@@ -34,7 +35,7 @@ private slots:
     int check_no_name(QString search, QString name_main);
     void add_apps_to_listWidget(QList<QList<QString>> list_result);
     void layout_title_app(QList<QString> data_app);
-
+	
 private:
     Ui::autorization_mainwindow *ui;
     sql_database database;

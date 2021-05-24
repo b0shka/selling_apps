@@ -84,7 +84,7 @@ QListWidget::item {
     </property>
     <property name="font">
      <font>
-      <pointsize>11</pointsize>
+      <pointsize>-1</pointsize>
      </font>
     </property>
     <property name="styleSheet">
@@ -93,7 +93,8 @@ height: 28px;
 color: white;
 background-color: #2a2a2a;
 border-radius: 5px;
-border: none;</string>
+border: none;
+font-size: 14px;</string>
     </property>
     <property name="placeholderText">
      <string>Поиск...</string>

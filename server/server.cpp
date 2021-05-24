@@ -60,9 +60,25 @@ void Server::message_handler(int client_socket)
 	{
 		int bytes = recv(client_socket, buffer, BUFFER, 0);
 		string message = string(buffer, 0, bytes-1);
-		if (bytes <= 0 || message == "[INFO] Close chat")
+
+		if (bytes <= 0)
 		{
 			cout << "[INFO] Client disconnect" << endl;
+			break;
+		}
+		else if (message.find(";[INFO] Close chat") != string::npos)
+		{
+			string user_close = "";
+
+			for (int i = 0; i < message.size(); i++)
+			{
+				if (message[i] != ';')
+					user_close += message[i];
+				else
+					break;
+			}
+
+			cout << "[" + user_close + "] Client disconnect" << endl;
 			break;
 		}
 

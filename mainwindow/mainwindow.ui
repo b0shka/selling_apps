@@ -67,7 +67,7 @@
      </property>
      <property name="font">
       <font>
-       <pointsize>11</pointsize>
+       <pointsize>-1</pointsize>
       </font>
      </property>
      <property name="styleSheet">
@@ -76,7 +76,11 @@ height: 28px;
 color: white;
 background-color: #2a2a2a;
 border-radius: 5px;
-border: none;</string>
+border: none;
+font-size: 14px;</string>
+     </property>
+     <property name="text">
+      <string/>
      </property>
      <property name="placeholderText">
       <string>Поиск...</string>
@@ -88,16 +92,23 @@ border: none;</string>
     <widget class="QPushButton" name="pushButton_2">
      <property name="geometry">
       <rect>
-       <x>555</x>
+       <x>615</x>
        <y>10</y>
-       <width>101</width>
+       <width>41</width>
        <height>36</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>-1</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="styleSheet">
       <string notr="true">QPushButton {
-	padding: 2px;
-	font-size: 14px;
+	padding-bottom: 3px;
+	font-size: 20px;
 	height: 28px;
 	color: white;
 	background-color: #2a2a2a;
@@ -108,7 +119,7 @@ QPushButton::hover {
 }</string>
      </property>
      <property name="text">
-      <string>Войти</string>
+      <string>⍈</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_3">
@@ -149,8 +160,8 @@ QPushButton::hover {
    <widget class="QListWidget" name="listWidget">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>55</y>
+      <x>5</x>
+      <y>50</y>
       <width>671</width>
       <height>371</height>
      </rect>

@@ -53,6 +53,8 @@ void Client::read_message()
 void Client::disconnect()
 {
 	g_status_online = 0;
-	strcpy(buffer, "[INFO] Close chat");
+	QString message_close = g_user_name + ";[INFO] Close chat";
+	QByteArray text_char = message_close.toLatin1();
+	strcpy(buffer, text_char.data());
 	send(client, buffer, BUFFER, 0);
 }

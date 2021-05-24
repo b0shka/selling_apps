@@ -29,7 +29,7 @@ void profile::get_info_from_db()
 
     QString count_app = user_info.get_count_apps(g_user_name);
     if (count_app != "ERROR")
-        ui->label_8->setText(count_app);
+        ui->pushButton_4->setText(count_app);
 
     QString count_star = user_info.get_all_star_for_profile(g_user_name);
     if (count_app != "ERROR")

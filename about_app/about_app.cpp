@@ -13,7 +13,7 @@ about_app::about_app(QList<QString> param_app, QWidget *parent) : QDialog(parent
     ui->pushButton->setText(param_app[1]);
 
     QList<QString> other_info_app = database.get_all_info_app_list_profile(param_app);
-    ui->label_3->setText(other_info_app[0] + " руб");
+    ui->label_3->setText(other_info_app[0] + " ₽");
     ui->label_6->setText(other_info_app[1]);
     ui->label_7->setText(other_info_app[2]);
 
@@ -105,8 +105,8 @@ void about_app::on_pushButton_5_clicked()
 
 void about_app::on_pushButton_6_clicked()
 {
-	chat chat_dev;
-    chat_dev.start(ui->pushButton->text());
+	chat chat_dev(ui->pushButton->text());
+    //chat_dev.start(ui->pushButton->text());
     chat_dev.setModal(true);
     chat_dev.exec();
 }

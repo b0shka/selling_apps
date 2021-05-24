@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>326</width>
-    <height>404</height>
+    <height>400</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -45,7 +45,7 @@ color: white;</string>
     <rect>
      <x>10</x>
      <y>365</y>
-     <width>146</width>
+     <width>116</width>
      <height>31</height>
     </rect>
    </property>
@@ -58,7 +58,7 @@ background-color: #ffb0be;
 border-radius: 5px;</string>
    </property>
    <property name="text">
-    <string>Удалить аккаунт</string>
+    <string>Удалить</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
@@ -118,9 +118,9 @@ color: white;</string>
   <widget class="QPushButton" name="pushButton_2">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>325</y>
-     <width>176</width>
+     <x>130</x>
+     <y>365</y>
+     <width>146</width>
      <height>31</height>
     </rect>
    </property>
@@ -138,7 +138,7 @@ QPushButton::hover {
 }</string>
    </property>
    <property name="text">
-    <string>Сохранить изменения</string>
+    <string>Сохранить</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit">
@@ -270,16 +270,23 @@ color: white;</string>
   <widget class="QPushButton" name="pushButton_3">
    <property name="geometry">
     <rect>
-     <x>165</x>
+     <x>280</x>
      <y>365</y>
-     <width>156</width>
+     <width>36</width>
      <height>31</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
    <property name="styleSheet">
     <string notr="true">QPushButton {
-	padding: 2px;
-	font-size: 14px;
+	padding-bottom: 3px;
+	font-size: 20px;
 	height: 28px;
 	color: white;
 	background-color: #404040;
@@ -290,33 +297,7 @@ QPushButton::hover {
 }</string>
    </property>
    <property name="text">
-    <string>Выйти из аккаунта</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_4">
-   <property name="geometry">
-    <rect>
-     <x>195</x>
-     <y>325</y>
-     <width>126</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton {
-	padding: 2px;
-	font-size: 14px;
-	height: 28px;
-	color: white;
-	background-color: #404040;
-	border-radius: 5px;
-}
-QPushButton::hover {
-	background-color: #949494;
-}</string>
-   </property>
-   <property name="text">
-    <string>Мои программы</string>
+    <string>⍇</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_7">
@@ -343,39 +324,12 @@ color: white;</string>
     <string>Количество программ</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_8">
-   <property name="geometry">
-    <rect>
-     <x>235</x>
-     <y>190</y>
-     <width>51</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>-1</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font-size: 16px;
-color: white;</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_9">
    <property name="geometry">
     <rect>
-     <x>235</x>
+     <x>225</x>
      <y>225</y>
-     <width>51</width>
+     <width>86</width>
      <height>21</height>
     </rect>
    </property>
@@ -419,6 +373,39 @@ color: white;</string>
    </property>
    <property name="text">
     <string>Количество звёзд</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_4">
+   <property name="geometry">
+    <rect>
+     <x>225</x>
+     <y>190</y>
+     <width>86</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+	font-size: 16px;
+	color: white;
+	background-color: #2a2a2a;
+	border: none;
+	text-align: left;
+}
+
+QPushButton::hover {
+	color: silver;
+}</string>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
  </widget>

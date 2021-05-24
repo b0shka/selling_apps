@@ -16,15 +16,16 @@ class chat : public QDialog
     Q_OBJECT
 
 public:
-    explicit chat(QWidget *parent = nullptr);
+    explicit chat(QString login_dev, QWidget *parent = nullptr);
     ~chat();
-	void start(QString login_dev);
+	//void start(QString login_dev);
 	void add_message_from_server(QString message);
 	
 private slots:
 	void on_pushButton_clicked();
 	void on_pushButton_2_clicked();
 	void add_message_to_listwidget(QString message);
+	void restore_chat();
 	
 private:
     Ui::chat *ui;

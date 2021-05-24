@@ -29,6 +29,7 @@ SOURCES += \
 	main.cpp \
     main_data/data.cpp \
 	mainwindow/mainwindow.cpp \
+	messenger/messenger.cpp \
 	profile/profile.cpp \
 	sql_database/sql_database.cpp \
     user_apps/user_apps.cpp \
@@ -48,6 +49,7 @@ HEADERS += \
     filter_search/filter_search.h \
     main_data/data.h \
 	mainwindow/mainwindow.h \
+	messenger/messenger.h \
 	profile/profile.h \
 	sql_database/sql_database.h \
     user_apps/user_apps.h \
@@ -64,6 +66,7 @@ FORMS += \
     favorite_app/favorite_app.ui \
     filter_search/filter_search.ui \
 	mainwindow/mainwindow.ui \
+	messenger/messenger.ui \
 	profile/profile.ui \
     user_apps/user_apps.ui \
     window_login/window_login.ui \

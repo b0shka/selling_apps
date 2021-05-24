@@ -34,7 +34,8 @@ void sql_database::create_table()
 													  "id_server integer,"
 													  "id_socket integer,"
 													  "all_message TEXT,"
-													  "new_message TEXT"
+													  "new_message TEXT,"
+													  "dialogs TEXT"
                                                       ");";
         if (!sql.exec(str_requests))
         {
@@ -801,4 +802,71 @@ void sql_database::add_new_message_to_user(QString login, QString message)
 	}
 	
 	db.commit();
+}
+
+void sql_database::start_dialog(QString login, QString login_dev)
+{
+	str_requests = "SELECT dialogs FROM " + user_table + " WHERE login = ('%1');";
+	if (!sql.exec(str_requests.arg(login)))
+	{
+		qDebug() << "[ERROR] Не удается получить dialogs " << db.lastError().text();
+		return;
+	}
+	
+	QSqlRecord get_data = sql.record();
+    QString dialogs;
+    while (sql.next())
+        dialogs = sql.value(get_data.indexOf("dialogs")).toString();
+	
+	int result_check = dialogs.indexOf(login_dev);
+	if (result_check == -1)
+	{
+		if (dialogs.size() == 0)
+			dialogs += login_dev;
+		else
+			dialogs += ";" + login_dev;
+		
+		str_requests = "UPDATE " + user_table + " SET dialogs = ('%1') WHERE login = ('%2');";
+		if (!sql.exec(str_requests.arg(dialogs).arg(login)))
+		{
+			qDebug() << "[ERROR] Не удается обновить dialogs " << db.lastError().text();
+			return;
+		}
+		
+		db.commit();
+	}
+}
+
+QString sql_database::get_dialogs(QString login)
+{
+	str_requests = "SELECT dialogs FROM " + user_table + " WHERE login = ('%1');";
+	if (!sql.exec(str_requests.arg(login)))
+	{
+		qDebug() << "[ERROR] Не удается получить dialogs " << db.lastError().text();
+		return "ERROR";
+	}
+	
+	QSqlRecord get_data = sql.record();
+    QString dialogs;
+    while (sql.next())
+        dialogs = sql.value(get_data.indexOf("dialogs")).toString();
+	
+	return dialogs;
+}
+
+QString sql_database::get_correspondence(QString login)
+{
+	str_requests = "SELECT all_message FROM " + user_table + " WHERE login = ('%1');";
+	if (!sql.exec(str_requests.arg(login)))
+	{
+		qDebug() << "[ERROR] Не удается получить переписку " << db.lastError().text();
+		return "ERROR";
+	}
+	
+	QSqlRecord get_data = sql.record();
+    QString all_message;
+    while (sql.next())
+        all_message = sql.value(get_data.indexOf("all_message")).toString();
+	
+	return all_message;
 }
