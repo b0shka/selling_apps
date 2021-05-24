@@ -33,9 +33,10 @@ void Client::send_message(QString message, QString login)
 		QByteArray text_char = message.toLatin1();
 		strcpy(buffer, text_char.data());
 		send(client, buffer, BUFFER, 0);
+		database.add_to_chat(login, g_user_name, message);
 	}
-	else if (status_online == 0)
-		database.add_new_message_to_user(login, message);
+	else
+		database.add_new_message_to_chat(login, g_user_name, message);
 }
 
 void Client::read_message()

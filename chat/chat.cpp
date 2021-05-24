@@ -49,9 +49,9 @@ void chat::on_pushButton_clicked()
 		add_message_to_listwidget(message);
 		ui->lineEdit_3->clear();
 		client.send_message(message, login_dev);
-		database.add_all_message(g_user_name, message + ";");
 	}
 	database.start_dialog(g_user_name, login_dev);
+	database.add_to_chat(g_user_name, login_dev, message);
 }
 
 void chat::on_pushButton_2_clicked()
@@ -64,7 +64,7 @@ void chat::on_pushButton_2_clicked()
 
 void chat::restore_chat()
 {
-	QString all_message = database.get_correspondence(g_user_name);
+	QString all_message = database.get_correspondence(g_user_name, login_dev);
 	qDebug() << all_message;
 	if (all_message != "ERROR")
 	{

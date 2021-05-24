@@ -22,6 +22,8 @@ void messenger::add_chats()
 	{
 		for (QString i : list_chats.split(";"))
 		{
+			if (i == "")
+				break;
 			QListWidgetItem *item = new QListWidgetItem;
 			item->setText(i);
 			//item->setIcon(QIcon("../img/green.jpg"));

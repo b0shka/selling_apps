@@ -50,17 +50,19 @@ public slots:
 	void add_id_server(int id_socket, QString login);
 	int get_id_server(QString login);
 	int get_status_online(QString login);
-	void add_all_message(QString login, QString message);
-	void add_new_message_to_user(QString login, QString message);
 	void start_dialog(QString login, QString login_dev);
+	void start_chat(QString login, QString login_dev);
 	QString get_dialogs(QString login);
-	QString get_correspondence(QString login);
+	QString get_correspondence(QString login, QString login_dev);
+	void add_to_chat(QString login, QString login_dev, QString messages);
+	void add_new_message_to_chat(QString login, QString login_dev, QString message);
 
 private:
     QSqlDatabase db;
     QSqlQuery sql;
     QString user_table = "users";
     QString app_table = "apps";
+	QString chats_table = "chats";
     QString str_requests;
 };
 
