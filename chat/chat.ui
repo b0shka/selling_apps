@@ -7,8 +7,20 @@
     <x>0</x>
     <y>0</y>
     <width>338</width>
-    <height>466</height>
+    <height>463</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>338</width>
+    <height>463</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>338</width>
+    <height>463</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
@@ -39,7 +51,7 @@ border-radius: 5px;</string>
    <property name="geometry">
     <rect>
      <x>60</x>
-     <y>15</y>
+     <y>20</y>
      <width>191</width>
      <height>21</height>
     </rect>
@@ -96,9 +108,9 @@ QPushButton::hover {
    <property name="geometry">
     <rect>
      <x>5</x>
-     <y>50</y>
+     <y>55</y>
      <width>331</width>
-     <height>371</height>
+     <height>366</height>
     </rect>
    </property>
    <property name="font">
@@ -127,7 +139,7 @@ QListWidget::item {
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>5</y>
+     <y>10</y>
      <width>36</width>
      <height>36</height>
     </rect>
@@ -155,6 +167,40 @@ QPushButton::hover {
    </property>
    <property name="text">
     <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_3">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>10</y>
+     <width>41</width>
+     <height>36</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+     <weight>75</weight>
+     <italic>false</italic>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+	padding: 2px;
+	font-size: 20px;
+	height: 28px;
+	color: white;
+	background-color: #404040;
+	border-radius: 5px;
+}
+QPushButton::hover {
+	background-color: #949494;
+}</string>
+   </property>
+   <property name="text">
+    <string>⋮</string>
    </property>
   </widget>
  </widget>

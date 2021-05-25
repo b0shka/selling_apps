@@ -14,6 +14,11 @@ autorization_mainwindow::autorization_mainwindow(QWidget *parent) :
 	ui->label->setText(g_user_name.split(" ")[0]);
     ui->pushButton_2->setText(g_user_name.at(0));
     get_name_app_from_db();
+	int new_messages = database.check_new_messages(g_user_name);
+	if (new_messages == 1)
+	{
+		
+	}
 }
 
 autorization_mainwindow::~autorization_mainwindow()

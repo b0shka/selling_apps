@@ -161,8 +161,8 @@ QPushButton::hover {
     <property name="geometry">
      <rect>
       <x>5</x>
-      <y>50</y>
-      <width>671</width>
+      <y>55</y>
+      <width>661</width>
       <height>371</height>
      </rect>
     </property>
@@ -172,13 +172,23 @@ QPushButton::hover {
 	font-size:15px;
 	background-color: #2a2a2a;
 	color: white;
-	padding: 5px 7px;
+	padding: 0px 2px;;
 }
 
 QListWidget::item {
-	padding: 2 px 6px;
+	margin-top: 4px;
+	padding-left: 5px;
+	background-color: #424242;
+	height: 35px;
+	border: none;
+	border-radius: 5px;
 }</string>
     </property>
+    <item>
+     <property name="text">
+      <string>bot</string>
+     </property>
+    </item>
    </widget>
   </widget>
  </widget>

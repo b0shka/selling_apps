@@ -46,8 +46,11 @@ void Client::read_message()
 	while (g_status_online == 1)
 	{
 		recv(client_socket, buffer, BUFFER, 0);
-		qDebug() << QString(buffer);
-		//chat_dev.add_message_from_server(QString(buffer));
+		if (QString(buffer).size() != 0)
+		{
+			qDebug() << QString(buffer);
+			//chat_dev.add_message_from_server(QString(buffer));
+		}
 	}
 }
 

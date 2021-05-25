@@ -58,6 +58,7 @@ public slots:
 	void add_new_message_to_database(QString login, QString login_dev, QString message);
 	QString get_new_messages(QString login, QString login_dev);
 	void new_messages_to_all_messages(QString login, QString login_dev);
+	int check_new_messages(QString login);
 
 private:
     QSqlDatabase db;
