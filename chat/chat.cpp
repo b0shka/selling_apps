@@ -16,7 +16,9 @@ chat::chat(QString login_dev, QWidget *parent) :
 	database.change_status_online(g_user_name);
 	
 	read_msg.start();
+	database.start_dialog(g_user_name, login_dev);
 	restore_chat();
+	restore_new_messages();
 }
 
 chat::~chat()
@@ -25,6 +27,7 @@ chat::~chat()
 	client.disconnect();
 	read_msg.wait();
 	database.change_status_online(g_user_name);
+	database.new_messages_to_all_messages(g_user_name, login_dev);
 }
 
 /*void chat::start(QString login_dev)
@@ -50,7 +53,6 @@ void chat::on_pushButton_clicked()
 		ui->lineEdit_3->clear();
 		client.send_message(message, login_dev);
 	}
-	database.start_dialog(g_user_name, login_dev);
 	database.add_to_chat(g_user_name, login_dev, message);
 }
 
@@ -65,12 +67,31 @@ void chat::on_pushButton_2_clicked()
 void chat::restore_chat()
 {
 	QString all_message = database.get_correspondence(g_user_name, login_dev);
-	qDebug() << all_message;
+	
 	if (all_message != "ERROR")
 	{
 		for (QString i : all_message.split(";"))
 		{
 			add_message_to_listwidget(i);
+		}
+	}
+}
+
+void chat::restore_new_messages()
+{
+	QString new_messages = database.get_new_messages(g_user_name, login_dev);
+	if (new_messages.size() != 0)
+	{
+		if (new_messages != "ERROR")
+		{
+			QListWidgetItem *item = new QListWidgetItem;
+			item->setTextAlignment(0);
+			item->setText("Новые сообщения");
+			ui->listWidget->addItem(item);
+			for (QString i : new_messages.split(";"))
+			{
+				add_message_from_server(i);
+			}
 		}
 	}
 }
@@ -85,9 +106,7 @@ void chat::add_message_to_listwidget(QString message)
 
 void chat::add_message_from_server(QString message)
 {
-	QTime time = QTime::currentTime();
 	QListWidgetItem *item = new QListWidgetItem;
-    item->setText("(" + time.toString("hh:mm") + ") " + message);
-	item->setText(message);
+    item->setText(message);
 	ui->listWidget->addItem(item);
 }

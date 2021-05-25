@@ -62,6 +62,7 @@ void sql_database::create_table()
         qDebug() << "[INFO] Создана таблица с программами";
 		
 		str_requests = "CREATE TABLE " + chats_table + " ("
+													   "id integer PRIMARY KEY NOT NULL,"
 													   "login VARCHAR (32) NOT NULL,"
 													   "login_dev VARCHAR (32) NOT NULL,"
 													   "messages TEXT,"
@@ -807,6 +808,35 @@ void sql_database::start_dialog(QString login, QString login_dev)
 		}
 		
 		db.commit();
+	}
+	
+	str_requests = "SELECT dialogs FROM " + user_table + " WHERE login = ('%1');";
+	if (!sql.exec(str_requests.arg(login_dev)))
+	{
+		qDebug() << "[ERROR] Не удается получить dialogs " << db.lastError().text();
+		return;
+	}
+	
+	get_data = sql.record();
+    while (sql.next())
+        dialogs = sql.value(get_data.indexOf("dialogs")).toString();
+	
+	result_check = dialogs.indexOf(login);
+	if (result_check == -1)
+	{
+		if (dialogs.size() == 0)
+			dialogs += login;
+		else
+			dialogs += ";" + login;
+		
+		str_requests = "UPDATE " + user_table + " SET dialogs = ('%1') WHERE login = ('%2');";
+		if (!sql.exec(str_requests.arg(dialogs).arg(login_dev)))
+		{
+			qDebug() << "[ERROR] Не удается обновить dialogs " << db.lastError().text();
+			return;
+		}
+		
+		db.commit();
 		
 		start_chat(login, login_dev);
 	}
@@ -814,21 +844,54 @@ void sql_database::start_dialog(QString login, QString login_dev)
 
 void sql_database::start_chat(QString login, QString login_dev)
 {
-	str_requests = "INSERT INTO " + chats_table + " (login, login_dev) VALUES('%1', '%2');";
+	str_requests = "SELECT id FROM " + chats_table + " WHERE login = ('%1') and login_dev = ('%2');";
 	if (!sql.exec(str_requests.arg(login).arg(login_dev)))
-    {
-        qDebug() << "[ERROR] Не получается создать запись с чатом " << db.lastError().text();
-        return;
-    }
-    db.commit();
+	{
+		qDebug() << "[ERROR] Не удается получить id переписки " << db.lastError().text();
+		return;
+	}
 	
-	str_requests = "INSERT INTO " + chats_table + " (login, login_dev) VALUES('%1', '%2');";
+	QSqlRecord get_data = sql.record();
+    QString id_dialog;
+    while (sql.next())
+        id_dialog = sql.value(get_data.indexOf("id")).toString();
+	
+	if (id_dialog.size() == 0)
+	{	
+		int chat_id = generate_id(chats_table);
+		
+		str_requests = "INSERT INTO " + chats_table + " (id, login, login_dev) VALUES(%1, '%2', '%3');";
+		if (!sql.exec(str_requests.arg(chat_id).arg(login).arg(login_dev)))
+		{
+			qDebug() << "[ERROR] Не получается создать запись с чатом " << db.lastError().text();
+			return;
+		}
+		db.commit();
+	}
+	
+	str_requests = "SELECT id FROM " + chats_table + " WHERE login = ('%1') and login_dev = ('%2');";
 	if (!sql.exec(str_requests.arg(login_dev).arg(login)))
-    {
-        qDebug() << "[ERROR] Не получается создать запись с чатом " << db.lastError().text();
-        return;
-    }
-    db.commit();
+	{
+		qDebug() << "[ERROR] Не удается получить id переписки " << db.lastError().text();
+		return;
+	}
+	
+	get_data = sql.record();
+    while (sql.next())
+        id_dialog = sql.value(get_data.indexOf("id")).toString();
+	
+	if (id_dialog.size() == 0)
+	{
+		int chat_id = generate_id(chats_table);
+		
+		str_requests = "INSERT INTO " + chats_table + " (id, login, login_dev) VALUES(%1, '%2', '%3');";
+		if (!sql.exec(str_requests.arg(chat_id).arg(login_dev).arg(login)))
+		{
+			qDebug() << "[ERROR] Не получается создать запись с чатом " << db.lastError().text();
+			return;
+		}
+		db.commit();
+	}
 }
 
 QString sql_database::get_dialogs(QString login)
@@ -891,26 +954,51 @@ void sql_database::add_to_chat(QString login, QString login_dev, QString message
 	db.commit();
 }
 
-void sql_database::add_new_message_to_chat(QString login, QString login_dev, QString message)
+void sql_database::add_new_message_to_database(QString login, QString login_dev, QString message)
+{
+	QString new_message = get_new_messages(login_dev, login);
+	if (new_message != "ERROR")
+	{
+		new_message += message + ";";
+		
+		str_requests = "UPDATE " + chats_table + " SET new_messages = ('%1') WHERE login = ('%2') and login_dev = ('%3');";
+		if (!sql.exec(str_requests.arg(new_message).arg(login_dev).arg(login)))
+		{
+			qDebug() << "Не удается обновить new_message " << db.lastError().text();
+			return;
+		}
+		
+		db.commit();
+	}
+}
+
+QString sql_database::get_new_messages(QString login, QString login_dev)
 {
 	str_requests = "SELECT new_messages FROM " + chats_table + " WHERE login = ('%1') and login_dev = ('%2');";
-	if (!sql.exec(str_requests.arg(login_dev).arg(login)))
+	if (!sql.exec(str_requests.arg(login).arg(login_dev)))
 	{
 		qDebug() << "[ERROR] Не удается получить new_message " << db.lastError().text();
-		return;
+		return "ERROR";
 	}
 	
 	QSqlRecord get_data = sql.record();
     QString new_message;
     while (sql.next())
         new_message = sql.value(get_data.indexOf("new_messages")).toString();
-
-	new_message += message + ";";
 	
-	str_requests = "UPDATE " + chats_table + " SET new_messages = ('%1') WHERE login = ('%2') and login_dev = ('%3');";
-	if (!sql.exec(str_requests.arg(new_message).arg(login_dev).arg(login)))
+	return new_message;
+}
+
+void sql_database::new_messages_to_all_messages(QString login, QString login_dev)
+{
+	QString new_message = get_new_messages(login, login_dev);
+	
+	add_to_chat(login, login_dev, new_message);
+	
+	str_requests = "UPDATE " + chats_table + " SET new_messages = ('%1') WHERE login = ('%2') and login_dev = ('%3')";
+	if (!sql.exec(str_requests.arg("").arg(login).arg(login_dev)))
 	{
-		qDebug() << "Не удается обновить new_message " << db.lastError().text();
+		qDebug() << "[ERROR] Не удается очистить new_messages " << db.lastError().text();
 		return;
 	}
 	

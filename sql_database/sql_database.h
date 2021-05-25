@@ -55,7 +55,9 @@ public slots:
 	QString get_dialogs(QString login);
 	QString get_correspondence(QString login, QString login_dev);
 	void add_to_chat(QString login, QString login_dev, QString messages);
-	void add_new_message_to_chat(QString login, QString login_dev, QString message);
+	void add_new_message_to_database(QString login, QString login_dev, QString message);
+	QString get_new_messages(QString login, QString login_dev);
+	void new_messages_to_all_messages(QString login, QString login_dev);
 
 private:
     QSqlDatabase db;

@@ -36,7 +36,7 @@ void Client::send_message(QString message, QString login)
 		database.add_to_chat(login, g_user_name, message);
 	}
 	else
-		database.add_new_message_to_chat(login, g_user_name, message);
+		database.add_new_message_to_database(g_user_name, login, message);
 }
 
 void Client::read_message()

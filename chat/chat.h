@@ -26,6 +26,7 @@ private slots:
 	void on_pushButton_2_clicked();
 	void add_message_to_listwidget(QString message);
 	void restore_chat();
+	void restore_new_messages();
 	
 private:
     Ui::chat *ui;
