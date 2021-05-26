@@ -184,6 +184,55 @@ QList<QString> sql_database::get_info_for_profile(QString login)
 
 QString sql_database::delete_user_from_db(QString login)
 {
+	str_requests = "DELETE FROM " + chats_table + " WHERE login = ('%1') or login_dev = ('%1');";
+	if (!sql.exec(str_requests.arg(login)))
+	{
+		qDebug() << "[ERROR] Не удается удалить чаты пользователя " << db.lastError().text();
+		return "ERROR";
+	}
+	db.commit();
+	
+	str_requests = "SELECT dialogs FROM " + user_table + " WHERE login = ('%1');";
+	if (!sql.exec(str_requests.arg(login)))
+	{
+		qDebug() << "[ERROR] Не удается получить список переписок пользователя " << db.lastError().text();
+		return "ERROR";
+	}
+	QSqlRecord get_data = sql.record();
+    QString dialogs;
+    while (sql.next())
+        dialogs = sql.value(get_data.indexOf("dialogs")).toString();
+	
+	for (QString i : dialogs.split(";"))
+	{
+		str_requests = "SELECT dialogs FROM " + user_table + " WHERE login = ('%1');";
+		if (!sql.exec(str_requests.arg(i)))
+		{
+			qDebug() << "[ERROR] Не удается получить список переписок пользователя с которым переписовался пользователь " << db.lastError().text();
+			return "ERROR";
+		}
+		
+		get_data = sql.record();
+		QString dev_dialogs;
+		QString new_dev_dialogs = "";
+		while (sql.next())
+			dev_dialogs = sql.value(get_data.indexOf("dialogs")).toString();
+		
+		for (QString i : dev_dialogs.split(";"))
+		{
+			if (i != login)
+				new_dev_dialogs += i + ";";
+		}
+		
+		str_requests = "UPDATE " + user_table + " SET dialogs = ('%1') WHERE login = ('%2');";
+		if (!sql.exec(str_requests.arg(new_dev_dialogs).arg(i)))
+		{
+			qDebug() << "[ERROR] Не удается обновить dialogs пользователя с которым переписовался пользователь " << db.lastError().text();
+			return "ERROR";
+		}
+		db.commit();
+	}
+	
     str_requests = "DELETE FROM " + user_table + " WHERE login = ('%1');";
     if (!sql.exec(str_requests.arg(login)))
     {
@@ -1066,7 +1115,7 @@ void sql_database::delete_chat(QString login, QString login_dev)
 	str_requests = "SELECT dialogs FROM " + user_table + " WHERE login = ('%1');";
 	if (!sql.exec(str_requests.arg(login)))
 	{
-		qDebug() << "[ERROR] Не удается удалить получить пользователя " << db.lastError().text();
+		qDebug() << "[ERROR] Не удается получить список переписок пользователя " << db.lastError().text();
 		return;
 	}
 	
@@ -1093,7 +1142,7 @@ void sql_database::delete_chat(QString login, QString login_dev)
 	str_requests = "SELECT dialogs FROM " + user_table + " WHERE login = ('%1');";
 	if (!sql.exec(str_requests.arg(login_dev)))
 	{
-		qDebug() << "[ERROR] Не удается удалить получить пользователя " << db.lastError().text();
+		qDebug() << "[ERROR] Не удается получить список переписок пользователя " << db.lastError().text();
 		return;
 	}
 	

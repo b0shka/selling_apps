@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "../mainwindow/mainwindow.h"
+#include "../popup/popup.h"
 
 namespace Ui {
 class autorization_mainwindow;
@@ -23,6 +24,7 @@ private slots:
     void on_pushButton_3_clicked();
     void on_pushButton_4_clicked();
 	void on_pushButton_5_clicked();
+	void on_pushButton_6_clicked();
     void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
     void keyPressEvent(QKeyEvent *event);
     void on_lineEdit_returnPressed();
@@ -38,6 +40,7 @@ private slots:
 	
 private:
     Ui::autorization_mainwindow *ui;
+	popup *popUp;
     sql_database database;
 };
 

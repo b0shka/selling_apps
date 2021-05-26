@@ -30,6 +30,7 @@ SOURCES += \
     main_data/data.cpp \
 	mainwindow/mainwindow.cpp \
 	messenger/messenger.cpp \
+	popup/popup.cpp \
 	profile/profile.cpp \
 	sql_database/sql_database.cpp \
     user_apps/user_apps.cpp \
@@ -50,6 +51,7 @@ HEADERS += \
     main_data/data.h \
 	mainwindow/mainwindow.h \
 	messenger/messenger.h \
+	popup/popup.h \
 	profile/profile.h \
 	sql_database/sql_database.h \
     user_apps/user_apps.h \

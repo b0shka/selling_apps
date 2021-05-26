@@ -5,6 +5,7 @@
 #include <QMessageBox>
 #include "../sql_database/sql_database.h"
 #include "../main_data/data.h"
+#include "../popup/popup.h"
 
 namespace Ui {
 class profile;
@@ -27,6 +28,7 @@ private slots:
 
 private:
     Ui::profile *ui;
+	popup *popUp;
     sql_database user_info;
 };
 

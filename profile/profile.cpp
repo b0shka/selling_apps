@@ -6,6 +6,7 @@ profile::profile(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::profile)
 {
+	popUp = new popup();
     ui->setupUi(this);
     g_status_now_profile = 1;
     ui->lineEdit->setText(g_user_name);
@@ -45,7 +46,8 @@ void profile::on_pushButton_clicked()
         QString result_delete = user_delete.delete_user_from_db(g_user_name);
         if (result_delete == "Success")
         {
-            QMessageBox::information(this, "Уведомление", "Запись удалена");
+			popUp->setPopupText("Запись удалена");
+			popUp->show();
             close();
             g_status_delete = 1;
         }
@@ -68,7 +70,8 @@ void profile::on_pushButton_2_clicked()
         QString result_save = user_info.save_change_in_profile({user_id, new_login, email, number_phone});
         if (result_save != "ERROR")
         {
-            QMessageBox::information(this, "Уведомление", "Данные сохранены");
+			popUp->setPopupText("Данные сохранены");
+			popUp->show();
             g_status_change = 1;
             g_user_name = new_login;
             close();

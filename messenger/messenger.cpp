@@ -5,6 +5,7 @@ messenger::messenger(QWidget *parent) :
 	QDialog(parent),
 	ui(new Ui::messenger)
 {
+	popUp = new popup();
 	ui->setupUi(this);
 	ui->pushButton->setHidden(true);
 	add_chats();
@@ -54,6 +55,8 @@ void messenger::on_pushButton_clicked()
     if (reply == QMessageBox::Yes)
 	{
         database.delete_chat(g_user_name, chat_name);
+		popUp->setPopupText("Переписка успешно удалена");
+		popUp->show();
 		ui->listWidget->clear();
 		add_chats();
 		ui->pushButton->setHidden(true);

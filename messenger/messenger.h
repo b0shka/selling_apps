@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include "../chat/chat.h"
 #include "../sql_database/sql_database.h"
+#include "../popup/popup.h"
 
 namespace Ui {
 class messenger;
@@ -27,6 +28,7 @@ private slots:
 	
 private:
 	Ui::messenger *ui;
+	popup *popUp;
 	sql_database database;
 	QString chat_name;
 };

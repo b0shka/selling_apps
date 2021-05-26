@@ -8,6 +8,11 @@ chat::chat(QWidget *parent) :
     ui(new Ui::chat)
 {
     ui->setupUi(this);
+	/*int status_online = database.get_status_online(login_dev);
+	if (status_online == 1)
+		ui->label_8->setHidden(false);
+	else
+		ui->label_8->setHidden(true);*/
 }
 
 chat::~chat()
@@ -24,6 +29,11 @@ void chat::start(QString login_dev)
 	ui->label_7->setText(login_dev.split(" ")[0]);
 	ui->pushButton_2->setText(login_dev.at(0));
 	ui->pushButton_4->setHidden(true);
+	int status_online = database.get_status_online(login_dev);
+	if (status_online == 1)
+		ui->label_8->setHidden(false);
+	else
+		ui->label_8->setHidden(true);
 	
 	client.conect_server();
 	database.change_status_online(g_user_name);

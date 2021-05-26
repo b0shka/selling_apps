@@ -10,6 +10,7 @@ autorization_mainwindow::autorization_mainwindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::autorization_mainwindow)
 {
+	popUp = new popup();
     ui->setupUi(this);
 	ui->label->setText(g_user_name.split(" ")[0]);
     ui->pushButton_2->setText(g_user_name.at(0));
@@ -17,7 +18,8 @@ autorization_mainwindow::autorization_mainwindow(QWidget *parent) :
 	int new_messages = database.check_new_messages(g_user_name);
 	if (new_messages == 1)
 	{
-		
+		popUp->setPopupText("У вас есть новые сообщения");
+		popUp->show();
 	}
 }
 
@@ -58,9 +60,6 @@ void autorization_mainwindow::on_pushButton_2_clicked()
         g_status_out = 0;
         g_status_autorization = 0;
         close();
-		/*g_status_online = 0;
-		database.change_status_online(g_user_name);
-		client.disconnect();*/
         auto mainwindow = new MainWindow();
         mainwindow->show();
     }
@@ -337,4 +336,17 @@ void autorization_mainwindow::on_pushButton_5_clicked()
     messenger chats;
 	chats.setModal(true);
 	chats.exec();
+}
+
+void autorization_mainwindow::on_pushButton_6_clicked()
+{
+	database.get_max_price_app();
+    database.get_min_price_app();
+    get_name_app_from_db();
+	int new_messages = database.check_new_messages(g_user_name);
+	if (new_messages == 1)
+	{
+		popUp->setPopupText("У вас есть новые сообщения");
+		popUp->show();
+	}
 }

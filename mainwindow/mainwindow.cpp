@@ -281,3 +281,10 @@ void MainWindow::change_mainwindow()
     autorization_window.setModal(false);
     autorization_window.exec();
 }
+
+void MainWindow::on_pushButton_4_clicked()
+{
+	database.get_max_price_app();
+    database.get_min_price_app();
+    get_name_app_from_db();
+}
