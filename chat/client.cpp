@@ -1,5 +1,4 @@
 ﻿#include "client.h"
-#include "chat.h"
 
 void Client::conect_server()
 {
@@ -33,26 +32,24 @@ void Client::send_message(QString message, QString login)
 		QByteArray text_char = message.toLatin1();
 		strcpy(buffer, text_char.data());
 		send(client, buffer, BUFFER, 0);
-		database.add_to_chat(login, g_user_name, message);
+		database.add_to_chat(login, g_user_name, "0" + message.mid(2));
 	}
 	else
-		database.add_new_message_to_database(g_user_name, login, message);
+		database.add_new_message_to_database(g_user_name, login, "0" + message);
 }
 
-void Client::read_message()
+/*void Client::read_message()
 {
 	int client_socket = database.get_id_server(g_user_name);
-	//chat chat_dev;
 	while (g_status_online == 1)
 	{
 		recv(client_socket, buffer, BUFFER, 0);
 		if (QString(buffer).size() != 0)
 		{
 			qDebug() << QString(buffer);
-			//chat_dev.add_message_from_server(QString(buffer));
 		}
 	}
-}
+}*/
 
 void Client::disconnect()
 {

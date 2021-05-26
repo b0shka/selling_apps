@@ -1052,3 +1052,104 @@ int sql_database::check_new_messages(QString login)
 	else
 		return 0;
 }
+
+void sql_database::delete_chat(QString login, QString login_dev)
+{
+	str_requests = "DELETE FROM " + chats_table + " WHERE (login = ('%1') and login_dev = ('%2')) or (login = ('%2') and login_dev = ('%1'));";
+	if (!sql.exec(str_requests.arg(login).arg(login_dev)))
+	{
+		qDebug() << "[ERROR] Не удается удалить чаты пользователя " << db.lastError().text();
+		return;
+	}
+	db.commit();
+
+	str_requests = "SELECT dialogs FROM " + user_table + " WHERE login = ('%1');";
+	if (!sql.exec(str_requests.arg(login)))
+	{
+		qDebug() << "[ERROR] Не удается удалить получить пользователя " << db.lastError().text();
+		return;
+	}
+	
+	QSqlRecord get_data = sql.record();
+    QString dialogs;
+	QString new_dialogs = "";
+    while (sql.next())
+        dialogs = sql.value(get_data.indexOf("dialogs")).toString();
+	
+	for (QString i : dialogs.split(";"))
+	{
+		if (i != login_dev)
+			new_dialogs += i + ";";
+	}
+	
+	str_requests = "UPDATE " + user_table + " SET dialogs = ('%1') WHERE login = ('%2');";
+	if (!sql.exec(str_requests.arg(new_dialogs).arg(login)))
+	{
+		qDebug() << "[ERROR] Не удается обновить dialogs " << db.lastError().text();
+		return;
+	}
+	db.commit();
+	
+	str_requests = "SELECT dialogs FROM " + user_table + " WHERE login = ('%1');";
+	if (!sql.exec(str_requests.arg(login_dev)))
+	{
+		qDebug() << "[ERROR] Не удается удалить получить пользователя " << db.lastError().text();
+		return;
+	}
+	
+	get_data = sql.record();
+	new_dialogs = "";
+    while (sql.next())
+        dialogs = sql.value(get_data.indexOf("dialogs")).toString();
+	
+	for (QString i : dialogs.split(";"))
+	{
+		if (i != login)
+			new_dialogs += i + ";";
+	}
+	
+	str_requests = "UPDATE " + user_table + " SET dialogs = ('%1') WHERE login = ('%2');";
+	if (!sql.exec(str_requests.arg(new_dialogs).arg(login_dev)))
+	{
+		qDebug() << "[ERROR] Не удается обновить dialogs " << db.lastError().text();
+		return;
+	}
+	db.commit();
+}
+
+void sql_database::delete_message(QString login, QString login_dev, QString message)
+{
+	QString messages = get_correspondence(login, login_dev);
+	QString new_messages = "";
+	
+	for (QString i : messages.split(";"))
+	{
+		if (i.mid(1) != message and i != "")
+			new_messages += i + ";";
+	}
+	
+	str_requests = "UPDATE " + chats_table + " SET messages = ('%1') WHERE login = ('%2') and login_dev = ('%3');";
+	if (!sql.exec(str_requests.arg(new_messages).arg(login).arg(login_dev)))
+	{
+		qDebug() << "[ERROR] Не удается обновить messages " << db.lastError().text();
+		return;
+	}
+	db.commit();
+	
+	messages = get_correspondence(login_dev, login);
+	new_messages = "";
+	
+	for (QString i : messages.split(";"))
+	{
+		if (i.mid(1) != message and i != "")
+			new_messages += i + ";";
+	}
+	
+	str_requests = "UPDATE " + chats_table + " SET messages = ('%1') WHERE login = ('%2') and login_dev = ('%3');";
+	if (!sql.exec(str_requests.arg(new_messages).arg(login_dev).arg(login)))
+	{
+		qDebug() << "[ERROR] Не удается обновить messages " << db.lastError().text();
+		return;
+	}
+	db.commit();
+}

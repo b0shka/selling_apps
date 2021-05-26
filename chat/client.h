@@ -20,9 +20,8 @@ class Client
 public:
 	void conect_server();
 	void send_message(QString message, QString login);
-	void read_message();
+	//void read_message();
 	void disconnect();
-	//int id_socket;
 	
 private:
 	int client;

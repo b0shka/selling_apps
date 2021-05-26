@@ -59,6 +59,8 @@ public slots:
 	QString get_new_messages(QString login, QString login_dev);
 	void new_messages_to_all_messages(QString login, QString login_dev);
 	int check_new_messages(QString login);
+	void delete_chat(QString login, QString login_dev);
+	void delete_message(QString login, QString login_dev, QString message);
 
 private:
     QSqlDatabase db;

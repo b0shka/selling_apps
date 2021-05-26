@@ -6,6 +6,7 @@ messenger::messenger(QWidget *parent) :
 	ui(new Ui::messenger)
 {
 	ui->setupUi(this);
+	ui->pushButton->setHidden(true);
 	add_chats();
 }
 
@@ -16,7 +17,6 @@ messenger::~messenger()
 
 void messenger::add_chats()
 {
-	sql_database database;
 	QString list_chats = database.get_dialogs(g_user_name);
 	if (list_chats != "ERROR")
 	{
@@ -36,8 +36,26 @@ void messenger::add_chats()
 void messenger::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 {
 	close();
-	chat chat_dev(item->text());
-    //chat_dev.start(ui->pushButton->text());
+	chat chat_dev;
+    chat_dev.start(item->text());
     chat_dev.setModal(true);
     chat_dev.exec();
+}
+
+void messenger::on_listWidget_itemClicked(QListWidgetItem *item)
+{
+	ui->pushButton->setHidden(false);
+	chat_name = item->text();
+}
+
+void messenger::on_pushButton_clicked()
+{
+	QMessageBox::Button reply = QMessageBox::question(this, "Подтверждение удаления", "Вы уверены?", QMessageBox::Yes | QMessageBox::No);
+    if (reply == QMessageBox::Yes)
+	{
+        database.delete_chat(g_user_name, chat_name);
+		ui->listWidget->clear();
+		add_chats();
+		ui->pushButton->setHidden(true);
+	}
 }

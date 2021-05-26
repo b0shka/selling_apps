@@ -70,3 +70,5 @@ int g_max_price = 0;
 int g_min_price = 0;
 QString g_technloges = "";
 QString g_description = "";
+
+QString g_ui = "";

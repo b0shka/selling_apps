@@ -52,8 +52,8 @@ void developper_app::on_pushButton_2_clicked()
 void developper_app::on_pushButton_3_clicked()
 {
 	close();
-	chat chat_dev(user_name_dev);
-    //chat_dev.start(user_name_dev);
+	chat chat_dev;
+    chat_dev.start(user_name_dev);
     chat_dev.setModal(true);
     chat_dev.exec();
 }

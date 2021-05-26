@@ -29,4 +29,6 @@ extern int g_min_price;
 extern QString g_technloges;
 extern QString g_description;
 
+extern QString g_ui;
+
 #endif // DATA_H

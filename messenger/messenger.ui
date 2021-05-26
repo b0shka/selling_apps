@@ -33,9 +33,9 @@ color: white;</string>
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>40</y>
+     <y>45</y>
      <width>341</width>
-     <height>426</height>
+     <height>421</height>
     </rect>
    </property>
    <property name="minimumSize">
@@ -79,7 +79,7 @@ QListWidget::item {
    <property name="geometry">
     <rect>
      <x>15</x>
-     <y>10</y>
+     <y>15</y>
      <width>146</width>
      <height>21</height>
     </rect>
@@ -97,6 +97,27 @@ color: white;</string>
    </property>
    <property name="text">
     <string>Мессенджер</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>10</y>
+     <width>101</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">padding: 2px;
+font-size: 14px;
+height: 28px;
+color: black;
+background-color: #ffb0be;
+border-radius: 5px;</string>
+   </property>
+   <property name="text">
+    <string>Удалить</string>
    </property>
   </widget>
  </widget>

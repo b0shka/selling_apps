@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QListWidgetItem>
+#include <QMessageBox>
 #include "../chat/chat.h"
 #include "../sql_database/sql_database.h"
 
@@ -21,9 +22,13 @@ public:
 private slots:
 	void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
 	void add_chats();
+	void on_listWidget_itemClicked(QListWidgetItem *item);
+	void on_pushButton_clicked();
 	
 private:
 	Ui::messenger *ui;
+	sql_database database;
+	QString chat_name;
 };
 
 #endif // MESSENGER_H
