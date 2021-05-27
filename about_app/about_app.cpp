@@ -105,8 +105,7 @@ void about_app::on_pushButton_5_clicked()
 
 void about_app::on_pushButton_6_clicked()
 {
-	chat chat_dev;
-    chat_dev.start(ui->pushButton->text());
+	chat chat_dev(ui->pushButton->text());
     chat_dev.setModal(true);
     chat_dev.exec();
 }

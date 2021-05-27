@@ -37,8 +37,7 @@ void messenger::add_chats()
 void messenger::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 {
 	close();
-	chat chat_dev;
-    chat_dev.start(item->text());
+	chat chat_dev(item->text());
     chat_dev.setModal(true);
     chat_dev.exec();
 }

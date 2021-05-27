@@ -1,30 +1,13 @@
 ﻿#include "chat.h"
 #include "ui_chat.h"
 #include "../developper_app/developper_app.h"
-#include <typeinfo>
 
-chat::chat(QWidget *parent) :
+chat::chat(QString login_dev, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::chat)
 {
     ui->setupUi(this);
-	/*int status_online = database.get_status_online(login_dev);
-	if (status_online == 1)
-		ui->label_8->setHidden(false);
-	else
-		ui->label_8->setHidden(true);*/
-}
-
-chat::~chat()
-{
-    delete ui;
-	client.disconnect();
-	read_msg.wait();
-	database.change_status_online(g_user_name);
-}
-
-void chat::start(QString login_dev)
-{
+	
 	this->login_dev = login_dev;
 	ui->label_7->setText(login_dev.split(" ")[0]);
 	ui->pushButton_2->setText(login_dev.at(0));
@@ -38,14 +21,37 @@ void chat::start(QString login_dev)
 	client.conect_server();
 	database.change_status_online(g_user_name);
 	
-	read_msg.start();
+	//read_msg.start();
+	
+	connect(&thread_read, &QThread::started, &thread, &thread_start::run);
+	connect(&thread, &thread_start::finished, &thread_read, &QThread::terminate);
+	connect(&thread, SIGNAL(add_msg(QString)), this, SLOT(add_message_from_server(QString)));
+	thread.moveToThread(&thread_read);
+	thread_read.start();
+	
 	database.start_dialog(g_user_name, login_dev);
 	restore_chat();
 	restore_new_messages();
 }
+
+chat::~chat()
+{
+	delete ui;
+	client.disconnect();
+	thread_read.quit();
+	thread_read.wait();
+	//read_msg.wait();
+	database.change_status_online(g_user_name);
+}
+
+void chat::on_pushButton_3_clicked()
+{
+	
+}
+
 	
 void chat::on_pushButton_clicked()
-{
+{	
 	QString message = ui->lineEdit_3->text();
 	QString text = message;
 
@@ -108,22 +114,6 @@ void chat::restore_new_messages()
 			}
 		}
 		database.new_messages_to_all_messages(g_user_name, login_dev);
-	}
-}
-
-void chat::read_message()
-{
-	int client_socket = database.get_id_server(g_user_name);
-	while (g_status_online == 1)
-	{
-		recv(client_socket, buffer, BUFFER, 0);
-		if (QString(buffer).size() != 0)
-		{
-			qDebug() << QString(buffer);
-			QListWidgetItem *item = new QListWidgetItem;
-			item->setText(QString(buffer));
-			ui->listWidget->addItem(item);;
-		}
 	}
 }
 

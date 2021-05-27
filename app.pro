@@ -23,6 +23,7 @@ SOURCES += \
     chat/chat.cpp \
 	chat/client.cpp \
 	chat/thread_chat.cpp \
+	chat/thread_start.cpp \
     developper_app/developper_app.cpp \
     favorite_app/favorite_app.cpp \
     filter_search/filter_search.cpp \
@@ -45,6 +46,7 @@ HEADERS += \
     chat/chat.h \
 	chat/client.h \
 	chat/thread_chat.h \
+	chat/thread_start.h \
     developper_app/developper_app.h \
     favorite_app/favorite_app.h \
     filter_search/filter_search.h \
