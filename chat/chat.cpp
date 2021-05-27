@@ -19,12 +19,12 @@ chat::chat(QString login_dev, QWidget *parent) :
 		ui->label_8->setHidden(true);
 	
 	client.conect_server();
-	database.change_status_online(g_user_name);
+	//database.change_status_online(g_user_name);
 	
-	//read_msg.start();
+	add_info.start();
 	
-	connect(&thread_read, &QThread::started, &thread, &thread_start::run);
-	connect(&thread, &thread_start::finished, &thread_read, &QThread::terminate);
+	connect(&thread_read, &QThread::started, &thread, &thread_chat::run);
+	connect(&thread, &thread_chat::finished, &thread_read, &QThread::terminate);
 	connect(&thread, SIGNAL(add_msg(QString)), this, SLOT(add_message_from_server(QString)));
 	thread.moveToThread(&thread_read);
 	thread_read.start();
@@ -40,7 +40,7 @@ chat::~chat()
 	client.disconnect();
 	thread_read.quit();
 	thread_read.wait();
-	//read_msg.wait();
+	add_info.wait();
 	database.change_status_online(g_user_name);
 }
 
@@ -48,7 +48,6 @@ void chat::on_pushButton_3_clicked()
 {
 	
 }
-
 	
 void chat::on_pushButton_clicked()
 {	

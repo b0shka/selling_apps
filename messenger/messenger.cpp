@@ -25,7 +25,12 @@ void messenger::add_chats()
 		{
 			if (i == "")
 				break;
+			//int count_new_messages = database.check_new_message_in_chat(i);
 			QListWidgetItem *item = new QListWidgetItem;
+			/*if (count_new_messages > 0)
+				item->setText(i + "\t\t\t" + QString::number(count_new_messages));
+			else
+				item->setText(i);*/
 			item->setText(i);
 			//item->setIcon(QIcon("../img/green.jpg"));
 			//ui->listWidget->setIconSize(QSize(32, 32));

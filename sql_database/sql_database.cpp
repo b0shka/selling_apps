@@ -1088,7 +1088,7 @@ int sql_database::check_new_messages(QString login)
 	if (!sql.exec(str_requests.arg(login)))
 	{
 		qDebug() << "[ERROR] Не удается получить все new_messages " << db.lastError().text();
-		return -1;
+		return 0;
 	}
 	
 	QSqlRecord get_data = sql.record();
@@ -1096,10 +1096,38 @@ int sql_database::check_new_messages(QString login)
     while (sql.next())
         new_message += sql.value(get_data.indexOf("new_messages")).toString();
 	
-	if (new_message.size() > 0)
-		return 1;
-	else
+	int count_new_mesages = 0;
+	for (QString i : new_message.split(";"))
+	{
+		if (i != "")
+			count_new_mesages++;
+	}
+	
+	return count_new_mesages;
+}
+
+int sql_database::check_new_message_in_chat(QString login_dev)
+{
+	str_requests = "SELECT new_messages FROM " + chats_table + " WHERE login = ('%1') and login_dev = ('%2');";
+	if (!sql.exec(str_requests.arg(g_user_name).arg(login_dev)))
+	{
+		qDebug() << "[ERROR] Не удается получить new_messages определенной переписки " << db.lastError().text();
 		return 0;
+	}
+	
+	QSqlRecord get_data = sql.record();
+    QString new_message;
+    while (sql.next())
+        new_message += sql.value(get_data.indexOf("new_messages")).toString();
+	
+	int count_new_mesages = 0;
+	for (QString i : new_message.split(";"))
+	{
+		if (i != "")
+			count_new_mesages++;
+	}
+	
+	return count_new_mesages;
 }
 
 void sql_database::delete_chat(QString login, QString login_dev)

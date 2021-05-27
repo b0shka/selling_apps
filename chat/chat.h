@@ -6,9 +6,8 @@
 #include <QListWidgetItem>
 #include <QMessageBox>
 #include "client.h"
+#include "thread_add_info.h"
 #include "thread_chat.h"
-#include "thread_start.h"
-#include <QThread>
 
 namespace Ui {
 class chat;
@@ -37,11 +36,10 @@ private:
     Ui::chat *ui;
 	Client client;
 	sql_database database;
-	//thread_chat read_msg;
+	thread_add_info add_info;
 	QThread thread_read;
-	thread_start thread;
+	thread_chat thread;
 	QString login_dev, message_name;
-	char buffer[BUFFER];
 };
 
 #endif // CHAT_H
