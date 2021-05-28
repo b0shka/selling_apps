@@ -6,6 +6,9 @@ filter_search::filter_search(QWidget *parent) :
     ui(new Ui::filter_search)
 {
     ui->setupUi(this);
+	
+	setWindowFlags(Qt::FramelessWindowHint);
+	setAttribute(Qt::WA_TranslucentBackground);
 
     ui->lineEdit->setText(QString::number(g_max_price));
     ui->lineEdit_2->setText(QString::number(g_min_price));
@@ -16,6 +19,23 @@ filter_search::filter_search(QWidget *parent) :
 filter_search::~filter_search()
 {
     delete ui;
+}
+
+void filter_search::mousePressEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::LeftButton) {
+        m_mousePoint = event->globalPos() - frameGeometry().topLeft();
+        event->accept();
+    }
+}
+
+void filter_search::mouseMoveEvent(QMouseEvent* event)
+{
+	if (event->buttons() & Qt::LeftButton )
+	{
+		move(event->globalPos() - m_mousePoint);
+		event->accept();
+	}
 }
 
 void filter_search::on_pushButton_clicked()
@@ -58,4 +78,14 @@ void filter_search::on_pushButton_2_clicked()
     ui->lineEdit_2->setText(QString::number(g_min_price));
     ui->lineEdit_3->setText(g_technloges);
     ui->lineEdit_4->setText(g_description);
+}
+
+void filter_search::on_pushButton_8_clicked()
+{
+    close();
+}
+
+void filter_search::on_pushButton_9_clicked()
+{
+    showMinimized();
 }

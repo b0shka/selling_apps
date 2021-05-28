@@ -5,11 +5,31 @@
 window_login::window_login(QWidget *parent) : QDialog(parent), ui(new Ui::window_login)
 {
     ui->setupUi(this);
+	
+	setWindowFlags(Qt::FramelessWindowHint);
+	setAttribute(Qt::WA_TranslucentBackground);
 }
 
 window_login::~window_login()
 {
     delete ui;
+}
+
+void window_login::mousePressEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::LeftButton) {
+        m_mousePoint = event->globalPos() - frameGeometry().topLeft();
+        event->accept();
+    }
+}
+
+void window_login::mouseMoveEvent(QMouseEvent* event)
+{
+	if (event->buttons() & Qt::LeftButton )
+	{
+		move(event->globalPos() - m_mousePoint);
+		event->accept();
+	}
 }
 
 void window_login::on_pushButton_clicked()
@@ -73,4 +93,14 @@ void window_login::on_pushButton_2_clicked()
     window_registration registration;
     registration.setModal(true);
     registration.exec();
+}
+
+void window_login::on_pushButton_8_clicked()
+{
+    close();
+}
+
+void window_login::on_pushButton_9_clicked()
+{
+    showMinimized();
 }

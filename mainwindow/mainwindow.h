@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QListWidgetItem>
 #include <QKeyEvent>
+#include <QMouseEvent>
+#include <QPoint>
 #include "about_app/about_app.h"
 #include "sql_database/sql_database.h"
 #include "../main_data/data.h"
@@ -33,9 +35,13 @@ private slots:
     void on_pushButton_2_clicked();
     void on_pushButton_3_clicked();
 	void on_pushButton_4_clicked();
+	void on_pushButton_8_clicked();
+	void on_pushButton_9_clicked();
     void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
+	void on_lineEdit_returnPressed();
     void keyPressEvent(QKeyEvent *event);
-    void on_lineEdit_returnPressed();
+	void mousePressEvent(QMouseEvent* event);
+	void mouseMoveEvent(QMouseEvent* event);
 
     // функции для работы с записями и поиском
     void get_name_app_from_db();
@@ -49,5 +55,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     sql_database database;
+	QPoint m_mousePoint;
 };
 #endif // MAINWINDOW_H

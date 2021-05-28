@@ -5,6 +5,8 @@
 #include <QTime>
 #include <QListWidgetItem>
 #include <QMessageBox>
+#include <QMouseEvent>
+#include <QPoint>
 #include "client.h"
 #include "thread_add_info.h"
 #include "thread_chat.h"
@@ -24,13 +26,17 @@ public:
 private slots:
 	void on_pushButton_clicked();
 	void on_pushButton_2_clicked();
+	void on_pushButton_3_clicked();
+	void on_pushButton_4_clicked();
+	void on_pushButton_8_clicked();
+	void on_pushButton_9_clicked();
+	void mousePressEvent(QMouseEvent* event);
+	void mouseMoveEvent(QMouseEvent* event);
 	void add_message_to_listwidget(QString message);
 	void add_message_from_server(QString message);
 	void restore_chat();
 	void restore_new_messages();
-	void on_pushButton_4_clicked();
 	void on_listWidget_itemClicked(QListWidgetItem *item);
-	void on_pushButton_3_clicked();
 	
 private:
     Ui::chat *ui;
@@ -40,6 +46,7 @@ private:
 	QThread thread_read;
 	thread_chat thread;
 	QString login_dev, message_name;
+	QPoint m_mousePoint;
 };
 
 #endif // CHAT_H

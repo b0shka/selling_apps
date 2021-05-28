@@ -26,8 +26,10 @@ private slots:
 	void on_pushButton_5_clicked();
 	void on_pushButton_6_clicked();
     void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
+	void on_lineEdit_returnPressed();
     void keyPressEvent(QKeyEvent *event);
-    void on_lineEdit_returnPressed();
+	void mousePressEvent(QMouseEvent* event);
+	void mouseMoveEvent(QMouseEvent* event);
 
     // функции для работы с записями и поиском
     void get_name_app_from_db();
@@ -38,10 +40,15 @@ private slots:
     void add_apps_to_listWidget(QList<QList<QString>> list_result);
     void layout_title_app(QList<QString> data_app);
 	
+	void on_pushButton_8_clicked();
+	
+	void on_pushButton_9_clicked();
+	
 private:
     Ui::autorization_mainwindow *ui;
 	popup *popUp;
     sql_database database;
+	QPoint m_mousePoint;
 };
 
 #endif // AUTORIZATION_MAINWINDOW_H

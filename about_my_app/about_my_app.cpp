@@ -6,6 +6,10 @@ about_my_app::about_my_app(QList<QString> param_app, QWidget *parent) :
     ui(new Ui::about_my_app)
 {
     ui->setupUi(this);
+	
+	setWindowFlags(Qt::FramelessWindowHint);
+	setAttribute(Qt::WA_TranslucentBackground);
+	
     if (param_app[0].size() > 0)
     {
         app_name = param_app[0];
@@ -21,6 +25,23 @@ about_my_app::about_my_app(QList<QString> param_app, QWidget *parent) :
 about_my_app::~about_my_app()
 {
     delete ui;
+}
+
+void about_my_app::mousePressEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::LeftButton) {
+        m_mousePoint = event->globalPos() - frameGeometry().topLeft();
+        event->accept();
+    }
+}
+
+void about_my_app::mouseMoveEvent(QMouseEvent* event)
+{
+	if (event->buttons() & Qt::LeftButton )
+	{
+		move(event->globalPos() - m_mousePoint);
+		event->accept();
+	}
 }
 
 void about_my_app::on_pushButton_clicked()
@@ -54,9 +75,21 @@ void about_my_app::on_pushButton_2_clicked()
         QString result_save = database.save_change_app({app_name, new_name, new_price, new_description, app_technologes});
         if (result_save != "ERROR")
         {
-            QMessageBox::information(this, "Уведомление", "Данные сохранены");
             g_status_change_app = 1;
             close();
-        }
+			popUp = new popup();
+			popUp->setPopupText("Данные сохранены");
+			popUp->show();
+		}
     }
+}
+
+void about_my_app::on_pushButton_8_clicked()
+{
+    close();
+}
+
+void about_my_app::on_pushButton_9_clicked()
+{
+    showMaximized();
 }

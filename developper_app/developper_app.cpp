@@ -8,6 +8,10 @@ developper_app::developper_app(QString login , QWidget *parent) :
     ui(new Ui::developper_app)
 {
     ui->setupUi(this);
+	
+	setWindowFlags(Qt::FramelessWindowHint);
+	setAttribute(Qt::WA_TranslucentBackground);
+	
     ui->label_7->setText(login.split(" ")[0]);
     user_name_dev = login;
 	
@@ -20,6 +24,23 @@ developper_app::developper_app(QString login , QWidget *parent) :
 developper_app::~developper_app()
 {
     delete ui;
+}
+
+void developper_app::mousePressEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::LeftButton) {
+        m_mousePoint = event->globalPos() - frameGeometry().topLeft();
+        event->accept();
+    }
+}
+
+void developper_app::mouseMoveEvent(QMouseEvent* event)
+{
+	if (event->buttons() & Qt::LeftButton )
+	{
+		move(event->globalPos() - m_mousePoint);
+		event->accept();
+	}
 }
 
 void developper_app::get_info_from_db(QString login)
@@ -55,4 +76,14 @@ void developper_app::on_pushButton_3_clicked()
 	chat chat_dev(user_name_dev);
     chat_dev.setModal(true);
     chat_dev.exec();
+}
+
+void developper_app::on_pushButton_8_clicked()
+{
+    close();
+}
+
+void developper_app::on_pushButton_9_clicked()
+{
+    showMinimized();
 }

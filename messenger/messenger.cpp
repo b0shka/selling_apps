@@ -7,6 +7,10 @@ messenger::messenger(QWidget *parent) :
 {
 	popUp = new popup();
 	ui->setupUi(this);
+	
+	setWindowFlags(Qt::FramelessWindowHint);
+	setAttribute(Qt::WA_TranslucentBackground);
+	
 	ui->pushButton->setHidden(true);
 	add_chats();
 }
@@ -16,25 +20,45 @@ messenger::~messenger()
 	delete ui;
 }
 
+void messenger::mousePressEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::LeftButton) {
+        m_mousePoint = event->globalPos() - frameGeometry().topLeft();
+        event->accept();
+    }
+}
+
+void messenger::mouseMoveEvent(QMouseEvent* event)
+{
+	if (event->buttons() & Qt::LeftButton )
+	{
+		move(event->globalPos() - m_mousePoint);
+		event->accept();
+	}
+}
+
 void messenger::add_chats()
 {
 	QString list_chats = database.get_dialogs(g_user_name);
 	if (list_chats != "ERROR")
 	{
+		ui->listWidget->clear();
 		for (QString i : list_chats.split(";"))
 		{
-			if (i == "")
-				break;
-			//int count_new_messages = database.check_new_message_in_chat(i);
-			QListWidgetItem *item = new QListWidgetItem;
-			/*if (count_new_messages > 0)
-				item->setText(i + "\t\t\t" + QString::number(count_new_messages));
+			if (i != "")
+			{
+				int count_new_messages = database.check_new_message_in_chat(i);
+				QListWidgetItem *item = new QListWidgetItem;
+				if (count_new_messages > 0)
+					item->setText(i + " (" + QString::number(count_new_messages) + ")");
+				else
+					item->setText(i);
+				//item->setIcon(QIcon("../img/green.jpg"));
+				//ui->listWidget->setIconSize(QSize(32, 32));
+				ui->listWidget->addItem(item);
+			}
 			else
-				item->setText(i);*/
-			item->setText(i);
-			//item->setIcon(QIcon("../img/green.jpg"));
-			//ui->listWidget->setIconSize(QSize(32, 32));
-			ui->listWidget->addItem(item);
+				break;
 		}
 	}
 }
@@ -42,7 +66,7 @@ void messenger::add_chats()
 void messenger::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 {
 	close();
-	chat chat_dev(item->text());
+	chat chat_dev(item->text().split(" (").at(0));
     chat_dev.setModal(true);
     chat_dev.exec();
 }
@@ -65,4 +89,14 @@ void messenger::on_pushButton_clicked()
 		add_chats();
 		ui->pushButton->setHidden(true);
 	}
+}
+
+void messenger::on_pushButton_8_clicked()
+{
+	close();
+}
+
+void messenger::on_pushButton_9_clicked()
+{
+    showMinimized();
 }

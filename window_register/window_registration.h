@@ -2,6 +2,8 @@
 #define WINDOW_REGISTRATION_H
 
 #include <QDialog>
+#include <QMouseEvent>
+#include <QPoint>
 #include "../sql_database/sql_database.h"
 #include "../main_data/data.h"
 
@@ -19,9 +21,14 @@ public:
 
 private slots:
     void on_pushButton_clicked();
-
+	void on_pushButton_8_clicked();
+	void on_pushButton_9_clicked();
+	void mousePressEvent(QMouseEvent* event);
+	void mouseMoveEvent(QMouseEvent* event);
+	
 private:
     Ui::window_registration *ui;
+	QPoint m_mousePoint;
 };
 
 #endif // WINDOW_REGISTRATION_H

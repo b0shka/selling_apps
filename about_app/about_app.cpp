@@ -16,6 +16,9 @@ about_app::about_app(QList<QString> param_app, QWidget *parent) : QDialog(parent
     ui->label_3->setText(other_info_app[0] + " ₽");
     ui->label_6->setText(other_info_app[1]);
     ui->label_7->setText(other_info_app[2]);
+	
+	setWindowFlags(Qt::FramelessWindowHint);
+	setAttribute(Qt::WA_TranslucentBackground);
 
     int user_id = database.get_id_user(g_user_name);
     QString check_id_star = database.check_id_in_id_star_app(ui->pushButton->text(), ui->label->text(), QString::number(user_id));
@@ -49,6 +52,23 @@ about_app::about_app(QList<QString> param_app, QWidget *parent) : QDialog(parent
 about_app::~about_app()
 {
     delete ui;
+}
+
+void about_app::mousePressEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::LeftButton) {
+        m_mousePoint = event->globalPos() - frameGeometry().topLeft();
+        event->accept();
+    }
+}
+
+void about_app::mouseMoveEvent(QMouseEvent* event)
+{
+	if (event->buttons() & Qt::LeftButton )
+	{
+		move(event->globalPos() - m_mousePoint);
+		event->accept();
+	}
 }
 
 void about_app::on_pushButton_clicked()
@@ -108,4 +128,14 @@ void about_app::on_pushButton_6_clicked()
 	chat chat_dev(ui->pushButton->text());
     chat_dev.setModal(true);
     chat_dev.exec();
+}
+
+void about_app::on_pushButton_8_clicked()
+{
+    close();
+}
+
+void about_app::on_pushButton_9_clicked()
+{
+    showMinimized();
 }

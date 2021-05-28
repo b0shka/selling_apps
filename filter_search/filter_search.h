@@ -2,6 +2,8 @@
 #define FILTER_SEARCH_H
 
 #include <QDialog>
+#include <QMouseEvent>
+#include <QPoint>
 #include "../main_data/data.h"
 #include "../sql_database/sql_database.h"
 
@@ -20,10 +22,15 @@ public:
 private slots:
     void on_pushButton_clicked();
     void on_pushButton_2_clicked();
-
+	void on_pushButton_8_clicked();
+	void on_pushButton_9_clicked();
+	void mousePressEvent(QMouseEvent* event);
+	void mouseMoveEvent(QMouseEvent* event);
+	
 private:
     Ui::filter_search *ui;
     sql_database database;
+	QPoint m_mousePoint;
 };
 
 #endif // FILTER_SEARCH_H

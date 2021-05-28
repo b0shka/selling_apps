@@ -2,6 +2,8 @@
 #define ABOUT_APP_H
 
 #include <QDialog>
+#include <QMouseEvent>
+#include <QPoint>
 #include "../developper_app/developper_app.h"
 #include "../sql_database/sql_database.h"
 
@@ -24,10 +26,15 @@ private slots:
     void on_pushButton_4_clicked();
     void on_pushButton_5_clicked();
     void on_pushButton_6_clicked();
-
+	void on_pushButton_8_clicked();
+	void on_pushButton_9_clicked();
+	void mousePressEvent(QMouseEvent* event);
+	void mouseMoveEvent(QMouseEvent* event);
+	
 private:
     Ui::about_app *ui;
     sql_database database;
+	QPoint m_mousePoint;
 };
 
 #endif // ABOUT_APP_H

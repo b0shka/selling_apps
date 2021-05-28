@@ -8,6 +8,9 @@ chat::chat(QString login_dev, QWidget *parent) :
 {
     ui->setupUi(this);
 	
+	setWindowFlags(Qt::FramelessWindowHint);
+	setAttribute(Qt::WA_TranslucentBackground);
+	
 	this->login_dev = login_dev;
 	ui->label_7->setText(login_dev.split(" ")[0]);
 	ui->pushButton_2->setText(login_dev.at(0));
@@ -42,6 +45,23 @@ chat::~chat()
 	thread_read.wait();
 	add_info.wait();
 	database.change_status_online(g_user_name);
+}
+
+void chat::mousePressEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::LeftButton) {
+        m_mousePoint = event->globalPos() - frameGeometry().topLeft();
+        event->accept();
+    }
+}
+
+void chat::mouseMoveEvent(QMouseEvent* event)
+{
+	if (event->buttons() & Qt::LeftButton )
+	{
+		move(event->globalPos() - m_mousePoint);
+		event->accept();
+	}
 }
 
 void chat::on_pushButton_3_clicked()
@@ -122,6 +142,7 @@ void chat::add_message_to_listwidget(QString message)
 	item->setTextAlignment(2);
     item->setText(message);
 	ui->listWidget->addItem(item);
+	ui->listWidget->scrollToBottom();
 }
 
 void chat::add_message_from_server(QString message)
@@ -129,6 +150,7 @@ void chat::add_message_from_server(QString message)
 	QListWidgetItem *item = new QListWidgetItem;
     item->setText(message);
 	ui->listWidget->addItem(item);
+	ui->listWidget->scrollToBottom();
 }
 
 void chat::on_pushButton_4_clicked()
@@ -150,4 +172,14 @@ void chat::on_listWidget_itemClicked(QListWidgetItem *item)
 		ui->pushButton_4->setHidden(false);
 		message_name = item->text();
 	}
+}
+
+void chat::on_pushButton_8_clicked()
+{
+    close();
+}
+
+void chat::on_pushButton_9_clicked()
+{
+    showMaximized();
 }

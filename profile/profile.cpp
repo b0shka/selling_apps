@@ -8,6 +8,10 @@ profile::profile(QWidget *parent) :
 {
 	popUp = new popup();
     ui->setupUi(this);
+	
+	setWindowFlags(Qt::FramelessWindowHint);
+	setAttribute(Qt::WA_TranslucentBackground);
+	
     g_status_now_profile = 1;
     ui->lineEdit->setText(g_user_name);
     get_info_from_db();
@@ -16,6 +20,23 @@ profile::profile(QWidget *parent) :
 profile::~profile()
 {
     delete ui;
+}
+
+void profile::mousePressEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::LeftButton) {
+        m_mousePoint = event->globalPos() - frameGeometry().topLeft();
+        event->accept();
+    }
+}
+
+void profile::mouseMoveEvent(QMouseEvent* event)
+{
+	if (event->buttons() & Qt::LeftButton )
+	{
+		move(event->globalPos() - m_mousePoint);
+		event->accept();
+	}
 }
 
 void profile::get_info_from_db()
@@ -91,4 +112,14 @@ void profile::on_pushButton_4_clicked()
     user_apps list_apps(g_user_name);
     list_apps.setModal(true);
     list_apps.exec();
+}
+
+void profile::on_pushButton_8_clicked()
+{
+    close();
+}
+
+void profile::on_pushButton_9_clicked()
+{
+    showMinimized();
 }

@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include <QMessageBox>
+#include <QMouseEvent>
+#include <QPoint>
 #include "../sql_database/sql_database.h"
 #include "../main_data/data.h"
 #include "../popup/popup.h"
@@ -25,11 +27,16 @@ private slots:
     void on_pushButton_2_clicked();
     void on_pushButton_3_clicked();
     void on_pushButton_4_clicked();
-
+	void on_pushButton_8_clicked();
+	void on_pushButton_9_clicked();
+	void mousePressEvent(QMouseEvent* event);
+	void mouseMoveEvent(QMouseEvent* event);
+	
 private:
     Ui::profile *ui;
 	popup *popUp;
     sql_database user_info;
+	QPoint m_mousePoint;
 };
 
 #endif // PROFILE_H

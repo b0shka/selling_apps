@@ -10,11 +10,43 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     database.get_max_price_app();
     database.get_min_price_app();
     get_name_app_from_db();
+	setWindowFlags(Qt::FramelessWindowHint);
+	setAttribute(Qt::WA_TranslucentBackground);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::mousePressEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::LeftButton) {
+        m_mousePoint = event->globalPos() - frameGeometry().topLeft();
+        event->accept();
+    }
+}
+
+void MainWindow::mouseMoveEvent(QMouseEvent* event)
+{
+	if (event->buttons() & Qt::LeftButton )
+	{
+		move(event->globalPos() - m_mousePoint);
+		event->accept();
+	}
+}
+
+// действия для клавиш на клавиатуре
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    switch (event->key())
+    {
+        case Qt::Key_Escape:
+            close();
+            break;
+        case Qt::Key_Control:
+            ui->lineEdit->setText("");
+    }
 }
 
 // нажатие кнопки при поиске
@@ -67,19 +99,6 @@ void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
     about_app app_information(param_app);
     app_information.setModal(true);
     app_information.exec();
-}
-
-// действия для клавиш на клавиатуре
-void MainWindow::keyPressEvent(QKeyEvent *event)
-{
-    switch (event->key())
-    {
-        case Qt::Key_Escape:
-            close();
-            break;
-        case Qt::Key_Control:
-            ui->lineEdit->setText("");
-    }
 }
 
 void MainWindow::on_lineEdit_returnPressed()
@@ -287,4 +306,14 @@ void MainWindow::on_pushButton_4_clicked()
 	database.get_max_price_app();
     database.get_min_price_app();
     get_name_app_from_db();
+}
+
+void MainWindow::on_pushButton_8_clicked()
+{
+    close();
+}
+
+void MainWindow::on_pushButton_9_clicked()
+{
+	showMinimized();
 }

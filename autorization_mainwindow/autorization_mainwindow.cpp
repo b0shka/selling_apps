@@ -12,9 +12,15 @@ autorization_mainwindow::autorization_mainwindow(QWidget *parent) :
 {
 	popUp = new popup();
     ui->setupUi(this);
+	
 	ui->label->setText(g_user_name.split(" ")[0]);
     ui->pushButton_2->setText(g_user_name.at(0));
+	
     get_name_app_from_db();
+	
+	setWindowFlags(Qt::FramelessWindowHint);
+	setAttribute(Qt::WA_TranslucentBackground);
+	
 	int new_messages = database.check_new_messages(g_user_name);
 	if (new_messages > 0)
 	{
@@ -49,13 +55,13 @@ void autorization_mainwindow::on_pushButton_2_clicked()
         auto mainwindow = new MainWindow();
         mainwindow->show();
     }
-    else if (g_status_change == 1)
+    if (g_status_change == 1)
     {
         g_status_change = 0;
         ui->label->setText(g_user_name);
         ui->pushButton_2->setText(g_user_name.at(0));
     }
-    else if (g_status_out == 1)
+    if (g_status_out == 1)
     {
         g_status_out = 0;
         g_status_autorization = 0;
@@ -68,7 +74,7 @@ void autorization_mainwindow::on_pushButton_2_clicked()
         get_name_app_from_db();
         g_status_delete_app = 0;
     }
-    else if (g_status_change_app == 1)
+    if (g_status_change_app == 1)
     {
         get_name_app_from_db();
         g_status_change_app = 0;
@@ -125,6 +131,23 @@ void autorization_mainwindow::keyPressEvent(QKeyEvent *event)
         case Qt::Key_Control:
             ui->lineEdit->setText("");
     }
+}
+
+void autorization_mainwindow::mousePressEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::LeftButton) {
+        m_mousePoint = event->globalPos() - frameGeometry().topLeft();
+        event->accept();
+    }
+}
+
+void autorization_mainwindow::mouseMoveEvent(QMouseEvent* event)
+{
+	if (event->buttons() & Qt::LeftButton )
+	{
+		move(event->globalPos() - m_mousePoint);
+		event->accept();
+	}
 }
 
 void autorization_mainwindow::on_lineEdit_returnPressed()
@@ -349,4 +372,14 @@ void autorization_mainwindow::on_pushButton_6_clicked()
 		popUp->setPopupText("У вас есть новые сообщения");
 		popUp->show();
 	}
+}
+
+void autorization_mainwindow::on_pushButton_8_clicked()
+{
+    close();
+}
+
+void autorization_mainwindow::on_pushButton_9_clicked()
+{
+    showMinimized();
 }

@@ -6,11 +6,31 @@ add_app::add_app(QWidget *parent) :
     ui(new Ui::add_app)
 {
     ui->setupUi(this);
+	
+	setWindowFlags(Qt::FramelessWindowHint);
+	setAttribute(Qt::WA_TranslucentBackground);
 }
 
 add_app::~add_app()
 {
     delete ui;
+}
+
+void add_app::mousePressEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::LeftButton) {
+        m_mousePoint = event->globalPos() - frameGeometry().topLeft();
+        event->accept();
+    }
+}
+
+void add_app::mouseMoveEvent(QMouseEvent* event)
+{
+	if (event->buttons() & Qt::LeftButton )
+	{
+		move(event->globalPos() - m_mousePoint);
+		event->accept();
+	}
 }
 
 void add_app::on_pushButton_clicked()
@@ -56,4 +76,14 @@ void add_app::on_pushButton_clicked()
             ui->label_5->setText("Ошибка на сервере");
         }
     }
+}
+
+void add_app::on_pushButton_8_clicked()
+{
+    close();
+}
+
+void add_app::on_pushButton_9_clicked()
+{
+    showMinimized();
 }

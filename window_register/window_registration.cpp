@@ -7,11 +7,31 @@ window_registration::window_registration(QWidget *parent) :
     ui(new Ui::window_registration)
 {
     ui->setupUi(this);
+	
+	setWindowFlags(Qt::FramelessWindowHint);
+	setAttribute(Qt::WA_TranslucentBackground);
 }
 
 window_registration::~window_registration()
 {
     delete ui;
+}
+
+void window_registration::mousePressEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::LeftButton) {
+        m_mousePoint = event->globalPos() - frameGeometry().topLeft();
+        event->accept();
+    }
+}
+
+void window_registration::mouseMoveEvent(QMouseEvent* event)
+{
+	if (event->buttons() & Qt::LeftButton )
+	{
+		move(event->globalPos() - m_mousePoint);
+		event->accept();
+	}
 }
 
 void window_registration::on_pushButton_clicked()
@@ -76,4 +96,14 @@ void window_registration::on_pushButton_clicked()
             }
         }
     }
+}
+
+void window_registration::on_pushButton_8_clicked()
+{
+    close();
+}
+
+void window_registration::on_pushButton_9_clicked()
+{
+	showMinimized();
 }

@@ -8,6 +8,10 @@ user_apps::user_apps(QString login, QWidget *parent) :
     ui(new Ui::user_apps)
 {
     ui->setupUi(this);
+	
+	setWindowFlags(Qt::FramelessWindowHint);
+	setAttribute(Qt::WA_TranslucentBackground);
+	
     this->login = login;
     QList<QString> list_apps_name = database.get_apps_for_list_profile(login);
     add_apps_to_listWidget(list_apps_name);
@@ -17,6 +21,23 @@ user_apps::user_apps(QString login, QWidget *parent) :
 user_apps::~user_apps()
 {
     delete ui;
+}
+
+void user_apps::mousePressEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::LeftButton) {
+        m_mousePoint = event->globalPos() - frameGeometry().topLeft();
+        event->accept();
+    }
+}
+
+void user_apps::mouseMoveEvent(QMouseEvent* event)
+{
+	if (event->buttons() & Qt::LeftButton )
+	{
+		move(event->globalPos() - m_mousePoint);
+		event->accept();
+	}
 }
 
 void user_apps::add_apps_to_listWidget(QList<QString> list_apps)
@@ -59,4 +80,14 @@ void user_apps::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
         info_app.setModal(true);
         info_app.exec();
     }
+}
+
+void user_apps::on_pushButton_8_clicked()
+{
+    close();
+}
+
+void user_apps::on_pushButton_9_clicked()
+{
+    showMinimized();
 }

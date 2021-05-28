@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include <QListWidgetItem>
+#include <QMouseEvent>
+#include <QPoint>
 #include "../sql_database/sql_database.h"
 
 namespace Ui {
@@ -18,13 +20,18 @@ public:
     ~favorite_app();
 
 private slots:
+	void on_pushButton_8_clicked();
+	void on_pushButton_9_clicked();
+	void mousePressEvent(QMouseEvent* event);
+	void mouseMoveEvent(QMouseEvent* event);
     void add_apps_to_listWidget(QList<QList<QString>> list_apps);
     void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
-
+	
 private:
     Ui::favorite_app *ui;
     sql_database database;
     QString login;
+	QPoint m_mousePoint;
 };
 
 #endif // FAVORITE_APP_H

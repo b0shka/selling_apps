@@ -220,7 +220,7 @@ QString sql_database::delete_user_from_db(QString login)
 		
 		for (QString i : dev_dialogs.split(";"))
 		{
-			if (i != login)
+			if (i != login and i != "")
 				new_dev_dialogs += i + ";";
 		}
 		
@@ -844,10 +844,7 @@ void sql_database::start_dialog(QString login, QString login_dev)
 	int result_check = dialogs.indexOf(login_dev);
 	if (result_check == -1)
 	{
-		if (dialogs.size() == 0)
-			dialogs += login_dev;
-		else
-			dialogs += ";" + login_dev;
+		dialogs += login_dev + ";";
 		
 		str_requests = "UPDATE " + user_table + " SET dialogs = ('%1') WHERE login = ('%2');";
 		if (!sql.exec(str_requests.arg(dialogs).arg(login)))
@@ -872,11 +869,8 @@ void sql_database::start_dialog(QString login, QString login_dev)
 	
 	result_check = dialogs.indexOf(login);
 	if (result_check == -1)
-	{
-		if (dialogs.size() == 0)
-			dialogs += login;
-		else
-			dialogs += ";" + login;
+	{		
+		dialogs += login + ";";
 		
 		str_requests = "UPDATE " + user_table + " SET dialogs = ('%1') WHERE login = ('%2');";
 		if (!sql.exec(str_requests.arg(dialogs).arg(login_dev)))
@@ -1155,7 +1149,7 @@ void sql_database::delete_chat(QString login, QString login_dev)
 	
 	for (QString i : dialogs.split(";"))
 	{
-		if (i != login_dev)
+		if (i != login_dev and i != "")
 			new_dialogs += i + ";";
 	}
 	
@@ -1181,7 +1175,7 @@ void sql_database::delete_chat(QString login, QString login_dev)
 	
 	for (QString i : dialogs.split(";"))
 	{
-		if (i != login)
+		if (i != login and i != "")
 			new_dialogs += i + ";";
 	}
 	
