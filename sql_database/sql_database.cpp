@@ -100,7 +100,7 @@ QList<QList<QString>> sql_database::get_apps_name()
 
         list_apps_name.push_back({app_name, app_price, app_description, author});
     }
-
+	
     return list_apps_name;
 }
 
@@ -1220,6 +1220,42 @@ void sql_database::delete_message(QString login, QString login_dev, QString mess
 	if (!sql.exec(str_requests.arg(new_messages).arg(login_dev).arg(login)))
 	{
 		qDebug() << "[ERROR] Не удается обновить messages " << db.lastError().text();
+		return;
+	}
+	db.commit();
+	
+	messages = get_new_messages(login, login_dev);
+	qDebug() << messages;
+	new_messages = "";
+	for (QString i : messages.split(";"))
+	{
+		if (i.mid(1) != message and i != "")
+			new_messages += i + ";";
+	}
+	qDebug() << new_messages;
+	
+	str_requests = "UPDATE " + chats_table + " SET new_messages = ('%1') WHERE login = ('%2') and login_dev = ('%3');";
+	if (!sql.exec(str_requests.arg(new_messages).arg(login).arg(login_dev)))
+	{
+		qDebug() << "[ERROR] Не удается обновить new_messages " << db.lastError().text();
+		return;
+	}
+	db.commit();
+	
+	messages = get_new_messages(login_dev, login);
+	qDebug() << messages;
+	new_messages = "";
+	for (QString i : messages.split(";"))
+	{
+		if (i.mid(1) != message and i != "")
+			new_messages += i + ";";
+	}
+	qDebug() << new_messages;
+	
+	str_requests = "UPDATE " + chats_table + " SET new_messages = ('%1') WHERE login = ('%2') and login_dev = ('%3');";
+	if (!sql.exec(str_requests.arg(new_messages).arg(login_dev).arg(login)))
+	{
+		qDebug() << "[ERROR] Не удается обновить new_messages " << db.lastError().text();
 		return;
 	}
 	db.commit();

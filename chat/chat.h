@@ -10,6 +10,7 @@
 #include "client.h"
 #include "thread_add_info.h"
 #include "thread_chat.h"
+#include "thread_online.h"
 
 namespace Ui {
 class chat;
@@ -37,14 +38,16 @@ private slots:
 	void restore_chat();
 	void restore_new_messages();
 	void on_listWidget_itemClicked(QListWidgetItem *item);
+	void add_online_in_chat(int status);
 	
 private:
     Ui::chat *ui;
 	Client client;
 	sql_database database;
+	QThread thread_read, thread_button;
 	thread_add_info add_info;
-	QThread thread_read;
 	thread_chat thread;
+	thread_online online;
 	QString login_dev, message_name;
 	QPoint m_mousePoint;
 };

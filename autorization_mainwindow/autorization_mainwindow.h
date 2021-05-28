@@ -2,7 +2,9 @@
 #define AUTORIZATION_MAINWINDOW_H
 
 #include <QDialog>
+#include <QThread>
 #include "../mainwindow/mainwindow.h"
+#include "thread_new_messages.h"
 #include "../popup/popup.h"
 
 namespace Ui {
@@ -19,12 +21,14 @@ public:
 	
 private slots:
     // функции для кнопок
-    void on_pushButton_clicked();
-    void on_pushButton_2_clicked();
-    void on_pushButton_3_clicked();
-    void on_pushButton_4_clicked();
-	void on_pushButton_5_clicked();
-	void on_pushButton_6_clicked();
+    void on_favorite_clicked();
+    void on_profile_clicked();
+    void on_filter_clicked();
+    void on_add_clicked();
+	void on_messages_clicked();
+	void on_update_clicked();
+	void on_close_clicked();
+	void on_hide_clicked();
     void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
 	void on_lineEdit_returnPressed();
     void keyPressEvent(QKeyEvent *event);
@@ -40,14 +44,15 @@ private slots:
     void add_apps_to_listWidget(QList<QList<QString>> list_result);
     void layout_title_app(QList<QString> data_app);
 	
-	void on_pushButton_8_clicked();
-	
-	void on_pushButton_9_clicked();
+	// other
+	void add_count_new_messages(QString count);
 	
 private:
     Ui::autorization_mainwindow *ui;
 	popup *popUp;
     sql_database database;
+	QThread thread_message;
+	thread_new_messages thread;
 	QPoint m_mousePoint;
 };
 

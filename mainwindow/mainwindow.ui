@@ -122,7 +122,7 @@ font-size: 14px;</string>
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_2">
+     <widget class="QPushButton" name="login">
       <property name="geometry">
        <rect>
         <x>620</x>
@@ -155,7 +155,7 @@ QPushButton::hover {
        <string>⍈</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_3">
+     <widget class="QPushButton" name="filter">
       <property name="geometry">
        <rect>
         <x>220</x>
@@ -189,7 +189,7 @@ QPushButton::hover {
        <string>⋮</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_4">
+     <widget class="QPushButton" name="update">
       <property name="geometry">
        <rect>
         <x>265</x>
@@ -249,13 +249,11 @@ QListWidget::item {
 	height: 35px;
 	border: none;
 	border-radius: 5px;
+}
+QListWidget::item:hover {
+	background-color: #949494;
 }</string>
      </property>
-     <item>
-      <property name="text">
-       <string>bot</string>
-      </property>
-     </item>
     </widget>
     <widget class="QFrame" name="frame_3">
      <property name="geometry">
@@ -279,7 +277,7 @@ QListWidget::item {
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <widget class="QPushButton" name="pushButton_8">
+     <widget class="QPushButton" name="close">
       <property name="geometry">
        <rect>
         <x>640</x>
@@ -312,7 +310,7 @@ QPushButton::hover {
        <string>✘</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_9">
+     <widget class="QPushButton" name="hide">
       <property name="geometry">
        <rect>
         <x>610</x>

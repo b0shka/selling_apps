@@ -20,14 +20,14 @@ public:
     ~about_app();
 
 private slots:
-    void on_pushButton_clicked();
-    void on_pushButton_2_clicked();
-    void on_pushButton_3_clicked();
-    void on_pushButton_4_clicked();
-    void on_pushButton_5_clicked();
-    void on_pushButton_6_clicked();
-	void on_pushButton_8_clicked();
-	void on_pushButton_9_clicked();
+    void on_login_dev_clicked();
+    void on_star_add_clicked();
+    void on_favorite_add_clicked();
+    void on_favorite_del_clicked();
+    void on_star_del_clicked();
+    void on_messages_clicked();
+	void on_close_clicked();
+	void on_hide_clicked();
 	void mousePressEvent(QMouseEvent* event);
 	void mouseMoveEvent(QMouseEvent* event);
 	

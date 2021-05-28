@@ -14,7 +14,6 @@ void thread_chat::run()
 		recv(client_socket, buffer, BUFFER, 0);
 		if (QString(buffer).size() != 0)
 		{
-			qDebug() << QString(buffer);
 			emit add_msg(QString(buffer));
 		}
 	}

@@ -14,34 +14,47 @@ autorization_mainwindow::autorization_mainwindow(QWidget *parent) :
     ui->setupUi(this);
 	
 	ui->label->setText(g_user_name.split(" ")[0]);
-    ui->pushButton_2->setText(g_user_name.at(0));
+    ui->profile->setText(g_user_name.at(0));
 	
     get_name_app_from_db();
 	
 	setWindowFlags(Qt::FramelessWindowHint);
 	setAttribute(Qt::WA_TranslucentBackground);
 	
-	int new_messages = database.check_new_messages(g_user_name);
-	if (new_messages > 0)
-	{
-		popUp->setPopupText("У вас есть новые сообщения (" + QString::number(new_messages) + ")");
-		popUp->show();
-	}
+	connect(&thread_message, &QThread::started, &thread, &thread_new_messages::run);
+	connect(&thread, &thread_new_messages::finished, &thread_message, &QThread::terminate);
+	connect(&thread, SIGNAL(add_count(QString)), this, SLOT(add_count_new_messages(QString)));
+	thread.moveToThread(&thread_message);
+	thread_message.start();
 }
 
 autorization_mainwindow::~autorization_mainwindow()
 {
+	g_status_autorization = 0;
+	thread_message.quit();
+	thread_message.wait();
     delete ui;
 }
 
-void autorization_mainwindow::on_pushButton_clicked()
+void autorization_mainwindow::add_count_new_messages(QString count)
+{
+	if (count == "0")
+		ui->label_8->setHidden(true);
+	else
+	{
+		ui->label_8->setHidden(false);
+		ui->label_8->setText(count);
+	}
+}
+
+void autorization_mainwindow::on_favorite_clicked()
 {
     favorite_app favorite;
     favorite.setModal(true);
     favorite.exec();
 }
 
-void autorization_mainwindow::on_pushButton_2_clicked()
+void autorization_mainwindow::on_profile_clicked()
 {
     profile profile_window;
     profile_window.setModal(true);
@@ -59,7 +72,7 @@ void autorization_mainwindow::on_pushButton_2_clicked()
     {
         g_status_change = 0;
         ui->label->setText(g_user_name);
-        ui->pushButton_2->setText(g_user_name.at(0));
+        ui->profile->setText(g_user_name.at(0));
     }
     if (g_status_out == 1)
     {
@@ -81,7 +94,7 @@ void autorization_mainwindow::on_pushButton_2_clicked()
     }
 }
 
-void autorization_mainwindow::on_pushButton_3_clicked()
+void autorization_mainwindow::on_filter_clicked()
 {
     filter_search change_filter;
     change_filter.setModal(true);
@@ -90,13 +103,43 @@ void autorization_mainwindow::on_pushButton_3_clicked()
     get_name_app_from_db();
 }
 
-void autorization_mainwindow::on_pushButton_4_clicked()
+void autorization_mainwindow::on_add_clicked()
 {
     add_app new_app;
     new_app.setModal(true);
     new_app.exec();
 
     get_name_app_from_db();
+}
+
+void autorization_mainwindow::on_messages_clicked()
+{
+    messenger chats;
+	chats.setModal(true);
+	chats.exec();
+}
+
+void autorization_mainwindow::on_update_clicked()
+{
+	database.get_max_price_app();
+    database.get_min_price_app();
+    get_name_app_from_db();
+	int new_messages = database.check_new_messages(g_user_name);
+	if (new_messages == 1)
+	{
+		popUp->setPopupText("У вас есть новые сообщения");
+		popUp->show();
+	}
+}
+
+void autorization_mainwindow::on_close_clicked()
+{
+    close();
+}
+
+void autorization_mainwindow::on_hide_clicked()
+{
+    showMinimized();
 }
 
 void autorization_mainwindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
@@ -352,34 +395,4 @@ int autorization_mainwindow::check_no_name(QString search, QString name_main)
             return 0;
     }
     return 0;
-}
-
-void autorization_mainwindow::on_pushButton_5_clicked()
-{
-    messenger chats;
-	chats.setModal(true);
-	chats.exec();
-}
-
-void autorization_mainwindow::on_pushButton_6_clicked()
-{
-	database.get_max_price_app();
-    database.get_min_price_app();
-    get_name_app_from_db();
-	int new_messages = database.check_new_messages(g_user_name);
-	if (new_messages == 1)
-	{
-		popUp->setPopupText("У вас есть новые сообщения");
-		popUp->show();
-	}
-}
-
-void autorization_mainwindow::on_pushButton_8_clicked()
-{
-    close();
-}
-
-void autorization_mainwindow::on_pushButton_9_clicked()
-{
-    showMinimized();
 }

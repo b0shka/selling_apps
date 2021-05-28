@@ -15,15 +15,8 @@ chat::chat(QString login_dev, QWidget *parent) :
 	ui->label_7->setText(login_dev.split(" ")[0]);
 	ui->pushButton_2->setText(login_dev.at(0));
 	ui->pushButton_4->setHidden(true);
-	int status_online = database.get_status_online(login_dev);
-	if (status_online == 1)
-		ui->label_8->setHidden(false);
-	else
-		ui->label_8->setHidden(true);
 	
 	client.conect_server();
-	//database.change_status_online(g_user_name);
-	
 	add_info.start();
 	
 	connect(&thread_read, &QThread::started, &thread, &thread_chat::run);
@@ -31,6 +24,13 @@ chat::chat(QString login_dev, QWidget *parent) :
 	connect(&thread, SIGNAL(add_msg(QString)), this, SLOT(add_message_from_server(QString)));
 	thread.moveToThread(&thread_read);
 	thread_read.start();
+	
+	connect(&thread_button, &QThread::started, &online, &thread_online::run);
+	connect(&online, &thread_online::finished, &thread_button, &QThread::terminate);
+	connect(&online, SIGNAL(add_online(int)), this, SLOT(add_online_in_chat(int)));
+	online.moveToThread(&thread_button);
+	online.setLogin_dev(login_dev);
+	thread_button.start();
 	
 	database.start_dialog(g_user_name, login_dev);
 	restore_chat();
@@ -43,8 +43,18 @@ chat::~chat()
 	client.disconnect();
 	thread_read.quit();
 	thread_read.wait();
+	thread_button.quit();
+	thread_button.wait();
 	add_info.wait();
 	database.change_status_online(g_user_name);
+}
+
+void chat::add_online_in_chat(int status)
+{
+	if (status == 1)
+		ui->label_8->setHidden(false);
+	else
+		ui->label_8->setHidden(true);
 }
 
 void chat::mousePressEvent(QMouseEvent* event)

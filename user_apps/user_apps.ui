@@ -192,6 +192,9 @@ QListWidget::item {
 	height: 35px;
 	border: none;
 	border-radius: 5px;
+}
+QListWidget::item:hover {
+	background-color: #949494;
 }</string>
     </property>
    </widget>

@@ -25,18 +25,13 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-public slots:
-    // для работы с авторизацией
-    void change_mainwindow();
-
 private slots:
     // функции для кнопок
-    void on_pushButton_clicked();
-    void on_pushButton_2_clicked();
-    void on_pushButton_3_clicked();
-	void on_pushButton_4_clicked();
-	void on_pushButton_8_clicked();
-	void on_pushButton_9_clicked();
+    void on_login_clicked();
+    void on_filter_clicked();
+	void on_update_clicked();
+	void on_close_clicked();
+	void on_hide_clicked();
     void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
 	void on_lineEdit_returnPressed();
     void keyPressEvent(QKeyEvent *event);
@@ -51,6 +46,9 @@ private slots:
     int check_word_in_word_no_name(QString search, QString name_main);
     void add_apps_to_listWidget(QList<QList<QString>> list_result);
     void layout_title_app(QList<QString> data_app);
+	
+	// для работы с авторизацией
+	void change_mainwindow();
 	
 private:
     Ui::MainWindow *ui;

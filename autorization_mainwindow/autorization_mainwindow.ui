@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1008</width>
-    <height>680</height>
+    <width>679</width>
+    <height>474</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -106,7 +106,7 @@ font-size: 14px;</string>
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="favorite">
      <property name="geometry">
       <rect>
        <x>355</x>
@@ -132,7 +132,7 @@ QPushButton::hover {
       <string>Избранное</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_2">
+    <widget class="QPushButton" name="profile">
      <property name="geometry">
       <rect>
        <x>620</x>
@@ -193,7 +193,7 @@ color: white;</string>
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_3">
+    <widget class="QPushButton" name="filter">
      <property name="geometry">
       <rect>
        <x>220</x>
@@ -226,7 +226,7 @@ QPushButton::hover {
       <string>⋮</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_5">
+    <widget class="QPushButton" name="messages">
      <property name="geometry">
       <rect>
        <x>310</x>
@@ -259,7 +259,7 @@ QPushButton::hover {
       <string>✉</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_6">
+    <widget class="QPushButton" name="update">
      <property name="geometry">
       <rect>
        <x>265</x>
@@ -291,6 +291,34 @@ QPushButton::hover {
      </property>
      <property name="text">
       <string>⭯</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_8">
+     <property name="geometry">
+      <rect>
+       <x>340</x>
+       <y>10</y>
+       <width>11</width>
+       <height>11</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>-1</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font-size: 8px;
+color: black;
+background-color: #f22c2c;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </widget>
@@ -326,6 +354,9 @@ QListWidget::item {
 	height: 35px;
 	border: none;
 	border-radius: 5px;
+}
+QListWidget::item:hover {
+	background-color: #949494;
 }</string>
     </property>
    </widget>
@@ -351,7 +382,7 @@ QListWidget::item {
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QPushButton" name="pushButton_8">
+    <widget class="QPushButton" name="close">
      <property name="geometry">
       <rect>
        <x>640</x>
@@ -384,7 +415,7 @@ QPushButton::hover {
       <string>✘</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_9">
+    <widget class="QPushButton" name="hide">
      <property name="geometry">
       <rect>
        <x>610</x>
@@ -441,7 +472,7 @@ color: white;</string>
      </property>
     </widget>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="add">
     <property name="geometry">
      <rect>
       <x>625</x>

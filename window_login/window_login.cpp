@@ -102,5 +102,6 @@ void window_login::on_pushButton_8_clicked()
 
 void window_login::on_pushButton_9_clicked()
 {
-    showMinimized();
+	showMinimized();
 }
+

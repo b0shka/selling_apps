@@ -6,12 +6,14 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+	
+	setWindowFlags(Qt::FramelessWindowHint);
+	setAttribute(Qt::WA_TranslucentBackground);
+	
     database.first_start();
     database.get_max_price_app();
     database.get_min_price_app();
     get_name_app_from_db();
-	setWindowFlags(Qt::FramelessWindowHint);
-	setAttribute(Qt::WA_TranslucentBackground);
 }
 
 MainWindow::~MainWindow()
@@ -36,7 +38,6 @@ void MainWindow::mouseMoveEvent(QMouseEvent* event)
 	}
 }
 
-// действия для клавиш на клавиатуре
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key())
@@ -44,33 +45,10 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         case Qt::Key_Escape:
             close();
             break;
-        case Qt::Key_Control:
-            ui->lineEdit->setText("");
     }
 }
 
-// нажатие кнопки при поиске
-void MainWindow::on_pushButton_clicked()
-{
-    QString search = ui->lineEdit->text();
-
-    if (search == "")
-    {
-        ui->lineEdit->setStyleSheet(lock_style);
-        ui->listWidget->clear();
-        get_name_app_from_db();
-    }
-    else
-    {
-        ui->lineEdit->setStyleSheet(default_style);
-        ui->listWidget->clear();
-        search_result(search);
-        ui->lineEdit->setText("");
-    }
-}
-
-// нажатие кнопки для авторизации
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::on_login_clicked()
 {
     window_login login;
     login.setModal(true);
@@ -80,13 +58,30 @@ void MainWindow::on_pushButton_2_clicked()
         change_mainwindow();
 }
 
-void MainWindow::on_pushButton_3_clicked()
+void MainWindow::on_filter_clicked()
 {
     filter_search change_filter;
     change_filter.setModal(true);
     change_filter.exec();
 
     get_name_app_from_db();
+}
+
+void MainWindow::on_update_clicked()
+{
+	database.get_max_price_app();
+    database.get_min_price_app();
+    get_name_app_from_db();
+}
+
+void MainWindow::on_close_clicked()
+{
+    close();
+}
+
+void MainWindow::on_hide_clicked()
+{
+	showMinimized();
 }
 
 // открытие информации о программе
@@ -103,14 +98,28 @@ void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 
 void MainWindow::on_lineEdit_returnPressed()
 {
-    on_pushButton_clicked();
+	QString search = ui->lineEdit->text();
+
+    if (search == "")
+    {
+        ui->lineEdit->setStyleSheet(lock_style);
+        ui->listWidget->clear();
+        get_name_app_from_db();
+    }
+    else
+    {
+        ui->lineEdit->setStyleSheet(default_style);
+        ui->listWidget->clear();
+        search_result(search);
+        ui->lineEdit->setText("");
+    }
 }
 
 // получение названий программ из БД
 void MainWindow::get_name_app_from_db()
 {
     QList<QList<QString>> list_apps_name = database.get_apps_name();
-
+	
     try {
         if (list_apps_name.size() == 0)
             throw 1;
@@ -299,21 +308,4 @@ void MainWindow::change_mainwindow()
     autorization_mainwindow autorization_window;
     autorization_window.setModal(false);
     autorization_window.exec();
-}
-
-void MainWindow::on_pushButton_4_clicked()
-{
-	database.get_max_price_app();
-    database.get_min_price_app();
-    get_name_app_from_db();
-}
-
-void MainWindow::on_pushButton_8_clicked()
-{
-    close();
-}
-
-void MainWindow::on_pushButton_9_clicked()
-{
-	showMinimized();
 }

@@ -61,7 +61,7 @@ color: white;</string>
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <widget class="QPushButton" name="pushButton_6">
+   <widget class="QPushButton" name="messages">
     <property name="geometry">
      <rect>
       <x>340</x>
@@ -121,7 +121,7 @@ QPushButton::hover {
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="favorite_del">
     <property name="geometry">
      <rect>
       <x>425</x>
@@ -189,7 +189,7 @@ QPushButton::hover {
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="favorite_add">
     <property name="geometry">
      <rect>
       <x>425</x>
@@ -250,7 +250,7 @@ QPushButton::hover {
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="login_dev">
     <property name="geometry">
      <rect>
       <x>110</x>
@@ -292,7 +292,7 @@ QPushButton::hover {
      <string>Технологии</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_5">
+   <widget class="QPushButton" name="star_del">
     <property name="geometry">
      <rect>
       <x>385</x>
@@ -348,7 +348,7 @@ color: silver;</string>
      <string>Разработчик:</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="star_add">
     <property name="geometry">
      <rect>
       <x>385</x>
@@ -403,7 +403,7 @@ QPushButton::hover {
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QPushButton" name="pushButton_8">
+    <widget class="QPushButton" name="close">
      <property name="geometry">
       <rect>
        <x>575</x>
@@ -436,7 +436,7 @@ QPushButton::hover {
       <string>✘</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_9">
+    <widget class="QPushButton" name="hide">
      <property name="geometry">
       <rect>
        <x>545</x>
