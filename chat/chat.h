@@ -11,6 +11,7 @@
 #include "thread_add_info.h"
 #include "thread_chat.h"
 #include "thread_online.h"
+#include "thread_send.h"
 
 namespace Ui {
 class chat;
@@ -46,10 +47,11 @@ private:
 	sql_database database;
 	QString login_dev, message_name;
 	QPoint m_mousePoint;
-	QThread thread_read, thread_button, thread_info;
+	QThread thread_read, thread_button, thread_info, thread_send_msg;
 	thread_add_info info;
 	thread_chat thread;
 	thread_online online;
+	thread_send send;
 };
 
 #endif // CHAT_H

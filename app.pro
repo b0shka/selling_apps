@@ -26,6 +26,7 @@ SOURCES += \
 	chat/thread_add_info.cpp \
 	chat/thread_chat.cpp \
 	chat/thread_online.cpp \
+	chat/thread_send.cpp \
     developper_app/developper_app.cpp \
     favorite_app/favorite_app.cpp \
     filter_search/filter_search.cpp \
@@ -51,6 +52,7 @@ HEADERS += \
 	chat/thread_add_info.h \
 	chat/thread_chat.h \
 	chat/thread_online.h \
+	chat/thread_send.h \
     developper_app/developper_app.h \
     favorite_app/favorite_app.h \
     filter_search/filter_search.h \

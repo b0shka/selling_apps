@@ -40,6 +40,14 @@ chat::chat(QString login_dev, QWidget *parent) :
 	online.setLogin_dev(login_dev);
 	thread_button.start();
 	
+	connect(&thread_send_msg, &QThread::started, &send, &thread_send::run);
+	connect(&send, &thread_send::finished, &thread_send_msg, &QThread::terminate);
+	connect(&send, SIGNAL(add_message(QString)), this, SLOT(add_message_to_listwidget(QString)));
+	send.moveToThread(&thread_send_msg);
+	send.setId_server(client.client);
+	send.setLogin_dev(login_dev);
+	thread_send_msg.start();
+	
 	ui->lineEdit_3->setFocus();
 }
 
@@ -53,6 +61,8 @@ chat::~chat()
 	thread_button.wait();
 	thread_info.quit();
 	thread_info.wait();
+	thread_send_msg.quit();
+	thread_send_msg.wait();
 	database.change_status_online(g_user_name);
 }
 
@@ -86,14 +96,10 @@ void chat::on_pushButton_clicked()
 	QString message = ui->lineEdit_3->text();
 	QString text = message;
 
-	if (text.replace(" ", "") != "")
+	if (text.replace(" ", "").size() != 0)
 	{
-		QTime time = QTime::currentTime();
-		message = "(" + time.toString("hh:mm") + ") " + message;
-		add_message_to_listwidget(message);
-		ui->lineEdit_3->clear();
-		client.send_message(message, login_dev);
-		database.add_to_chat(g_user_name, login_dev, "1" + message);
+		send.setMessage(message);
+		ui->lineEdit_3->setText("");
 	}
 }
 

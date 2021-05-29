@@ -254,6 +254,69 @@ QString sql_database::delete_user_from_db(QString login)
 
 QString sql_database::save_change_in_profile(QList<QString> data_change)
 {
+	if (data_change.at(1) != g_user_name)
+	{
+		str_requests = "SELECT login FROM " + user_table + ";";
+		if (!sql.exec(str_requests))
+		{
+			qDebug() << "[ERROR] << Не удалось получить все login " << db.lastError().text();
+			return "ERROR";
+		}
+		
+		QSqlRecord get_data = sql.record();
+		QString all_login = "";
+		while (sql.next())
+			all_login += sql.value(get_data.indexOf("login")).toString() + ";";
+		
+		for (QString i : all_login.split(";"))
+		{
+			if (i != g_user_name and i != "")
+			{
+				QString dialogs = get_dialogs(i);
+				QString new_dialogs = "";
+				for (QString j : dialogs.split(";"))
+				{
+					if (j != g_user_name and j != "")
+						new_dialogs += j + ";";
+					else if (j == g_user_name and j != "")
+						new_dialogs += data_change.at(1) + ";";
+				}
+				
+				str_requests = "UPDATE " + user_table + " SET dialogs = ('%1') WHERE login = ('%2');";
+				if (!sql.exec(str_requests.arg(new_dialogs).arg(i)))
+				{
+					qDebug() << "[ERROR] Не удается обновить dialogs " << db.lastError().text();
+					return "ERROR";
+				}
+				db.commit();
+			}
+		}
+		
+		str_requests = "UPDATE " + app_table + " SET author = ('%1') WHERE author = ('%2');";
+		if (!sql.exec(str_requests.arg(data_change.at(1)).arg(g_user_name)))
+		{
+			qDebug() << "[ERROR] Не удается обновить author " << db.lastError().text();
+			return "ERROR";
+		}
+		db.commit();
+		
+		str_requests = "UPDATE " + chats_table + " SET login = ('%1') WHERE login = ('%2');";
+		if (!sql.exec(str_requests.arg(data_change.at(1)).arg(g_user_name)))
+		{
+			qDebug() << "[ERROR] Не удается изменить login в chats " << db.lastError().text();
+			return "ERROR";
+		}
+		db.commit();
+		
+		str_requests = "UPDATE " + chats_table + " SET login_dev = ('%1') WHERE login_dev = ('%2');";
+		if (!sql.exec(str_requests.arg(data_change.at(1)).arg(g_user_name)))
+		{
+			qDebug() << "[ERROR] Не удается изменить login_dev в chats " << db.lastError().text();
+			return "ERROR";
+		}
+		db.commit();
+	}
+	
     str_requests = "UPDATE " + user_table + " SET login = ('%1'), email = ('%2'), number_phone = ('%3') WHERE id = ('%4');";
     if (!sql.exec(str_requests.arg(data_change.at(1)).arg(data_change.at(2)).arg(data_change.at(3)).arg(data_change.at(0))))
     {
@@ -261,6 +324,7 @@ QString sql_database::save_change_in_profile(QList<QString> data_change)
         return "ERROR";
     }
     db.commit();
+	
     return "Successs";
 }
 
@@ -1120,19 +1184,9 @@ void sql_database::delete_chat(QString login, QString login_dev)
 		return;
 	}
 	db.commit();
-
-	str_requests = "SELECT dialogs FROM " + user_table + " WHERE login = ('%1');";
-	if (!sql.exec(str_requests.arg(login)))
-	{
-		qDebug() << "[ERROR] Не удается получить список переписок пользователя " << db.lastError().text();
-		return;
-	}
 	
-	QSqlRecord get_data = sql.record();
-    QString dialogs;
+	QString dialogs = get_dialogs(login);
 	QString new_dialogs = "";
-    while (sql.next())
-        dialogs = sql.value(get_data.indexOf("dialogs")).toString();
 	
 	for (QString i : dialogs.split(";"))
 	{
@@ -1148,17 +1202,7 @@ void sql_database::delete_chat(QString login, QString login_dev)
 	}
 	db.commit();
 	
-	str_requests = "SELECT dialogs FROM " + user_table + " WHERE login = ('%1');";
-	if (!sql.exec(str_requests.arg(login_dev)))
-	{
-		qDebug() << "[ERROR] Не удается получить список переписок пользователя " << db.lastError().text();
-		return;
-	}
-	
-	get_data = sql.record();
-	new_dialogs = "";
-    while (sql.next())
-        dialogs = sql.value(get_data.indexOf("dialogs")).toString();
+	dialogs = get_dialogs(login_dev);
 	
 	for (QString i : dialogs.split(";"))
 	{

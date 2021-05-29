@@ -20,7 +20,7 @@ void Client::conect_server()
 	g_status_online = 1;
 }
 
-void Client::send_message(QString message, QString login)
+/*void Client::send_message(QString message, QString login)
 {
 	int status_online = database.get_status_online(login);
 	if (status_online == 1)
@@ -34,7 +34,7 @@ void Client::send_message(QString message, QString login)
 	}
 	else
 		database.add_new_message_to_database(g_user_name, login, "0" + message);
-}
+}*/
 
 void Client::disconnect()
 {

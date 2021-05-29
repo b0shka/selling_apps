@@ -19,7 +19,7 @@ class Client
 {
 public:
 	void conect_server();
-	void send_message(QString message, QString login);
+	//void send_message(QString message, QString login);
 	void disconnect();
 	int client;
 	

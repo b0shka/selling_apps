@@ -94,10 +94,10 @@ void profile::on_pushButton_2_clicked()
         QString result_save = user_info.save_change_in_profile({user_id, new_login, email, number_phone});
         if (result_save != "ERROR")
         {
+			g_status_change = 1;
+            g_user_name = new_login;
 			popUp->setPopupText("Данные сохранены");
 			popUp->show();
-            g_status_change = 1;
-            g_user_name = new_login;
             close();
         }
     }
