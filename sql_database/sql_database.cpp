@@ -352,16 +352,16 @@ QList<QString> sql_database::get_all_info_app_list_profile(QList<QString> param_
     return list_apps_name;
 }
 
-QString sql_database::delete_app_from_db(QString name_app)
+QString sql_database::delete_app_from_db(int app_id)
 {
-    str_requests = "DELETE FROM " + app_table + " WHERE app_name = ('%1') and author = ('%2');";
-    if (!sql.exec(str_requests.arg(name_app).arg(g_user_name)))
+    str_requests = "DELETE FROM " + app_table + " WHERE id = (%1);";
+	if (!sql.exec(str_requests.arg(app_id)))
     {
         qDebug() << "[ERROR] Ошибка при удалении программы: " << db.lastError().text();
         return "ERROR";
     }
+	
     db.commit();
-    qDebug() << "[INFO] Программа успешно удалена";
     return "Success";
 }
 
@@ -462,7 +462,24 @@ int sql_database::get_id_user(QString login)
     while (sql.next())
         user_id = sql.value(get_data.indexOf("id")).toInt();
 
-    return user_id;
+	return user_id;
+}
+
+int sql_database::get_id_app(QString app_name, QString app_price, QString app_description, QString app_technologes)
+{
+	str_requests = "SELECT id FROM " + app_table + " WHERE app_name = ('%1') and app_price = ('%2') and app_description = ('%3') and app_technologes = ('%4');";
+	if (!sql.exec(str_requests.arg(app_name).arg(app_price).arg(app_description).arg(app_technologes)))
+	{
+		qDebug() << "[ERROR] Не удатся получить id программы " << db.lastError().text();
+		return 0;
+	}
+	
+	QSqlRecord get_data = sql.record();
+    int app_id;
+    while (sql.next())
+        app_id = sql.value(get_data.indexOf("id")).toInt();
+
+	return app_id;
 }
 
 QString sql_database::get_list_id_star_app(QString login, QString app_name)
@@ -519,7 +536,7 @@ void sql_database::get_max_price_app()
 
     QSqlRecord get_data = sql.record();
     QString app_price;
-
+	g_max_price = 0;
     while (sql.next())
     {
         app_price = sql.value(get_data.indexOf("app_price")).toString();

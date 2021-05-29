@@ -15,6 +15,8 @@ profile::profile(QWidget *parent) :
     g_status_now_profile = 1;
     ui->lineEdit->setText(g_user_name);
     get_info_from_db();
+	
+	ui->lineEdit->setFocus();
 }
 
 profile::~profile()
@@ -77,17 +79,18 @@ void profile::on_pushButton_clicked()
 
 void profile::on_pushButton_2_clicked()
 {
-    QString new_login = ui->lineEdit->text();
-
-    if (new_login == "")
+    QString new_login = ui->lineEdit->text();	
+	QString check_new_login = new_login.replace(" ", "");
+	
+    if (check_new_login.size() == 0)
         ui->lineEdit->setStyleSheet(lock_style_other_color);
     else
     {
         ui->lineEdit->setStyleSheet(default_style_other_color);
 
+		QString email = ui->lineEdit_2->text();
+		QString number_phone = ui->lineEdit_3->text();
         QString user_id = ui->label_2->text();
-        QString email = ui->lineEdit_2->text();
-        QString number_phone = ui->lineEdit_3->text();
         QString result_save = user_info.save_change_in_profile({user_id, new_login, email, number_phone});
         if (result_save != "ERROR")
         {
@@ -122,4 +125,19 @@ void profile::on_pushButton_8_clicked()
 void profile::on_pushButton_9_clicked()
 {
     showMinimized();
+}
+
+void profile::on_lineEdit_returnPressed()
+{
+    on_pushButton_2_clicked();
+}
+
+void profile::on_lineEdit_2_returnPressed()
+{
+    on_pushButton_2_clicked();
+}
+
+void profile::on_lineEdit_3_returnPressed()
+{
+    on_pushButton_2_clicked();
 }

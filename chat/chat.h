@@ -27,16 +27,16 @@ public:
 private slots:
 	void on_pushButton_clicked();
 	void on_pushButton_2_clicked();
-	void on_pushButton_3_clicked();
 	void on_pushButton_4_clicked();
 	void on_pushButton_8_clicked();
 	void on_pushButton_9_clicked();
+	void on_lineEdit_3_returnPressed();
 	void mousePressEvent(QMouseEvent* event);
 	void mouseMoveEvent(QMouseEvent* event);
 	void add_message_to_listwidget(QString message);
 	void add_message_from_server(QString message);
-	void restore_chat();
-	void restore_new_messages();
+	void restore_chat(QString all_message);
+	void restore_new_messages(QString new_messages);
 	void on_listWidget_itemClicked(QListWidgetItem *item);
 	void add_online_in_chat(int status);
 	

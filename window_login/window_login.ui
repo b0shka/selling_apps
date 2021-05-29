@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>977</width>
-    <height>576</height>
+    <width>382</width>
+    <height>297</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>404</width>
+    <width>3</width>
     <height>270</height>
    </size>
   </property>
@@ -86,7 +86,7 @@ color: white;</string>
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QPushButton" name="pushButton_8">
+    <widget class="QPushButton" name="close">
      <property name="geometry">
       <rect>
        <x>345</x>
@@ -119,7 +119,7 @@ QPushButton::hover {
       <string>✘</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_9">
+    <widget class="QPushButton" name="hide">
      <property name="geometry">
       <rect>
        <x>315</x>

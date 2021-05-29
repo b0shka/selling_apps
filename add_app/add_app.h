@@ -6,6 +6,7 @@
 #include <QPoint>
 #include "../sql_database/sql_database.h"
 #include "../main_data/data.h"
+#include "../popup/popup.h"
 
 namespace Ui {
 class add_app;
@@ -23,12 +24,16 @@ private slots:
     void on_pushButton_clicked();
 	void on_pushButton_8_clicked();
 	void on_pushButton_9_clicked();
+	void on_lineEdit_returnPressed();
+	void on_lineEdit_2_returnPressed();
+	void on_lineEdit_3_returnPressed();
 	void mousePressEvent(QMouseEvent* event);
 	void mouseMoveEvent(QMouseEvent* event);
 	
 private:
     Ui::add_app *ui;
     sql_database database;
+	popup *popUp;
 	QPoint m_mousePoint;
 };
 

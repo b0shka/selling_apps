@@ -285,44 +285,10 @@ QListWidget::item {
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QPushButton" name="pushButton_3">
-     <property name="geometry">
-      <rect>
-       <x>285</x>
-       <y>5</y>
-       <width>41</width>
-       <height>36</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>-1</pointsize>
-       <weight>75</weight>
-       <italic>false</italic>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton {
-	padding: 2px;
-	font-size: 20px;
-	height: 28px;
-	color: white;
-	background-color: #404040;
-	border-radius: 5px;
-}
-QPushButton::hover {
-	background-color: #949494;
-}</string>
-     </property>
-     <property name="text">
-      <string>⋮</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="pushButton_4">
      <property name="geometry">
       <rect>
-       <x>195</x>
+       <x>245</x>
        <y>5</y>
        <width>86</width>
        <height>36</height>

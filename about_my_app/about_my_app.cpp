@@ -20,6 +20,8 @@ about_my_app::about_my_app(QList<QString> param_app, QWidget *parent) :
         ui->textEdit->setPlainText(info_app[1]);
         ui->lineEdit_3->setText(info_app[2]);
     }
+	
+	ui->pushButton_2->setFocus();
 }
 
 about_my_app::~about_my_app()
@@ -49,27 +51,62 @@ void about_my_app::on_pushButton_clicked()
     QMessageBox::Button reply = QMessageBox::question(this, "Подтверждение удаления", "Вы уверены?", QMessageBox::Yes | QMessageBox::No);
     if (reply == QMessageBox::Yes)
     {
-        QString result_delete = database.delete_app_from_db(ui->lineEdit->text());
-        if (result_delete == "Success")
-        {
-            QMessageBox::information(this, "Уведомление", "Программа удалена");
-            close();
-            g_status_delete_app = 1;
-        }
+		int id_app = database.get_id_app(ui->lineEdit->text(), ui->lineEdit_2->text(), ui->textEdit->toPlainText(), ui->lineEdit_3->text());
+		if (id_app != 0)
+		{
+			QString result_delete = database.delete_app_from_db(id_app);
+			if (result_delete == "Success")
+			{
+				popUp = new popup();
+				popUp->setPopupText("Программа удалена");
+				popUp->show();
+				close();
+				g_status_delete_app = 1;
+			}
+		}
+		else
+		{
+			popUp = new popup();
+			popUp->setPopupText("Ошибка на стороне сервера");
+			popUp->show();
+		}
     }
 }
 
 void about_my_app::on_pushButton_2_clicked()
 {
     QString new_name = ui->lineEdit->text();
-
-    if (new_name == "")
+	QString new_price = ui->lineEdit_2->text();
+	
+	QString check_new_name = new_name.replace(" ", "");
+	QString check_new_price = new_price.replace(" ", "");
+	
+    if (check_new_name.size() == 0 && check_new_price.size() == 0)
+	{
+		ui->lineEdit->setFocus();
         ui->lineEdit->setStyleSheet(lock_style_other_color);
+		ui->lineEdit_2->setStyleSheet(lock_style_other_color);
+	}
+	else if (check_new_name.size() == 0 || check_new_price.size() == 0)
+	{
+		if (check_new_name.size() == 0)
+        {
+			ui->lineEdit->setFocus();
+            ui->lineEdit->setStyleSheet(lock_style_other_color);
+            ui->lineEdit_2->setStyleSheet(default_style_other_color);
+        }
+        else
+        {
+			ui->lineEdit_2->setFocus();
+            ui->lineEdit->setStyleSheet(default_style_other_color);
+            ui->lineEdit_2->setStyleSheet(lock_style_other_color);
+        }
+	}
     else
     {
         ui->lineEdit->setStyleSheet(default_style_other_color);
+		ui->lineEdit_2->setStyleSheet(default_style_other_color);
 
-        QString new_price = ui->lineEdit_2->text();
         QString new_description = ui->textEdit->toPlainText();
         QString app_technologes = ui->lineEdit_3->text();
         QString result_save = database.save_change_app({app_name, new_name, new_price, new_description, app_technologes});
@@ -92,4 +129,19 @@ void about_my_app::on_pushButton_8_clicked()
 void about_my_app::on_pushButton_9_clicked()
 {
     showMaximized();
+}
+
+void about_my_app::on_lineEdit_returnPressed()
+{
+    on_pushButton_2_clicked();
+}
+
+void about_my_app::on_lineEdit_2_returnPressed()
+{
+    on_pushButton_2_clicked();
+}
+
+void about_my_app::on_lineEdit_3_returnPressed()
+{
+    on_pushButton_2_clicked();
 }

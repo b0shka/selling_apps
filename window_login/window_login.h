@@ -1,12 +1,7 @@
 ﻿#ifndef WINDOW_LOGIN_H
 #define WINDOW_LOGIN_H
 
-#include <QDialog>
-#include <QMouseEvent>
-#include <QPoint>
 #include "../window_register/window_registration.h"
-#include "../sql_database/sql_database.h"
-#include "../main_data/data.h"
 
 namespace Ui {
 class window_login;
@@ -23,8 +18,10 @@ public:
 private slots:
     void on_pushButton_clicked();
     void on_pushButton_2_clicked();
-	void on_pushButton_8_clicked();
-	void on_pushButton_9_clicked();
+	void on_close_clicked();
+	void on_hide_clicked();
+	void on_lineEdit_returnPressed();
+	void on_lineEdit_2_returnPressed();
 	void mousePressEvent(QMouseEvent* event);
 	void mouseMoveEvent(QMouseEvent* event);
 	

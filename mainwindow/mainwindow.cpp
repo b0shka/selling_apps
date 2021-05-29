@@ -99,8 +99,9 @@ void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 void MainWindow::on_lineEdit_returnPressed()
 {
 	QString search = ui->lineEdit->text();
+	QString check_search = search.replace(" ", "");
 
-    if (search == "")
+    if (check_search.size() == 0)
     {
         ui->lineEdit->setStyleSheet(lock_style);
         ui->listWidget->clear();

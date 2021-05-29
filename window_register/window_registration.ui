@@ -83,7 +83,7 @@ color: white;</string>
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QPushButton" name="pushButton_8">
+    <widget class="QPushButton" name="close">
      <property name="geometry">
       <rect>
        <x>350</x>
@@ -116,7 +116,7 @@ QPushButton::hover {
       <string>✘</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_9">
+    <widget class="QPushButton" name="hide">
      <property name="geometry">
       <rect>
        <x>320</x>
@@ -311,6 +311,38 @@ color: white;</string>
     </property>
     <property name="clearButtonEnabled">
      <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>45</y>
+      <width>36</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>-1</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	padding-top: 5px;
+	font-size: 22px;
+	color: white;
+	background-color: #404040;
+	border-radius: 5px;
+}
+QPushButton::hover {
+	background-color: #949494;
+}</string>
+    </property>
+    <property name="text">
+     <string>🡸</string>
     </property>
    </widget>
   </widget>

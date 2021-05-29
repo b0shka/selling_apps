@@ -18,7 +18,8 @@ public:
 	
 signals:
 	void finished();
-	void add_info(QString message);
+	void add_all_msg(QString message);
+	void add_new_msg(QString message);
 	void login_devChanged(QString login_dev);
 	
 public slots:

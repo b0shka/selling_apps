@@ -10,20 +10,20 @@ autorization_mainwindow::autorization_mainwindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::autorization_mainwindow)
 {
-	popUp = new popup();
     ui->setupUi(this);
+	
+	setWindowFlags(Qt::FramelessWindowHint);
+	setAttribute(Qt::WA_TranslucentBackground);
 	
 	ui->label->setText(g_user_name.split(" ")[0]);
     ui->profile->setText(g_user_name.at(0));
 	
     get_name_app_from_db();
 	
-	setWindowFlags(Qt::FramelessWindowHint);
-	setAttribute(Qt::WA_TranslucentBackground);
-	
 	int count_messages = database.check_new_messages(g_user_name);
 	if (count_messages > 0)
 	{
+		popUp = new popup();
 		popUp->setPopupText("У вас есть новые сообщения");
 		popUp->show();
 	}
@@ -161,6 +161,8 @@ void autorization_mainwindow::on_listWidget_itemDoubleClicked(QListWidgetItem *i
         app_information.setModal(true);
         app_information.exec();
 
+		database.get_max_price_app();
+		database.get_min_price_app();
         get_name_app_from_db();
     }
     else
@@ -203,8 +205,9 @@ void autorization_mainwindow::mouseMoveEvent(QMouseEvent* event)
 void autorization_mainwindow::on_lineEdit_returnPressed()
 {
     QString search = ui->lineEdit->text();
+	QString check_search = search.replace(" ", "");
 
-    if (search == "")
+    if (check_search.size() == 0)
     {
         ui->lineEdit->setStyleSheet(lock_style);
         ui->listWidget->clear();
@@ -222,7 +225,8 @@ void autorization_mainwindow::on_lineEdit_returnPressed()
 void autorization_mainwindow::get_name_app_from_db()
 {
     QList<QList<QString>> list_apps_name = database.get_apps_name();
-
+	ui->listWidget->clear();
+	
     try {
         if (list_apps_name.size() == 0)
             throw 1;
@@ -241,7 +245,6 @@ void autorization_mainwindow::get_name_app_from_db()
 
 void autorization_mainwindow::add_apps_to_listWidget(QList<QList<QString>> list_result)
 {
-    ui->listWidget->clear();
     for (QList<QString> i : list_result)
     {
         if (g_technloges != "")

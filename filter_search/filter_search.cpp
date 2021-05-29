@@ -14,6 +14,8 @@ filter_search::filter_search(QWidget *parent) :
     ui->lineEdit_2->setText(QString::number(g_min_price));
     ui->lineEdit_3->setText(g_technloges);
     ui->lineEdit_4->setText(g_description);
+	
+	ui->pushButton->setFocus();
 }
 
 filter_search::~filter_search()
@@ -48,8 +50,14 @@ void filter_search::on_pushButton_clicked()
     }
     else
     {
-        g_max_price = ui->lineEdit->text().toInt();
-        g_min_price = ui->lineEdit_2->text().toInt();
+		if (ui->lineEdit->text().replace(" ", "").size() == 0)
+			g_max_price = 0;
+		else
+			g_max_price = ui->lineEdit->text().toInt();
+		if (ui->lineEdit_2->text().replace(" ", "").size() == 0)
+			g_min_price = 0;
+		else
+			g_min_price = ui->lineEdit_2->text().toInt();
         g_technloges = ui->lineEdit_3->text();
         g_description = ui->lineEdit_4->text();
 
@@ -74,8 +82,11 @@ void filter_search::on_pushButton_2_clicked()
     if (g_max_price == 0)
         ui->lineEdit->setText("");
     else
-        ui->lineEdit->setText(QString::number(g_max_price));
-    ui->lineEdit_2->setText(QString::number(g_min_price));
+		ui->lineEdit->setText(QString::number(g_max_price));
+	if (g_min_price == 0)
+        ui->lineEdit_2->setText("");
+    else
+		ui->lineEdit_2->setText(QString::number(g_min_price));
     ui->lineEdit_3->setText(g_technloges);
     ui->lineEdit_4->setText(g_description);
 }
@@ -88,4 +99,24 @@ void filter_search::on_pushButton_8_clicked()
 void filter_search::on_pushButton_9_clicked()
 {
     showMinimized();
+}
+
+void filter_search::on_lineEdit_returnPressed()
+{
+    on_pushButton_clicked();
+}
+
+void filter_search::on_lineEdit_2_returnPressed()
+{
+    on_pushButton_clicked();
+}
+
+void filter_search::on_lineEdit_3_returnPressed()
+{
+    on_pushButton_clicked();
+}
+
+void filter_search::on_lineEdit_4_returnPressed()
+{
+    on_pushButton_clicked();
 }

@@ -20,6 +20,8 @@ chat::chat(QString login_dev, QWidget *parent) :
 	
 	connect(&thread_info, &QThread::started, &info, &thread_add_info::run);
 	connect(&info, &thread_add_info::finished, &thread_info, &QThread::terminate);
+	connect(&info, SIGNAL(add_all_msg(QString)), this, SLOT(restore_chat(QString)));
+	connect(&info, SIGNAL(add_new_msg(QString)), this, SLOT(restore_new_messages(QString)));
 	info.moveToThread(&thread_info);
 	info.setLogin_dev(login_dev);
 	thread_info.start();
@@ -38,8 +40,7 @@ chat::chat(QString login_dev, QWidget *parent) :
 	online.setLogin_dev(login_dev);
 	thread_button.start();
 	
-	restore_chat();
-	restore_new_messages();
+	ui->lineEdit_3->setFocus();
 }
 
 chat::~chat()
@@ -79,11 +80,6 @@ void chat::mouseMoveEvent(QMouseEvent* event)
 		event->accept();
 	}
 }
-
-void chat::on_pushButton_3_clicked()
-{
-	
-}
 	
 void chat::on_pushButton_clicked()
 {	
@@ -109,10 +105,8 @@ void chat::on_pushButton_2_clicked()
     profile_developer.exec();
 }
 
-void chat::restore_chat()
-{
-	QString all_message = database.get_correspondence(g_user_name, login_dev);
-	
+void chat::restore_chat(QString all_message)
+{	
 	if (all_message.size() != 0)
 	{
 		if (all_message != "ERROR")
@@ -131,9 +125,8 @@ void chat::restore_chat()
 	}
 }
 
-void chat::restore_new_messages()
+void chat::restore_new_messages(QString new_messages)
 {
-	QString new_messages = database.get_new_messages(g_user_name, login_dev);
 	if (new_messages.size() != 0)
 	{
 		if (new_messages != "ERROR")
@@ -176,7 +169,8 @@ void chat::on_pushButton_4_clicked()
 	{
         database.delete_message(g_user_name, login_dev, message_name);
 		ui->listWidget->clear();
-		restore_chat();
+		QString all_messages = database.get_correspondence(g_user_name, login_dev);
+		restore_chat(all_messages);
 		ui->pushButton_4->setHidden(true);
 	}
 }
@@ -197,5 +191,10 @@ void chat::on_pushButton_8_clicked()
 
 void chat::on_pushButton_9_clicked()
 {
-    showMaximized();
+	showMaximized();
+}
+
+void chat::on_lineEdit_3_returnPressed()
+{
+	on_pushButton_clicked();
 }

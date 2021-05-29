@@ -97,8 +97,8 @@ QPushButton::hover {
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>480</x>
-      <y>45</y>
+      <x>475</x>
+      <y>50</y>
       <width>116</width>
       <height>26</height>
      </rect>
@@ -170,7 +170,7 @@ QPushButton::hover {
     <property name="geometry">
      <rect>
       <x>15</x>
-      <y>45</y>
+      <y>50</y>
       <width>406</width>
       <height>26</height>
      </rect>
@@ -253,9 +253,9 @@ QPushButton::hover {
    <widget class="QPushButton" name="login_dev">
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>115</x>
       <y>365</y>
-      <width>221</width>
+      <width>216</width>
       <height>21</height>
      </rect>
     </property>

@@ -25,6 +25,9 @@ private slots:
     void on_pushButton_2_clicked();
 	void on_pushButton_8_clicked();
 	void on_pushButton_9_clicked();
+	void on_lineEdit_returnPressed();
+	void on_lineEdit_2_returnPressed();
+	void on_lineEdit_3_returnPressed();
 	void mousePressEvent(QMouseEvent* event);
 	void mouseMoveEvent(QMouseEvent* event);
 	

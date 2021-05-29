@@ -24,12 +24,13 @@ public slots:
     int generate_id(QString name_table);
     QList<QString> get_apps_for_list_profile(QString login);
     QList<QString> get_all_info_app_list_profile(QList<QString> param_app);
-    QString delete_app_from_db(QString name_app);
+    QString delete_app_from_db(int app_id);
     QString save_change_app(QList<QString> data_change);
     QString get_count_apps(QString login);
     QString add_star_to_app(QString login, QString app_name);
     QString add_id_users_star_app(QString login, QString app_name, QString new_id);
     int get_id_user(QString login);
+	int get_id_app(QString app_name, QString app_price, QString app_description, QString app_technologes);
     QString get_list_id_star_app(QString login, QString app_name);
     QString check_id_in_id_star_app(QString login, QString app_name, QString user_id);
     QString get_all_star_for_profile(QString login);
