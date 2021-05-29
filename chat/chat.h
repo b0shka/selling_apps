@@ -44,12 +44,12 @@ private:
     Ui::chat *ui;
 	Client client;
 	sql_database database;
-	QThread thread_read, thread_button;
-	thread_add_info add_info;
-	thread_chat thread;
-	thread_online online;
 	QString login_dev, message_name;
 	QPoint m_mousePoint;
+	QThread thread_read, thread_button, thread_info;
+	thread_add_info info;
+	thread_chat thread;
+	thread_online online;
 };
 
 #endif // CHAT_H

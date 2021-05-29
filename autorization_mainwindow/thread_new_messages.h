@@ -6,7 +6,6 @@
 #include <QString>
 #include "../sql_database/sql_database.h"
 #include "../main_data/data.h"
-#include "../popup/popup.h"
 
 class thread_new_messages : public QObject
 {

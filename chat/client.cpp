@@ -17,8 +17,6 @@ void Client::conect_server()
 	//qDebug() << QString(buffer).split(";")[0].toLatin1().data();
 	database.add_client_id(QString(buffer).toInt(), g_user_name);
 	
-	database.add_id_server(client, g_user_name);
-	
 	g_status_online = 1;
 }
 
@@ -37,19 +35,6 @@ void Client::send_message(QString message, QString login)
 	else
 		database.add_new_message_to_database(g_user_name, login, "0" + message);
 }
-
-/*void Client::read_message()
-{
-	int client_socket = database.get_id_server(g_user_name);
-	while (g_status_online == 1)
-	{
-		recv(client_socket, buffer, BUFFER, 0);
-		if (QString(buffer).size() != 0)
-		{
-			qDebug() << QString(buffer);
-		}
-	}
-}*/
 
 void Client::disconnect()
 {

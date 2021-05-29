@@ -21,6 +21,13 @@ autorization_mainwindow::autorization_mainwindow(QWidget *parent) :
 	setWindowFlags(Qt::FramelessWindowHint);
 	setAttribute(Qt::WA_TranslucentBackground);
 	
+	int count_messages = database.check_new_messages(g_user_name);
+	if (count_messages > 0)
+	{
+		popUp->setPopupText("У вас есть новые сообщения");
+		popUp->show();
+	}
+	
 	connect(&thread_message, &QThread::started, &thread, &thread_new_messages::run);
 	connect(&thread, &thread_new_messages::finished, &thread_message, &QThread::terminate);
 	connect(&thread, SIGNAL(add_count(QString)), this, SLOT(add_count_new_messages(QString)));

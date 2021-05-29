@@ -20,11 +20,10 @@ class Client
 public:
 	void conect_server();
 	void send_message(QString message, QString login);
-	//void read_message();
 	void disconnect();
+	int client;
 	
 private:
-	int client;
 	sockaddr_in hint;
     char buffer[BUFFER];
 	sql_database database;

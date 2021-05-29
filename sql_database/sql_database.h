@@ -47,8 +47,6 @@ public slots:
 	void change_status_online(QString login);
 	void add_client_id(int client, QString login);
 	int get_id_socket_user(QString login);
-	void add_id_server(int id_socket, QString login);
-	int get_id_server(QString login);
 	int get_status_online(QString login);
 	void start_dialog(QString login, QString login_dev);
 	void start_chat(QString login, QString login_dev);
