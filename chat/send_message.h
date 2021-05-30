@@ -1,5 +1,5 @@
-﻿#ifndef THREAD_SEND_H
-#define THREAD_SEND_H
+﻿#ifndef SEND_MESSAGE_H
+#define SEND_MESSAGE_H
 
 #include <QObject>
 #include <QDebug>
@@ -10,39 +10,41 @@
 
 #define BUFFER 1024
 
-class thread_send : public QObject
+class send_message : public QObject
 {
 	Q_OBJECT
 	Q_PROPERTY(QString login_dev READ login_dev WRITE setLogin_dev NOTIFY login_devChanged)
-	Q_PROPERTY(QString message READ message WRITE setMessage NOTIFY messageChanged)
 	Q_PROPERTY(int id_server READ id_server WRITE setId_server NOTIFY id_serverChanged)
+	Q_PROPERTY(QString message READ message WRITE setMessage NOTIFY messageChanged)
 	
 public:
-	explicit thread_send(QObject *parent = nullptr);
+	explicit send_message(QObject *parent = nullptr);
 	QString login_dev() const;
-	QString message() const;
 	int id_server() const;
+	QString message() const;
 	
 signals:
 	void finished();
-	void add_message(QString message);
+	void add_msg(QString message);
+	void add_send_msg(QString message);
 	void login_devChanged(QString login_dev);
-	void messageChanged(QString message);
 	void id_serverChanged(int id_server);
-	
+	void messageChanged(QString message);
+
 public slots:
 	void run();
+	void sending();
 	void setLogin_dev(QString login_dev);
-	void setMessage(QString message);
 	void setId_server(int id_server);
+	void setMessage(QString message);
 	
 private:
 	char buffer[BUFFER];
 	sql_database database;
-	QString m_login_dev;
+	QString m_login_dev, send_text;
+	int m_id_server;
 	QString m_message = "";
 	QString msg;
-	int m_id_server;
 };
 
-#endif // THREAD_SEND_H
+#endif // SEND_MESSAGE_H

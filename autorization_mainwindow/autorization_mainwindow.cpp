@@ -180,8 +180,9 @@ void autorization_mainwindow::keyPressEvent(QKeyEvent *event)
         case Qt::Key_Escape:
             close();
             break;
-        case Qt::Key_Control:
-            ui->lineEdit->setText("");
+	    case Qt::Key_F5:
+		    get_name_app_from_db();
+		    break;
     }
 }
 

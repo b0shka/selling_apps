@@ -10,7 +10,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	setWindowFlags(Qt::FramelessWindowHint);
 	setAttribute(Qt::WA_TranslucentBackground);
 	
-    database.first_start();
+	database.first_start();
+	
     database.get_max_price_app();
     database.get_min_price_app();
     get_name_app_from_db();
@@ -45,6 +46,11 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         case Qt::Key_Escape:
             close();
             break;
+	    case Qt::Key_F5:
+		    database.get_max_price_app();
+		    database.get_min_price_app();
+		    get_name_app_from_db();
+	 	    break;
     }
 }
 

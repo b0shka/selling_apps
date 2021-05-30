@@ -23,6 +23,7 @@ SOURCES += \
 	autorization_mainwindow/thread_new_messages.cpp \
     chat/chat.cpp \
 	chat/client.cpp \
+	chat/send_message.cpp \
 	chat/thread_add_info.cpp \
 	chat/thread_chat.cpp \
 	chat/thread_online.cpp \
@@ -49,6 +50,7 @@ HEADERS += \
 	autorization_mainwindow/thread_new_messages.h \
     chat/chat.h \
 	chat/client.h \
+	chat/send_message.h \
 	chat/thread_add_info.h \
 	chat/thread_chat.h \
 	chat/thread_online.h \

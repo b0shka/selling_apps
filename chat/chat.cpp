@@ -26,12 +26,28 @@ chat::chat(QString login_dev, QWidget *parent) :
 	info.setLogin_dev(login_dev);
 	thread_info.start();
 	
-	connect(&thread_read, &QThread::started, &thread, &thread_chat::run);
+	/*connect(&thread_read, &QThread::started, &thread, &thread_chat::run);
 	connect(&thread, &thread_chat::finished, &thread_read, &QThread::terminate);
 	connect(&thread, SIGNAL(add_msg(QString)), this, SLOT(add_message_from_server(QString)));
 	thread.moveToThread(&thread_read);
 	thread.setId_server(client.client);
-	thread_read.start();
+	thread_read.start();*/
+	
+	connect(&thread_signal_msg, &QThread::started, &read_msg, &send_message::run);
+	connect(&read_msg, &send_message::finished, &thread_signal_msg, &QThread::terminate);
+	connect(&read_msg, SIGNAL(add_msg(QString)), this, SLOT(add_message_from_server(QString)));
+	read_msg.moveToThread(&thread_signal_msg);
+	read_msg.setId_server(client.client);
+	read_msg.setLogin_dev(login_dev);
+	thread_signal_msg.start();
+	
+	connect(&thread_send_msg, &QThread::started, &send_msg, &send_message::sending);
+	connect(&send_msg, &send_message::finished, &thread_send_msg, &QThread::terminate);
+	connect(&send_msg, SIGNAL(add_send_msg(QString)), this, SLOT(add_message_to_listwidget(QString)));
+	send_msg.moveToThread(&thread_send_msg);
+	send_msg.setLogin_dev(login_dev);
+	send_msg.setId_server(client.client);
+	thread_send_msg.start();
 	
 	connect(&thread_button, &QThread::started, &online, &thread_online::run);
 	connect(&online, &thread_online::finished, &thread_button, &QThread::terminate);
@@ -40,13 +56,13 @@ chat::chat(QString login_dev, QWidget *parent) :
 	online.setLogin_dev(login_dev);
 	thread_button.start();
 	
-	connect(&thread_send_msg, &QThread::started, &send, &thread_send::run);
+	/*connect(&thread_send_msg, &QThread::started, &send, &thread_send::run);
 	connect(&send, &thread_send::finished, &thread_send_msg, &QThread::terminate);
 	connect(&send, SIGNAL(add_message(QString)), this, SLOT(add_message_to_listwidget(QString)));
 	send.moveToThread(&thread_send_msg);
 	send.setId_server(client.client);
 	send.setLogin_dev(login_dev);
-	thread_send_msg.start();
+	thread_send_msg.start();*/
 	
 	ui->lineEdit_3->setFocus();
 }
@@ -55,12 +71,14 @@ chat::~chat()
 {
 	delete ui;
 	client.disconnect();
-	thread_read.quit();
-	thread_read.wait();
-	thread_button.quit();
-	thread_button.wait();
+	/*thread_read.quit();
+	thread_read.wait();*/
 	thread_info.quit();
 	thread_info.wait();
+	thread_signal_msg.quit();
+	thread_signal_msg.wait();
+	thread_button.quit();
+	thread_button.wait();
 	thread_send_msg.quit();
 	thread_send_msg.wait();
 	database.change_status_online(g_user_name);
@@ -98,8 +116,12 @@ void chat::on_pushButton_clicked()
 
 	if (text.replace(" ", "").size() != 0)
 	{
-		send.setMessage(message);
+		//QTime time = QTime::currentTime();
+		//message = "(" + time.toString("hh:mm") + ") " + message;
+		//add_message_to_listwidget(message);
 		ui->lineEdit_3->setText("");
+		send_msg.setMessage(message);
+		//send_msg.sending(message);
 	}
 }
 

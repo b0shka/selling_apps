@@ -7,11 +7,13 @@
 #include <QMessageBox>
 #include <QMouseEvent>
 #include <QPoint>
-#include "client.h"
+#include <QThread>
 #include "thread_add_info.h"
-#include "thread_chat.h"
+//#include "thread_chat.h"
 #include "thread_online.h"
-#include "thread_send.h"
+//#include "thread_send.h"
+#include "send_message.h"
+#include "client.h"
 
 namespace Ui {
 class chat;
@@ -47,11 +49,14 @@ private:
 	sql_database database;
 	QString login_dev, message_name;
 	QPoint m_mousePoint;
-	QThread thread_read, thread_button, thread_info, thread_send_msg;
+	//QThread thread_read, thread_send_msg;
+	QThread thread_button, thread_info, thread_signal_msg, thread_send_msg;
 	thread_add_info info;
-	thread_chat thread;
+	//thread_chat thread;
 	thread_online online;
-	thread_send send;
+	//thread_send send;
+	send_message read_msg;
+	send_message send_msg;
 };
 
 #endif // CHAT_H

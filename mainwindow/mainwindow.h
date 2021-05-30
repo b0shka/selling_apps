@@ -7,9 +7,9 @@
 #include <QMouseEvent>
 #include <QPoint>
 #include "about_app/about_app.h"
-#include "sql_database/sql_database.h"
-#include "../main_data/data.h"
 #include "../filter_search/filter_search.h"
+#include "../sql_database/sql_database.h"
+#include "../main_data/data.h"
 
 using namespace std;
 
@@ -24,6 +24,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+	void get_name_app_from_db();
 
 private slots:
     // функции для кнопок
@@ -39,7 +40,6 @@ private slots:
 	void mouseMoveEvent(QMouseEvent* event);
 
     // функции для работы с записями и поиском
-    void get_name_app_from_db();
     void search_result(QString search);
     int check_error(QString search, QString name_main);
     int check_word_in_word(QString search, QString name_main);
