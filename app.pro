@@ -23,11 +23,7 @@ SOURCES += \
 	autorization_mainwindow/thread_new_messages.cpp \
     chat/chat.cpp \
 	chat/client.cpp \
-	chat/send_message.cpp \
-	chat/thread_add_info.cpp \
-	chat/thread_chat.cpp \
-	chat/thread_online.cpp \
-	chat/thread_send.cpp \
+	chat/thread_in_chat.cpp \
     developper_app/developper_app.cpp \
     favorite_app/favorite_app.cpp \
     filter_search/filter_search.cpp \
@@ -50,11 +46,7 @@ HEADERS += \
 	autorization_mainwindow/thread_new_messages.h \
     chat/chat.h \
 	chat/client.h \
-	chat/send_message.h \
-	chat/thread_add_info.h \
-	chat/thread_chat.h \
-	chat/thread_online.h \
-	chat/thread_send.h \
+	chat/thread_in_chat.h \
     developper_app/developper_app.h \
     favorite_app/favorite_app.h \
     filter_search/filter_search.h \

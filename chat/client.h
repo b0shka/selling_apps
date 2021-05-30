@@ -19,9 +19,8 @@ class Client
 {
 public:
 	void conect_server();
-	//void send_message(QString message, QString login);
 	void disconnect();
-	int client;
+	int client, result_connect;
 	
 private:
 	sockaddr_in hint;

@@ -16,7 +16,7 @@ profile::profile(QWidget *parent) :
     ui->lineEdit->setText(g_user_name);
     get_info_from_db();
 	
-	ui->lineEdit->setFocus();
+	ui->pushButton_2->setFocus();
 }
 
 profile::~profile()

@@ -10,7 +10,7 @@
 
 #define BUFFER 1024
 
-class send_message : public QObject
+class thread_in_chat : public QObject
 {
 	Q_OBJECT
 	Q_PROPERTY(QString login_dev READ login_dev WRITE setLogin_dev NOTIFY login_devChanged)
@@ -18,7 +18,7 @@ class send_message : public QObject
 	Q_PROPERTY(QString message READ message WRITE setMessage NOTIFY messageChanged)
 	
 public:
-	explicit send_message(QObject *parent = nullptr);
+	explicit thread_in_chat(QObject *parent = nullptr);
 	QString login_dev() const;
 	int id_server() const;
 	QString message() const;
@@ -27,6 +27,9 @@ signals:
 	void finished();
 	void add_msg(QString message);
 	void add_send_msg(QString message);
+	void add_all_msg(QString message);
+	void add_new_msg(QString message);
+	void add_online(int message);
 	void login_devChanged(QString login_dev);
 	void id_serverChanged(int id_server);
 	void messageChanged(QString message);
@@ -34,6 +37,8 @@ signals:
 public slots:
 	void run();
 	void sending();
+	void add_ingo();
+	void check_online();
 	void setLogin_dev(QString login_dev);
 	void setId_server(int id_server);
 	void setMessage(QString message);
@@ -44,7 +49,6 @@ private:
 	QString m_login_dev, send_text;
 	int m_id_server;
 	QString m_message = "";
-	QString msg;
 };
 
 #endif // SEND_MESSAGE_H

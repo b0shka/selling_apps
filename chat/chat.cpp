@@ -15,54 +15,48 @@ chat::chat(QString login_dev, QWidget *parent) :
 	ui->label_7->setText(login_dev.split(" ")[0]);
 	ui->pushButton_2->setText(login_dev.at(0));
 	ui->pushButton_4->setHidden(true);
+	ui->label_8->setHidden(true);
 	
 	client.conect_server();
-	
-	connect(&thread_info, &QThread::started, &info, &thread_add_info::run);
-	connect(&info, &thread_add_info::finished, &thread_info, &QThread::terminate);
-	connect(&info, SIGNAL(add_all_msg(QString)), this, SLOT(restore_chat(QString)));
-	connect(&info, SIGNAL(add_new_msg(QString)), this, SLOT(restore_new_messages(QString)));
-	info.moveToThread(&thread_info);
-	info.setLogin_dev(login_dev);
-	thread_info.start();
-	
-	/*connect(&thread_read, &QThread::started, &thread, &thread_chat::run);
-	connect(&thread, &thread_chat::finished, &thread_read, &QThread::terminate);
-	connect(&thread, SIGNAL(add_msg(QString)), this, SLOT(add_message_from_server(QString)));
-	thread.moveToThread(&thread_read);
-	thread.setId_server(client.client);
-	thread_read.start();*/
-	
-	connect(&thread_signal_msg, &QThread::started, &read_msg, &send_message::run);
-	connect(&read_msg, &send_message::finished, &thread_signal_msg, &QThread::terminate);
-	connect(&read_msg, SIGNAL(add_msg(QString)), this, SLOT(add_message_from_server(QString)));
-	read_msg.moveToThread(&thread_signal_msg);
-	read_msg.setId_server(client.client);
-	read_msg.setLogin_dev(login_dev);
-	thread_signal_msg.start();
-	
-	connect(&thread_send_msg, &QThread::started, &send_msg, &send_message::sending);
-	connect(&send_msg, &send_message::finished, &thread_send_msg, &QThread::terminate);
-	connect(&send_msg, SIGNAL(add_send_msg(QString)), this, SLOT(add_message_to_listwidget(QString)));
-	send_msg.moveToThread(&thread_send_msg);
-	send_msg.setLogin_dev(login_dev);
-	send_msg.setId_server(client.client);
-	thread_send_msg.start();
-	
-	connect(&thread_button, &QThread::started, &online, &thread_online::run);
-	connect(&online, &thread_online::finished, &thread_button, &QThread::terminate);
-	connect(&online, SIGNAL(add_online(int)), this, SLOT(add_online_in_chat(int)));
-	online.moveToThread(&thread_button);
-	online.setLogin_dev(login_dev);
-	thread_button.start();
-	
-	/*connect(&thread_send_msg, &QThread::started, &send, &thread_send::run);
-	connect(&send, &thread_send::finished, &thread_send_msg, &QThread::terminate);
-	connect(&send, SIGNAL(add_message(QString)), this, SLOT(add_message_to_listwidget(QString)));
-	send.moveToThread(&thread_send_msg);
-	send.setId_server(client.client);
-	send.setLogin_dev(login_dev);
-	thread_send_msg.start();*/
+	if (client.result_connect == -1)
+	{
+		popUp = new popup();
+		popUp->setPopupText("Не удалось подключиться к серверу");
+		popUp->show();
+	}
+	else
+	{
+		connect(&thread_info, &QThread::started, &info, &thread_in_chat::add_ingo);
+		connect(&info, &thread_in_chat::finished, &thread_info, &QThread::terminate);
+		connect(&info, SIGNAL(add_all_msg(QString)), this, SLOT(restore_chat(QString)));
+		connect(&info, SIGNAL(add_new_msg(QString)), this, SLOT(restore_new_messages(QString)));
+		info.moveToThread(&thread_info);
+		info.setLogin_dev(login_dev);
+		thread_info.start();
+		
+		connect(&thread_signal_msg, &QThread::started, &read_msg, &thread_in_chat::run);
+		connect(&read_msg, &thread_in_chat::finished, &thread_signal_msg, &QThread::terminate);
+		connect(&read_msg, SIGNAL(add_msg(QString)), this, SLOT(add_message_from_server(QString)));
+		read_msg.moveToThread(&thread_signal_msg);
+		read_msg.setId_server(client.client);
+		read_msg.setLogin_dev(login_dev);
+		thread_signal_msg.start();
+		
+		connect(&thread_send_msg, &QThread::started, &send_msg, &thread_in_chat::sending);
+		connect(&send_msg, &thread_in_chat::finished, &thread_send_msg, &QThread::terminate);
+		connect(&send_msg, SIGNAL(add_send_msg(QString)), this, SLOT(add_message_to_listwidget(QString)));
+		send_msg.moveToThread(&thread_send_msg);
+		send_msg.setLogin_dev(login_dev);
+		send_msg.setId_server(client.client);
+		thread_send_msg.start();
+		
+		connect(&thread_button, &QThread::started, &online, &thread_in_chat::check_online);
+		connect(&online, &thread_in_chat::finished, &thread_button, &QThread::terminate);
+		connect(&online, SIGNAL(add_online(int)), this, SLOT(add_online_in_chat(int)));
+		online.moveToThread(&thread_button);
+		online.setLogin_dev(login_dev);
+		thread_button.start();
+	}
 	
 	ui->lineEdit_3->setFocus();
 }
@@ -70,18 +64,19 @@ chat::chat(QString login_dev, QWidget *parent) :
 chat::~chat()
 {
 	delete ui;
-	client.disconnect();
-	/*thread_read.quit();
-	thread_read.wait();*/
-	thread_info.quit();
-	thread_info.wait();
-	thread_signal_msg.quit();
-	thread_signal_msg.wait();
-	thread_button.quit();
-	thread_button.wait();
-	thread_send_msg.quit();
-	thread_send_msg.wait();
-	database.change_status_online(g_user_name);
+	if (client.result_connect != -1)
+	{
+		client.disconnect();
+		thread_info.quit();
+		thread_info.wait();
+		thread_signal_msg.quit();
+		thread_signal_msg.wait();
+		thread_send_msg.quit();
+		thread_send_msg.wait();
+		thread_button.quit();
+		thread_button.wait();
+		database.change_status_online(g_user_name);
+	}
 }
 
 void chat::add_online_in_chat(int status)
@@ -111,17 +106,23 @@ void chat::mouseMoveEvent(QMouseEvent* event)
 	
 void chat::on_pushButton_clicked()
 {	
-	QString message = ui->lineEdit_3->text();
-	QString text = message;
-
-	if (text.replace(" ", "").size() != 0)
+	if (client.result_connect != -1)
 	{
-		//QTime time = QTime::currentTime();
-		//message = "(" + time.toString("hh:mm") + ") " + message;
-		//add_message_to_listwidget(message);
-		ui->lineEdit_3->setText("");
-		send_msg.setMessage(message);
-		//send_msg.sending(message);
+		QString message = ui->lineEdit_3->text();
+		QString text = message;
+		
+		if (text.replace(" ", "").size() != 0)
+		{
+			ui->lineEdit_3->setText("");
+			send_msg.setMessage(message);
+		}
+		if (status_read_new_msg == 1)
+		{
+			ui->listWidget->clear();
+			QString all_messages = database.get_correspondence(g_user_name, login_dev);
+			restore_chat(all_messages);
+			status_read_new_msg = 0;
+		}
 	}
 }
 
@@ -171,6 +172,7 @@ void chat::restore_new_messages(QString new_messages)
 		}
 		database.new_messages_to_all_messages(g_user_name, login_dev);
 	}
+	status_read_new_msg = 1;
 }
 
 void chat::add_message_to_listwidget(QString message)

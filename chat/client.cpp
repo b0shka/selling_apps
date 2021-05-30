@@ -8,33 +8,21 @@ void Client::conect_server()
 	hint.sin_port = htons(PORT);
 	inet_pton(AF_INET, IP, &hint.sin_addr);
 
-	connect(client, (sockaddr*)&hint, sizeof(hint));
-	
-	strcpy(buffer, g_user_name.toLatin1());
-	send(client, buffer, BUFFER, 0);
-
-	recv(client, buffer, BUFFER, 0);
-	//qDebug() << QString(buffer).split(";")[0].toLatin1().data();
-	database.add_client_id(QString(buffer).toInt(), g_user_name);
-	
-	g_status_online = 1;
-}
-
-/*void Client::send_message(QString message, QString login)
-{
-	int status_online = database.get_status_online(login);
-	if (status_online == 1)
-	{
-		int client_id = database.get_id_socket_user(login);
-		message = QString::number(client_id) + ";" + message;
-		QByteArray text_char = message.toLatin1();
-		strcpy(buffer, text_char.data());
-		send(client, buffer, BUFFER, 0);
-		database.add_to_chat(login, g_user_name, "0" + message.mid(2));
-	}
+	result_connect = connect(client, (sockaddr*)&hint, sizeof(hint));
+	if (result_connect == -1)
+		return;
 	else
-		database.add_new_message_to_database(g_user_name, login, "0" + message);
-}*/
+	{
+		strcpy(buffer, g_user_name.toLatin1());
+		send(client, buffer, BUFFER, 0);
+		
+		recv(client, buffer, BUFFER, 0);
+		//qDebug() << QString(buffer).split(";")[0].toLatin1().data();
+		database.add_client_id(QString(buffer).toInt(), g_user_name);
+		
+		g_status_online = 1;
+	}
+}
 
 void Client::disconnect()
 {

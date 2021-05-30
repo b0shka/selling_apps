@@ -8,12 +8,9 @@
 #include <QMouseEvent>
 #include <QPoint>
 #include <QThread>
-#include "thread_add_info.h"
-//#include "thread_chat.h"
-#include "thread_online.h"
-//#include "thread_send.h"
-#include "send_message.h"
+#include "thread_in_chat.h"
 #include "client.h"
+#include "../popup/popup.h"
 
 namespace Ui {
 class chat;
@@ -45,18 +42,14 @@ private slots:
 	
 private:
     Ui::chat *ui;
+	popup *popUp;
 	Client client;
 	sql_database database;
 	QString login_dev, message_name;
 	QPoint m_mousePoint;
-	//QThread thread_read, thread_send_msg;
+	int status_read_new_msg = 0;
 	QThread thread_button, thread_info, thread_signal_msg, thread_send_msg;
-	thread_add_info info;
-	//thread_chat thread;
-	thread_online online;
-	//thread_send send;
-	send_message read_msg;
-	send_message send_msg;
+	thread_in_chat read_msg, send_msg, info, online;
 };
 
 #endif // CHAT_H
