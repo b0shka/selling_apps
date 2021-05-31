@@ -89,16 +89,6 @@ void autorization_mainwindow::on_profile_clicked()
         auto mainwindow = new MainWindow();
         mainwindow->show();
     }
-    if (g_status_delete_app == 1)
-    {
-        get_name_app_from_db();
-        g_status_delete_app = 0;
-    }
-    if (g_status_change_app == 1)
-    {
-        get_name_app_from_db();
-        g_status_change_app = 0;
-    }
 }
 
 void autorization_mainwindow::on_filter_clicked()

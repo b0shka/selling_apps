@@ -48,6 +48,9 @@ void sql_database::create_table()
                                                      "app_price VARCHAR (20),"
                                                      "app_description TEXT,"
                                                      "app_technologes TEXT,"
+													 "app_photo1 BLOB,"
+													 "app_photo2 BLOB,"
+													 "app_photo3 BLOB,"
                                                      "app_star integer,"
                                                      "id_users_star TEXT,"
                                                      "author VARCHAR (40) NOT NULL"
@@ -328,23 +331,33 @@ QString sql_database::save_change_in_profile(QList<QString> data_change)
     return "Successs";
 }
 
-QString sql_database::add_new_app(QList<QString> param_app)
-{
-    int app_id = generate_id(app_table);
+QString sql_database::add_new_app(const QList<QString> &param_app, const QByteArray &image_bytes1, const QByteArray &image_bytes2,const QByteArray &image_bytes3)
+{		
+	int app_id = generate_id(app_table);
 
     if (app_id == 0)
     {
         qDebug() << "[ERROR] Не удается сгенерировать id: " << db.lastError().text();
         return "ERROR";
     }
-
-    str_requests = "INSERT INTO " + app_table + " (id, app_name, app_price, app_description, app_technologes, author) VALUES(%1, '%2', '%3', '%4', '%5', '%6');";
-    if (!sql.exec(str_requests.arg(app_id).arg(param_app.at(0)).arg(param_app.at(1)).arg(param_app.at(2)).arg(param_app.at(3)).arg(param_app.at(4))))
-    {
-        qDebug() << "[ERROR] Ошибка при добавлении новой программы в БД";
-        return "ERROR";
-    }
-    db.commit();
+	
+	str_requests = "INSERT INTO " + app_table + " (id, app_name, app_price, app_description, app_technologes, app_photo1, app_photo2, app_photo3, author) VALUES(:id , :name, :price, :description, :technologes, :photo1, :photo2, :photo3, :author);";
+	sql.prepare(str_requests);
+	sql.bindValue(":id", app_id);
+	sql.bindValue(":name", param_app.at(0));
+	sql.bindValue(":price", param_app.at(1));
+	sql.bindValue(":description", param_app.at(2));
+	sql.bindValue(":technologes", param_app.at(3));
+	sql.bindValue(":photo1", image_bytes1);
+	sql.bindValue(":photo2", image_bytes2);
+	sql.bindValue(":photo3", image_bytes3);
+	sql.bindValue(":author", param_app.at(4));
+	if (!sql.exec())
+	{
+		qDebug() << "[ERROR] Не удается добавить фото в БД " << db.lastError().text();
+		return "ERROR";
+	}
+	db.commit();
     return "OK";
 }
 
@@ -413,7 +426,29 @@ QList<QString> sql_database::get_all_info_app_list_profile(QList<QString> param_
         list_apps_name = {app_price, app_description, app_technologes};
     }
 
-    return list_apps_name;
+	return list_apps_name;
+}
+
+QList<QByteArray> sql_database::get_bytes_photo(QString app_name, QString login)
+{
+	str_requests = "SELECT app_photo1, app_photo2, app_photo3 FROM " + app_table + " WHERE app_name = ('%1') and author = ('%2');";
+	if (!sql.exec(str_requests.arg(app_name).arg(login)))
+	{
+		qDebug() << "[ERROR] Не удается получить bytes фото " << db.lastError().text();
+		return {nullptr};
+	}
+	
+	QSqlRecord get_data = sql.record();
+	QString app_description;
+    QByteArray app_photo1, app_photo2, app_photo3;
+    while (sql.next())
+    {
+        app_photo1 = sql.value(get_data.indexOf("app_photo1")).toByteArray();
+        app_photo2 = sql.value(get_data.indexOf("app_photo2")).toByteArray();
+        app_photo3 = sql.value(get_data.indexOf("app_photo3")).toByteArray();
+    }
+	
+	return {app_photo1, app_photo2, app_photo3};
 }
 
 QString sql_database::delete_app_from_db(int app_id)
@@ -429,14 +464,25 @@ QString sql_database::delete_app_from_db(int app_id)
     return "Success";
 }
 
-QString sql_database::save_change_app(QList<QString> data_change)
-{
-    str_requests = "UPDATE " + app_table + " SET app_name = ('%1'), app_price = ('%2'), app_description = ('%3'), app_technologes = ('%4') WHERE app_name = ('%5') and author = ('%6');";
-    if (!sql.exec(str_requests.arg(data_change.at(1)).arg(data_change.at(2)).arg(data_change.at(3)).arg(data_change.at(4)).arg(data_change.at(0)).arg(g_user_name)))
-    {
-        qDebug() << "[ERROR] Не удается сохранить изменения программы: " << db.lastError().text();
-        return "ERROR";
-    }
+QString sql_database::save_change_app(const QList<QString> &data_change, const QByteArray &image_bytes1, const QByteArray &image_bytes2,const QByteArray &image_bytes3)
+{	
+	str_requests = "UPDATE " + app_table + " SET app_name = (:name), app_price = (:price), app_description = (:description), app_technologes = (:technologes), app_photo1 = (:photo1), app_photo2 = (:photo2), app_photo3 = (:photo3) WHERE app_name = (:old_name) and author = (:author_app)";
+	sql.prepare(str_requests);
+	sql.bindValue(":name", data_change.at(1));
+	sql.bindValue(":price", data_change.at(2));
+	sql.bindValue(":description", data_change.at(3));
+	sql.bindValue(":technologes", data_change.at(4));
+	sql.bindValue(":photo1", image_bytes1);
+	sql.bindValue(":photo2", image_bytes2);
+	sql.bindValue(":photo3", image_bytes3);
+	sql.bindValue(":old_name", data_change.at(0));
+	sql.bindValue(":author_app", g_user_name);
+	
+	if (!sql.exec())
+	{
+		qDebug() << "[ERROR] Не удается сохранить изменения программы " << db.lastError().text();
+		return "ERROR";
+	}
     db.commit();
     return "Successs";
 }
@@ -1289,5 +1335,24 @@ void sql_database::delete_message(QString login, QString login_dev, QString mess
 		qDebug() << "[ERROR] Не удается обновить new_messages " << db.lastError().text();
 		return;
 	}
+	db.commit();
+}
+
+void sql_database::add_app_photo(QByteArray image_bytes)
+{
+	str_requests = "UPDATE " + app_table + " SET app_photo = (%1) WHERE author = ('%2');";
+	sql.prepare("UPDATE " + app_table + " SET app_photo = :pic WHERE login = :login;");
+	sql.bindValue(":login", g_user_name);
+	sql.bindValue(":pic", image_bytes);
+	if (!sql.exec())
+	{
+		qDebug() << "[ERROR] Не удается добавить фото в БД " << db.lastError().text();
+		return;
+	}
+	/*if (!sql.exec(str_requests.arg(image_bytes).arg(g_user_name)))
+	{
+		qDebug() << "[ERROR] Не удается добавить фото в БД " << db.lastError().text();
+		return;
+	}*/
 	db.commit();
 }

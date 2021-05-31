@@ -20,6 +20,7 @@ public:
     ~about_app();
 
 private slots:
+	void add_info(QList<QString> name_app);
     void on_login_dev_clicked();
     void on_star_add_clicked();
     void on_favorite_add_clicked();

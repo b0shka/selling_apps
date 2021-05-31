@@ -10,7 +10,23 @@ about_my_app::about_my_app(QList<QString> param_app, QWidget *parent) :
 	setWindowFlags(Qt::FramelessWindowHint);
 	setAttribute(Qt::WA_TranslucentBackground);
 	
-    if (param_app[0].size() > 0)
+	ui->pushButton_10->setHidden(true);
+	ui->pushButton_11->setHidden(true);
+	ui->pushButton_12->setHidden(true);
+	
+	add_info(param_app);
+	
+	ui->pushButton_2->setFocus();
+}
+
+about_my_app::~about_my_app()
+{
+	delete ui;
+}
+
+void about_my_app::add_info(QList<QString> param_app)
+{
+	if (param_app[0].size() > 0)
     {
         app_name = param_app[0];
         ui->lineEdit->setText(param_app[0]);
@@ -21,12 +37,26 @@ about_my_app::about_my_app(QList<QString> param_app, QWidget *parent) :
         ui->lineEdit_3->setText(info_app[2]);
     }
 	
-	ui->pushButton_2->setFocus();
-}
-
-about_my_app::~about_my_app()
-{
-    delete ui;
+	QList<QByteArray> list_bytes_photo = database.get_bytes_photo(param_app[0], param_app[1]);
+	
+	imageBytes1 = list_bytes_photo[0];
+	imageBytes2 = list_bytes_photo[1];
+	imageBytes3 = list_bytes_photo[2];
+	
+	one_Pixmap.loadFromData(list_bytes_photo[0]);
+	two_Pixmap.loadFromData(list_bytes_photo[1]);
+	three_Pixmap.loadFromData(list_bytes_photo[2]);
+	
+	if (list_bytes_photo[0] != nullptr)
+		ui->pushButton_10->setHidden(false);
+	if (list_bytes_photo[1] != nullptr)
+		ui->pushButton_11->setHidden(false);
+	if (list_bytes_photo[2] != nullptr)
+		ui->pushButton_12->setHidden(false);
+	
+	ui->label_10->setPixmap(one_Pixmap.scaled(166, 111));
+	ui->label_11->setPixmap(two_Pixmap.scaled(166, 111));
+	ui->label_12->setPixmap(three_Pixmap.scaled(166, 111));
 }
 
 void about_my_app::mousePressEvent(QMouseEvent* event)
@@ -109,7 +139,8 @@ void about_my_app::on_pushButton_2_clicked()
 
         QString new_description = ui->textEdit->toPlainText();
         QString app_technologes = ui->lineEdit_3->text();
-        QString result_save = database.save_change_app({app_name, new_name, new_price, new_description, app_technologes});
+        QString result_save = database.save_change_app({app_name, new_name, new_price, new_description, app_technologes}, imageBytes1, imageBytes2, imageBytes3);
+		
         if (result_save != "ERROR")
         {
             g_status_change_app = 1;
@@ -144,4 +175,117 @@ void about_my_app::on_lineEdit_2_returnPressed()
 void about_my_app::on_lineEdit_3_returnPressed()
 {
     on_pushButton_2_clicked();
+}
+
+void about_my_app::on_pushButton_10_clicked()
+{
+	if (two_Pixmap.isNull())
+	{
+		ui->label_10->clear();
+		ui->pushButton_10->setHidden(true);
+		one_Pixmap.loadFromData(nullptr);
+		imageBytes1.clear();
+	}
+	else
+	{
+		ui->label_10->setPixmap(two_Pixmap.scaled(166, 111));
+		if (three_Pixmap.isNull())
+		{
+			two_Pixmap.loadFromData(nullptr);
+			imageBytes2.clear();
+		}
+	}
+	if (three_Pixmap.isNull())
+	{
+		ui->label_11->clear();
+		ui->pushButton_11->setHidden(true);
+	}
+	else
+	{
+		ui->label_11->setPixmap(three_Pixmap.scaled(166, 111));
+		ui->label_12->clear();
+		ui->pushButton_12->setHidden(true);
+		two_Pixmap = three_Pixmap;
+		three_Pixmap.loadFromData(nullptr);
+		imageBytes3.clear();
+	}
+}
+
+void about_my_app::on_pushButton_11_clicked()
+{
+	if (three_Pixmap.isNull())
+	{
+		ui->label_11->clear();
+		ui->pushButton_11->setHidden(true);
+		two_Pixmap.loadFromData(nullptr);
+		imageBytes2.clear();
+	}
+	else
+	{
+		ui->label_11->setPixmap(three_Pixmap.scaled(166, 111));
+		ui->label_12->clear();
+		ui->pushButton_12->setHidden(true);
+		two_Pixmap = three_Pixmap;
+		three_Pixmap.loadFromData(nullptr);
+		imageBytes3.clear();
+	}
+}
+
+void about_my_app::on_pushButton_12_clicked()
+{
+	ui->label_12->clear();
+	ui->pushButton_12->setHidden(true);
+	three_Pixmap.loadFromData(nullptr);
+}
+
+void about_my_app::on_pushButton_3_clicked()
+{
+	QString filename = QFileDialog::getOpenFileName(this,
+		tr("Choose image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
+	if (one_Pixmap.isNull())
+		count_photo = 0;
+	else if (two_Pixmap.isNull())
+		count_photo = 1;
+	else if (three_Pixmap.isNull())
+		count_photo = 2;
+	else
+		count_photo = 3;
+	
+	if (count_photo == 0 || count_photo == 3)
+	{
+		one_Pixmap.load(filename);
+		ui->label_10->setPixmap(one_Pixmap.scaled(166, 111));
+		QBuffer buffer(&imageBytes1);
+		buffer.open(QIODevice::WriteOnly);
+		if (filename.split(".")[1] == "png")
+			one_Pixmap.save(&buffer, "PNG");
+		else if (filename.split(".")[1] == "jpg" || filename.split(".")[1] == "jpeg")
+			one_Pixmap.save(&buffer, "JPG");
+		ui->pushButton_10->setHidden(false);
+	}
+	else if (count_photo == 1)
+	{
+		two_Pixmap.load(filename);
+		ui->label_11->setPixmap(two_Pixmap.scaled(166, 111));
+		QBuffer buffer(&imageBytes2);
+		buffer.open(QIODevice::WriteOnly);
+		if (filename.split(".")[1] == "png")
+			two_Pixmap.save(&buffer, "PNG");
+		else if (filename.split(".")[1] == "jpg" || filename.split(".")[1] == "jpeg")
+			two_Pixmap.save(&buffer, "JPG");
+		ui->pushButton_11->setHidden(false);
+	}
+	else if (count_photo == 2)
+	{
+		three_Pixmap.load(filename);
+		ui->label_12->setPixmap(three_Pixmap.scaled(166, 111));
+		count_photo = 0;
+		QBuffer buffer(&imageBytes3);
+		buffer.open(QIODevice::WriteOnly);
+		if (filename.split(".")[1] == "png")
+			three_Pixmap.save(&buffer, "PNG");
+		else if (filename.split(".")[1] == "jpg" || filename.split(".")[1] == "jpeg")
+			three_Pixmap.save(&buffer, "JPG");
+		ui->pushButton_12->setHidden(false);
+	}
 }

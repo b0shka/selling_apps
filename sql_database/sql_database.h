@@ -20,12 +20,13 @@ public slots:
     QList<QString> get_info_for_profile(QString login);
     QString delete_user_from_db(QString login);
     QString save_change_in_profile(QList<QString> data_change);
-    QString add_new_app(QList<QString> param_app);
+	QString add_new_app(const QList<QString> &param_app, const QByteArray &image_bytes1, const QByteArray &image_bytes2,const QByteArray &image_bytes3);
     int generate_id(QString name_table);
     QList<QString> get_apps_for_list_profile(QString login);
     QList<QString> get_all_info_app_list_profile(QList<QString> param_app);
+	QList<QByteArray> get_bytes_photo(QString app_name, QString login);
     QString delete_app_from_db(int app_id);
-    QString save_change_app(QList<QString> data_change);
+    QString save_change_app(const QList<QString> &data_change, const QByteArray &image_bytes1, const QByteArray &image_bytes2,const QByteArray &image_bytes3);
     QString get_count_apps(QString login);
     QString add_star_to_app(QString login, QString app_name);
     QString add_id_users_star_app(QString login, QString app_name, QString new_id);
@@ -61,6 +62,7 @@ public slots:
 	int check_new_message_in_chat(QString login_dev);
 	void delete_chat(QString login, QString login_dev);
 	void delete_message(QString login, QString login_dev, QString message);
+	void add_app_photo(QByteArray image_bytes);
 
 private:
     QSqlDatabase db;
