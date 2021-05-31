@@ -78,8 +78,6 @@ color: white;</string>
     <property name="styleSheet">
      <string notr="true">padding: 2px;
 font-size: 14px;
-height: 28px;
-color: white;
 background-color: #404040;
 border-radius: 5px;</string>
     </property>
@@ -98,10 +96,7 @@ border-radius: 5px;</string>
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	padding: 2px;
 	font-size: 14px;
-	height: 28px;
-	color: white;
 	background-color: #404040;
 	border-radius: 5px;
 }
@@ -125,8 +120,6 @@ QPushButton::hover {
     <property name="styleSheet">
      <string notr="true">padding: 2px;
 font-size: 14px;
-height: 28px;
-color: white;
 background-color: #404040;
 border-radius: 5px;</string>
     </property>
@@ -146,8 +139,6 @@ border-radius: 5px;</string>
     <property name="styleSheet">
      <string notr="true">padding: 2px;
 font-size: 14px;
-height: 28px;
-color: white;
 background-color: #404040;
 border-radius: 5px;</string>
     </property>
@@ -190,8 +181,6 @@ border-radius: 5px;</string>
     <property name="styleSheet">
      <string notr="true">padding: 2px;
 font-size: 14px;
-height: 28px;
-color: white;
 background-color: #404040;
 border-radius: 5px;</string>
     </property>
@@ -253,8 +242,6 @@ border-radius: 5px;</string>
      <property name="styleSheet">
       <string notr="true">QPushButton {
 	font-size: 20px;
-	height: 28px;
-	color: white;
 	background-color: #404040;
 	border-radius: 5px;
 }
@@ -287,7 +274,6 @@ QPushButton::hover {
       <string notr="true">QPushButton {
 	padding-bottom: 4px;
 	font-size: 20px;
-	color: white;
 	background-color: #404040;
 	border-radius: 5px;
 }
@@ -397,10 +383,7 @@ color: white;</string>
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	padding: 2px;
 	font-size: 14px;
-	height: 28px;
-	color: white;
 	background-color: #404040;
 	border-radius: 5px;
 }

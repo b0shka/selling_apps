@@ -92,8 +92,6 @@
      </property>
      <property name="styleSheet">
       <string notr="true">padding:2px 5px;
-height: 28px;
-color: white;
 background-color: #2a2a2a;
 border-radius: 5px;
 border: none;
@@ -117,10 +115,7 @@ font-size: 14px;</string>
      </property>
      <property name="styleSheet">
       <string notr="true">QPushButton {
-	padding: 2px;
 	font-size: 14px;
-	height: 28px;
-	color: white;
 	background-color: #2a2a2a;
 	border-radius: 5px;
 }
@@ -150,9 +145,7 @@ QPushButton::hover {
      </property>
      <property name="styleSheet">
       <string notr="true">QPushButton {
-	padding: 2px;
 	font-size: 18px;
-	height: 28px;
 	color: black;
 	background-color: #6accc1;
 	border-radius: 18px;
@@ -211,10 +204,7 @@ color: white;</string>
      </property>
      <property name="styleSheet">
       <string notr="true">QPushButton {
-	padding: 2px;
 	font-size: 20px;
-	height: 28px;
-	color: white;
 	background-color: #2a2a2a;
 	border-radius: 5px;
 }
@@ -246,8 +236,6 @@ QPushButton::hover {
       <string notr="true">QPushButton {
 	padding-top: 2px;
 	font-size: 30px;
-	height: 28px;
-	color: white;
 	background-color: #2a2a2a;
 	border-radius: 5px;
 }
@@ -280,8 +268,6 @@ QPushButton::hover {
       <string notr="true">QPushButton {
 	padding-top: 4px;
 	font-size: 18px;
-	height: 28px;
-	color: white;
 	background-color: #2a2a2a;
 	border-radius: 5px;
 }
@@ -401,8 +387,6 @@ QListWidget::item:hover {
      <property name="styleSheet">
       <string notr="true">QPushButton {
 	font-size: 20px;
-	height: 28px;
-	color: white;
 	background-color: #2a2a2a;
 	border-radius: 5px;
 }
@@ -435,7 +419,6 @@ QPushButton::hover {
       <string notr="true">QPushButton {
 	padding-bottom: 4px;
 	font-size: 20px;
-	color: white;
 	background-color: #2a2a2a;
 	border-radius: 5px;
 }
@@ -490,9 +473,7 @@ color: white;</string>
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	padding: 2px;
 	font-size: 20px;
-	height: 28px;
 	color: black;
 	background-color: #6accc1;
 	border-radius: 18px;

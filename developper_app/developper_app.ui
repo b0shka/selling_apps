@@ -90,8 +90,6 @@ color: white;</string>
      <property name="styleSheet">
       <string notr="true">QPushButton {
 	font-size: 20px;
-	height: 28px;
-	color: white;
 	background-color: #404040;
 	border-radius: 5px;
 }
@@ -124,7 +122,6 @@ QPushButton::hover {
       <string notr="true">QPushButton {
 	padding-bottom: 4px;
 	font-size: 20px;
-	color: white;
 	background-color: #404040;
 	border-radius: 5px;
 }
@@ -180,7 +177,6 @@ color: white;</string>
     <property name="styleSheet">
      <string notr="true">QPushButton {
 	font-size: 16px;
-	color: white;
 	background-color: #2a2a2a;
 	border: none;
 	text-align: left;
@@ -482,10 +478,7 @@ color: white;</string>
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	padding: 2px;
 	font-size: 30px;
-	height: 28px;
-	color: white;
 	background-color: #404040;
 	border-radius: 5px;
 }

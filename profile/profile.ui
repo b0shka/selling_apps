@@ -90,8 +90,6 @@ color: white;</string>
      <property name="styleSheet">
       <string notr="true">QPushButton {
 	font-size: 20px;
-	height: 28px;
-	color: white;
 	background-color: #404040;
 	border-radius: 5px;
 }
@@ -124,7 +122,6 @@ QPushButton::hover {
       <string notr="true">QPushButton {
 	padding-bottom: 4px;
 	font-size: 20px;
-	color: white;
 	background-color: #404040;
 	border-radius: 5px;
 }
@@ -207,7 +204,6 @@ color: white;</string>
     <property name="styleSheet">
      <string notr="true">QPushButton {
 	font-size: 16px;
-	color: white;
 	background-color: #2a2a2a;
 	border: none;
 	text-align: left;
@@ -232,10 +228,7 @@ QPushButton::hover {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	padding: 2px;
 	font-size: 14px;
-	height: 28px;
-	color: white;
 	background-color: #404040;
 	border-radius: 5px;
 }
@@ -259,8 +252,6 @@ QPushButton::hover {
     <property name="styleSheet">
      <string notr="true">padding: 2px;
 font-size: 14px;
-height: 28px;
-color: white;
 background-color: #404040;
 border-radius: 5px;</string>
     </property>
@@ -309,8 +300,6 @@ color: white;</string>
      <string notr="true">QPushButton {
 	padding-bottom: 3px;
 	font-size: 20px;
-	height: 28px;
-	color: white;
 	background-color: #404040;
 	border-radius: 5px;
 }
@@ -358,8 +347,6 @@ color: white;</string>
     <property name="styleSheet">
      <string notr="true">padding: 2px;
 font-size: 14px;
-height: 28px;
-color: white;
 background-color: #404040;
 border-radius: 5px;</string>
     </property>
@@ -452,9 +439,7 @@ color: white;</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">padding: 2px;
-font-size: 14px;
-height: 28px;
+     <string notr="true">font-size: 14px;
 color: black;
 background-color: #ffb0be;
 border-radius: 5px;</string>
@@ -499,8 +484,6 @@ color: white;</string>
     <property name="styleSheet">
      <string notr="true">padding: 2px;
 font-size: 14px;
-height: 28px;
-color: white;
 background-color: #404040;
 border-radius: 5px;</string>
     </property>
