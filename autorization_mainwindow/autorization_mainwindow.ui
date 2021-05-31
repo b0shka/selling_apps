@@ -50,6 +50,7 @@
     <string notr="true">QFrame{
 	border: none;
 	border-radius: 5px;
+	color: white;
 }</string>
    </property>
    <property name="frameShape">
@@ -115,6 +116,7 @@ font-size: 14px;</string>
      </property>
      <property name="styleSheet">
       <string notr="true">QPushButton {
+	color: white;
 	font-size: 14px;
 	background-color: #2a2a2a;
 	border-radius: 5px;
@@ -205,6 +207,7 @@ color: white;</string>
      <property name="styleSheet">
       <string notr="true">QPushButton {
 	font-size: 20px;
+	color: white;
 	background-color: #2a2a2a;
 	border-radius: 5px;
 }
@@ -235,6 +238,7 @@ QPushButton::hover {
      <property name="styleSheet">
       <string notr="true">QPushButton {
 	padding-top: 2px;
+	color: white;
 	font-size: 30px;
 	background-color: #2a2a2a;
 	border-radius: 5px;
@@ -268,6 +272,7 @@ QPushButton::hover {
       <string notr="true">QPushButton {
 	padding-top: 4px;
 	font-size: 18px;
+	color: white;
 	background-color: #2a2a2a;
 	border-radius: 5px;
 }
@@ -386,6 +391,7 @@ QListWidget::item:hover {
      </property>
      <property name="styleSheet">
       <string notr="true">QPushButton {
+	color: white;
 	font-size: 20px;
 	background-color: #2a2a2a;
 	border-radius: 5px;
@@ -420,6 +426,7 @@ QPushButton::hover {
 	padding-bottom: 4px;
 	font-size: 20px;
 	background-color: #2a2a2a;
+	color: white;
 	border-radius: 5px;
 }
 QPushButton::hover {

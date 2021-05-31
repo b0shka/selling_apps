@@ -107,7 +107,7 @@ QList<QList<QString>> sql_database::get_apps_name()
 }
 
 // добавление пользователя в БД при регистрации
-QString sql_database::register_new_user(QString user_login, QString user_password)
+QString sql_database::register_new_user(const QString &user_login, const QString &user_password)
 {
     str_requests = "SELECT id FROM " + user_table + " WHERE login = ('%1');";
     if (!sql.exec(str_requests.arg(user_login)))
@@ -141,7 +141,7 @@ QString sql_database::register_new_user(QString user_login, QString user_passwor
 }
 
 // проверка данных при авторизации
-QString sql_database::check_login_user(QString user_login, QString user_password)
+QString sql_database::check_login_user(const QString &user_login, const QString &user_password)
 {
     str_requests = "SELECT id, login FROM " + user_table + " WHERE (login = ('%1') or email = ('%1') or number_phone = ('%1')) and password = ('%2');";
     if (!sql.exec(str_requests.arg(user_login).arg(user_password)))
@@ -164,7 +164,7 @@ QString sql_database::check_login_user(QString user_login, QString user_password
         return "NOT";
 }
 
-QList<QString> sql_database::get_info_for_profile(QString login)
+QList<QString> sql_database::get_info_for_profile(const QString &login)
 {
     str_requests = "SELECT id, email, number_phone FROM " + user_table + " WHERE login = ('%1');";
     if (!sql.exec(str_requests.arg(login)))
@@ -184,7 +184,7 @@ QList<QString> sql_database::get_info_for_profile(QString login)
     return {user_id, user_email, user_number_phone};
 }
 
-QString sql_database::delete_user_from_db(QString login)
+QString sql_database::delete_user_from_db(const QString &login)
 {
 	str_requests = "DELETE FROM " + chats_table + " WHERE login = ('%1') or login_dev = ('%1');";
 	if (!sql.exec(str_requests.arg(login)))
@@ -255,7 +255,7 @@ QString sql_database::delete_user_from_db(QString login)
     return "Success";
 }
 
-QString sql_database::save_change_in_profile(QList<QString> data_change)
+QString sql_database::save_change_in_profile(const QList<QString> &data_change)
 {
 	if (data_change.at(1) != g_user_name)
 	{
@@ -361,7 +361,7 @@ QString sql_database::add_new_app(const QList<QString> &param_app, const QByteAr
     return "OK";
 }
 
-int sql_database::generate_id(QString name_table)
+int sql_database::generate_id(const QString &name_table)
 {
     str_requests = "SELECT id FROM " + name_table;
     sql.exec(str_requests);
@@ -385,7 +385,7 @@ int sql_database::generate_id(QString name_table)
     return new_id;
 }
 
-QList<QString> sql_database::get_apps_for_list_profile(QString login)
+QList<QString> sql_database::get_apps_for_list_profile(const QString &login)
 {
     str_requests = "SELECT app_name FROM " + app_table + " WHERE author = ('%1');";
     if (!sql.exec(str_requests.arg(login)))
@@ -406,7 +406,7 @@ QList<QString> sql_database::get_apps_for_list_profile(QString login)
     return list_apps_name;
 }
 
-QList<QString> sql_database::get_all_info_app_list_profile(QList<QString> param_app)
+QList<QString> sql_database::get_all_info_app_list_profile(const QList<QString> &param_app)
 {
     str_requests = "SELECT app_price, app_description, app_technologes FROM " + app_table + " WHERE app_name = ('%1') and author = ('%2');";
     if (!sql.exec(str_requests.arg(param_app[0]).arg(param_app.last())))
@@ -429,7 +429,7 @@ QList<QString> sql_database::get_all_info_app_list_profile(QList<QString> param_
 	return list_apps_name;
 }
 
-QList<QByteArray> sql_database::get_bytes_photo(QString app_name, QString login)
+QList<QByteArray> sql_database::get_bytes_photo(const QString &app_name, const QString &login)
 {
 	str_requests = "SELECT app_photo1, app_photo2, app_photo3 FROM " + app_table + " WHERE app_name = ('%1') and author = ('%2');";
 	if (!sql.exec(str_requests.arg(app_name).arg(login)))
@@ -451,7 +451,7 @@ QList<QByteArray> sql_database::get_bytes_photo(QString app_name, QString login)
 	return {app_photo1, app_photo2, app_photo3};
 }
 
-QString sql_database::delete_app_from_db(int app_id)
+QString sql_database::delete_app_from_db(const int &app_id)
 {
     str_requests = "DELETE FROM " + app_table + " WHERE id = (%1);";
 	if (!sql.exec(str_requests.arg(app_id)))
@@ -487,7 +487,7 @@ QString sql_database::save_change_app(const QList<QString> &data_change, const Q
     return "Successs";
 }
 
-QString sql_database::get_count_apps(QString login)
+QString sql_database::get_count_apps(const QString &login)
 {
     str_requests = "SELECT app_name FROM " + app_table + " WHERE author = ('%1');";
     if (!sql.exec(str_requests.arg(login)))
@@ -502,7 +502,7 @@ QString sql_database::get_count_apps(QString login)
     return QString::number(count);
 }
 
-QString sql_database::add_star_to_app(QString login, QString app_name)
+QString sql_database::add_star_to_app(const QString &login, const QString &app_name)
 {
     str_requests = "SELECT app_star FROM " + app_table + " WHERE app_name = ('%1') and author = ('%2');";
     if (!sql.exec(str_requests.arg(app_name).arg(login)))
@@ -538,7 +538,7 @@ QString sql_database::add_star_to_app(QString login, QString app_name)
     return "Success";
 }
 
-QString sql_database::add_id_users_star_app(QString login, QString app_name, QString new_id)
+QString sql_database::add_id_users_star_app(const QString &login, const QString &app_name, const QString &new_id)
 {
     QString list_user = get_list_id_star_app(login, app_name);
 
@@ -558,7 +558,7 @@ QString sql_database::add_id_users_star_app(QString login, QString app_name, QSt
     return "Success";
 }
 
-int sql_database::get_id_user(QString login)
+int sql_database::get_id_user(const QString &login)
 {
     str_requests = "SELECT id FROM " + user_table + " WHERE login = ('%1');";
     if (!sql.exec(str_requests.arg(login)))
@@ -575,7 +575,7 @@ int sql_database::get_id_user(QString login)
 	return user_id;
 }
 
-int sql_database::get_id_app(QString app_name, QString app_price, QString app_description, QString app_technologes)
+int sql_database::get_id_app(const QString &app_name, const QString &app_price, const QString &app_description, const QString &app_technologes)
 {
 	str_requests = "SELECT id FROM " + app_table + " WHERE app_name = ('%1') and app_price = ('%2') and app_description = ('%3') and app_technologes = ('%4');";
 	if (!sql.exec(str_requests.arg(app_name).arg(app_price).arg(app_description).arg(app_technologes)))
@@ -592,7 +592,7 @@ int sql_database::get_id_app(QString app_name, QString app_price, QString app_de
 	return app_id;
 }
 
-QString sql_database::get_list_id_star_app(QString login, QString app_name)
+QString sql_database::get_list_id_star_app(const QString &login, const QString &app_name)
 {
     str_requests = "SELECT id_users_star FROM " + app_table + " WHERE app_name = ('%1') and author = ('%2');";
     if (!sql.exec(str_requests.arg(app_name).arg(login)))
@@ -609,7 +609,7 @@ QString sql_database::get_list_id_star_app(QString login, QString app_name)
     return list_user;
 }
 
-QString sql_database::check_id_in_id_star_app(QString login, QString app_name, QString user_id)
+QString sql_database::check_id_in_id_star_app(const QString &login, const QString &app_name, const QString &user_id)
 {
     QString list_user = get_list_id_star_app(login, app_name);
 
@@ -621,7 +621,7 @@ QString sql_database::check_id_in_id_star_app(QString login, QString app_name, Q
         return "NOT";
 }
 
-QString sql_database::get_all_star_for_profile(QString login)
+QString sql_database::get_all_star_for_profile(const QString &login)
 {
     str_requests = "SELECT app_star FROM " + app_table + " WHERE author = ('%1');";
     if (!sql.exec(str_requests.arg(login)))
@@ -679,7 +679,7 @@ void sql_database::get_min_price_app()
         g_min_price = 0;
 }
 
-QString sql_database::get_id_app(QString login, QString app_name)
+QString sql_database::get_id_app(const QString &login, const QString &app_name)
 {
     str_requests = "SELECT id FROM " + app_table + " WHERE app_name = ('%1') and author = ('%2');";
     if (!sql.exec(str_requests.arg(app_name).arg(login)))
@@ -693,7 +693,7 @@ QString sql_database::get_id_app(QString login, QString app_name)
     return app_id;
 }
 
-QString sql_database::add_app_to_favorite(QString login, QString app_name)
+QString sql_database::add_app_to_favorite(const QString &login, const QString &app_name)
 {
     QString favorite_app = get_id_favorite_app();
     QString new_favorite_app = get_id_app(login, app_name);
@@ -753,7 +753,7 @@ QList<QList<QString>> sql_database::get_list_favorite_app()
     return data_apps;
 }
 
-QList<QString> sql_database::get_info_app_id(int app_id)
+QList<QString> sql_database::get_info_app_id(const int &app_id)
 {
     str_requests = "SELECT app_name, author FROM " + app_table + " WHERE id = (%1);";
     if (!sql.exec(str_requests.arg(app_id)))
@@ -775,7 +775,7 @@ QList<QString> sql_database::get_info_app_id(int app_id)
     return list_apps_name;
 }
 
-QString sql_database::check_app_favorite(QString app_id)
+QString sql_database::check_app_favorite(const QString &app_id)
 {
     QString favorite_app = get_id_favorite_app();
 
@@ -788,7 +788,7 @@ QString sql_database::check_app_favorite(QString app_id)
 }
 
 
-QString sql_database::delete_app_to_favorite(QString login, QString app_name)
+QString sql_database::delete_app_to_favorite(const QString &login, const QString &app_name)
 {
     QString app_id = get_id_app(login, app_name);
     QString favorite_app = get_id_favorite_app();
@@ -810,7 +810,7 @@ QString sql_database::delete_app_to_favorite(QString login, QString app_name)
     return "Success";
 }
 
-QString sql_database::delete_app_star(QString login, QString app_name)
+QString sql_database::delete_app_star(const QString &login, const QString &app_name)
 {
     str_requests = "SELECT app_star FROM " + app_table + " WHERE app_name = ('%1') and author = ('%2');";
     if (!sql.exec(str_requests.arg(app_name).arg(login)))
@@ -845,7 +845,7 @@ QString sql_database::delete_app_star(QString login, QString app_name)
     return "Success";
 }
 
-QString sql_database::delete_id_users_star_app(QString login, QString app_name, QString delete_id)
+QString sql_database::delete_id_users_star_app(const QString &login, const QString &app_name, const QString &delete_id)
 {
     QString list_user = get_list_id_star_app(login, app_name);
 
@@ -866,7 +866,7 @@ QString sql_database::delete_id_users_star_app(QString login, QString app_name, 
 	return "Success";
 }
 
-void sql_database::change_status_online(QString login)
+void sql_database::change_status_online(const QString &login)
 {
 	str_requests = "UPDATE " + user_table + " SET status_online = ('%1') WHERE login = ('%2');";
 	if (!sql.exec(str_requests.arg(g_status_online).arg(login)))
@@ -878,7 +878,7 @@ void sql_database::change_status_online(QString login)
 	db.commit();
 }
 
-void sql_database::add_client_id(int client, QString login)
+void sql_database::add_client_id(const int &client, const QString &login)
 {
 	str_requests = "UPDATE " + user_table + " SET id_socket = ('%1') WHERE login = ('%2');";
 	if (!sql.exec(str_requests.arg(client).arg(login)))
@@ -890,7 +890,7 @@ void sql_database::add_client_id(int client, QString login)
 	db.commit();
 }
 
-int sql_database::get_id_socket_user(QString login)
+int sql_database::get_id_socket_user(const QString &login)
 {
 	str_requests = "SELECT id_socket FROM " + user_table + " WHERE login = ('%1');";
 	if (!sql.exec(str_requests.arg(login)))
@@ -907,7 +907,7 @@ int sql_database::get_id_socket_user(QString login)
 	return id_socket;
 }
 
-int sql_database::get_status_online(QString login)
+int sql_database::get_status_online(const QString &login)
 {
 	str_requests = "SELECT status_online FROM " + user_table + " WHERE login = ('%1');";
 	if (!sql.exec(str_requests.arg(login)))
@@ -924,7 +924,7 @@ int sql_database::get_status_online(QString login)
 	return status_online;
 }
 
-void sql_database::start_dialog(QString login, QString login_dev)
+void sql_database::start_dialog(const QString &login, const QString &login_dev)
 {
 	str_requests = "SELECT dialogs FROM " + user_table + " WHERE login = ('%1');";
 	if (!sql.exec(str_requests.arg(login)))
@@ -982,7 +982,7 @@ void sql_database::start_dialog(QString login, QString login_dev)
 	}
 }
 
-void sql_database::start_chat(QString login, QString login_dev)
+void sql_database::start_chat(const QString &login, const QString &login_dev)
 {
 	str_requests = "SELECT id FROM " + chats_table + " WHERE login = ('%1') and login_dev = ('%2');";
 	if (!sql.exec(str_requests.arg(login).arg(login_dev)))
@@ -1034,7 +1034,7 @@ void sql_database::start_chat(QString login, QString login_dev)
 	}
 }
 
-QString sql_database::get_dialogs(QString login)
+QString sql_database::get_dialogs(const QString &login)
 {
 	str_requests = "SELECT dialogs FROM " + user_table + " WHERE login = ('%1');";
 	if (!sql.exec(str_requests.arg(login)))
@@ -1051,7 +1051,7 @@ QString sql_database::get_dialogs(QString login)
 	return dialogs;
 }
 
-QString sql_database::get_correspondence(QString login, QString login_dev)
+QString sql_database::get_correspondence(const QString &login, const QString &login_dev)
 {
 	str_requests = "SELECT messages FROM " + chats_table + " WHERE login = ('%1') and login_dev = ('%2');";
 	if (!sql.exec(str_requests.arg(login).arg(login_dev)))
@@ -1068,7 +1068,7 @@ QString sql_database::get_correspondence(QString login, QString login_dev)
 	return all_message;
 }
 
-void sql_database::add_to_chat(QString login, QString login_dev, QString messages)
+void sql_database::add_to_chat(const QString &login, const QString &login_dev, const QString &messages)
 {
 	str_requests = "SELECT messages FROM " + chats_table + " WHERE login = ('%1') and login_dev = ('%2');";
 	if (!sql.exec(str_requests.arg(login).arg(login_dev)))
@@ -1097,7 +1097,7 @@ void sql_database::add_to_chat(QString login, QString login_dev, QString message
 	}
 }
 
-void sql_database::add_new_message_to_database(QString login, QString login_dev, QString message)
+void sql_database::add_new_message_to_database(const QString &login, const QString &login_dev, const QString &message)
 {
 	QString new_message = get_new_messages(login_dev, login);
 	
@@ -1116,7 +1116,7 @@ void sql_database::add_new_message_to_database(QString login, QString login_dev,
 	}
 }
 
-QString sql_database::get_new_messages(QString login, QString login_dev)
+QString sql_database::get_new_messages(const QString &login, const QString &login_dev)
 {
 	str_requests = "SELECT new_messages FROM " + chats_table + " WHERE login = ('%1') and login_dev = ('%2');";
 	if (!sql.exec(str_requests.arg(login).arg(login_dev)))
@@ -1133,7 +1133,7 @@ QString sql_database::get_new_messages(QString login, QString login_dev)
 	return new_message;
 }
 
-void sql_database::new_messages_to_all_messages(QString login, QString login_dev)
+void sql_database::new_messages_to_all_messages(const QString &login, const QString &login_dev)
 {
 	QString new_message = get_new_messages(login, login_dev);
 	
@@ -1173,7 +1173,7 @@ void sql_database::new_messages_to_all_messages(QString login, QString login_dev
 	db.commit();
 }
 
-int sql_database::check_new_messages(QString login)
+int sql_database::check_new_messages(const QString &login)
 {
 	str_requests = "SELECT new_messages FROM " + chats_table + " WHERE login = ('%1');";
 	if (!sql.exec(str_requests.arg(login)))
@@ -1197,7 +1197,7 @@ int sql_database::check_new_messages(QString login)
 	return count_new_mesages;
 }
 
-int sql_database::check_new_message_in_chat(QString login_dev)
+int sql_database::check_new_message_in_chat(const QString &login_dev)
 {
 	str_requests = "SELECT new_messages FROM " + chats_table + " WHERE login = ('%1') and login_dev = ('%2');";
 	if (!sql.exec(str_requests.arg(g_user_name).arg(login_dev)))
@@ -1221,7 +1221,7 @@ int sql_database::check_new_message_in_chat(QString login_dev)
 	return count_new_mesages;
 }
 
-void sql_database::delete_chat(QString login, QString login_dev)
+void sql_database::delete_chat(const QString &login, const QString &login_dev)
 {
 	str_requests = "DELETE FROM " + chats_table + " WHERE (login = ('%1') and login_dev = ('%2')) or (login = ('%2') and login_dev = ('%1'));";
 	if (!sql.exec(str_requests.arg(login).arg(login_dev)))
@@ -1265,7 +1265,7 @@ void sql_database::delete_chat(QString login, QString login_dev)
 	db.commit();
 }
 
-void sql_database::delete_message(QString login, QString login_dev, QString message)
+void sql_database::delete_message(const QString &login, const QString &login_dev, const QString &message)
 {
 	QString messages = get_correspondence(login, login_dev);
 	QString new_messages = "";
@@ -1338,7 +1338,7 @@ void sql_database::delete_message(QString login, QString login_dev, QString mess
 	db.commit();
 }
 
-void sql_database::add_app_photo(QByteArray image_bytes)
+void sql_database::add_app_photo(const QByteArray &image_bytes)
 {
 	str_requests = "UPDATE " + app_table + " SET app_photo = (%1) WHERE author = ('%2');";
 	sql.prepare("UPDATE " + app_table + " SET app_photo = :pic WHERE login = :login;");
@@ -1349,10 +1349,5 @@ void sql_database::add_app_photo(QByteArray image_bytes)
 		qDebug() << "[ERROR] Не удается добавить фото в БД " << db.lastError().text();
 		return;
 	}
-	/*if (!sql.exec(str_requests.arg(image_bytes).arg(g_user_name)))
-	{
-		qDebug() << "[ERROR] Не удается добавить фото в БД " << db.lastError().text();
-		return;
-	}*/
 	db.commit();
 }
