@@ -5,6 +5,7 @@
 #include <QMouseEvent>
 #include <QPoint>
 #include "../sql_database/sql_database.h"
+#include "../popup/popup.h"
 
 namespace Ui {
 class developper_app;
@@ -32,6 +33,7 @@ private:
     sql_database developer_info;
     QString user_name_dev;
 	QPoint m_mousePoint;
+	popup *popUp;
 };
 
 #endif // DEVELOPPER_APP_H

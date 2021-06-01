@@ -10,6 +10,7 @@
 #include "../filter_search/filter_search.h"
 #include "../sql_database/sql_database.h"
 #include "../main_data/data.h"
+#include "../popup/popup.h"
 
 using namespace std;
 
@@ -54,5 +55,6 @@ private:
     Ui::MainWindow *ui;
     sql_database database;
 	QPoint m_mousePoint;
+	popup *popUp;
 };
 #endif // MAINWINDOW_H

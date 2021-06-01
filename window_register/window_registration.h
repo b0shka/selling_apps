@@ -7,6 +7,7 @@
 #include <QCryptographicHash>
 #include "../sql_database/sql_database.h"
 #include "../main_data/data.h"
+#include "../popup/popup.h"
 
 namespace Ui {
 class window_registration;
@@ -35,6 +36,7 @@ private:
 	QString password;
     QString username;
 	QPoint m_mousePoint;
+	popup *popUp;
 };
 
 #endif // WINDOW_REGISTRATION_H

@@ -4,6 +4,7 @@
 window_login::window_login(QWidget *parent) : QDialog(parent), ui(new Ui::window_login)
 {
     ui->setupUi(this);
+	popUp = new popup();
 	
 	setWindowFlags(Qt::FramelessWindowHint);
 	setAttribute(Qt::WA_TranslucentBackground);
@@ -76,6 +77,8 @@ void window_login::on_pushButton_clicked()
             ui->lineEdit->setText("");
             ui->lineEdit_2->setText("");
             g_status_autorization = 1;
+			popUp->setPopupText("Вы авторизовались");
+			popUp->show();
             qDebug() << "[INFO] Авторизация пользователя";
             close();
         }

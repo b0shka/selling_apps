@@ -6,6 +6,7 @@
 #include <QPoint>
 #include "../developper_app/developper_app.h"
 #include "../sql_database/sql_database.h"
+#include "../popup/popup.h"
 
 namespace Ui {
 class about_app;
@@ -36,6 +37,7 @@ private:
     Ui::about_app *ui;
     sql_database database;
 	QPoint m_mousePoint;
+	popup *popUp;
 };
 
 #endif // ABOUT_APP_H

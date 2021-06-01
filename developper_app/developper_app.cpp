@@ -8,6 +8,7 @@ developper_app::developper_app(QString login , QWidget *parent) :
     ui(new Ui::developper_app)
 {
     ui->setupUi(this);
+	popUp = new popup();
 	
 	setWindowFlags(Qt::FramelessWindowHint);
 	setAttribute(Qt::WA_TranslucentBackground);
@@ -52,14 +53,29 @@ void developper_app::get_info_from_db(QString login)
         ui->label_8->setText(data.at(1));
         ui->label_9->setText(data.at(2));
     }
+	else
+	{
+		popUp->setPopupText("Ошибка на стороне сервера");
+		popUp->show();
+	}
 
     QString count_app = developer_info.get_count_apps(login);
     if (count_app != "ERROR")
         ui->pushButton_2->setText(count_app);
+	else
+	{
+		popUp->setPopupText("Ошибка на стороне сервера");
+		popUp->show();
+	}
 
     QString count_star = developer_info.get_all_star_for_profile(login);
     if (count_app != "ERROR")
         ui->label_12->setText(count_star);
+	else
+	{
+		popUp->setPopupText("Ошибка на стороне сервера");
+		popUp->show();
+	}
 }
 
 void developper_app::on_pushButton_2_clicked()

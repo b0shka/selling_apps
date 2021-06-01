@@ -7,6 +7,7 @@ chat::chat(QString login_dev, QWidget *parent) :
     ui(new Ui::chat)
 {
     ui->setupUi(this);
+	popUp = new popup();
 	
 	setWindowFlags(Qt::FramelessWindowHint);
 	setAttribute(Qt::WA_TranslucentBackground);
@@ -20,7 +21,6 @@ chat::chat(QString login_dev, QWidget *parent) :
 	client.conect_server();
 	if (client.result_connect == -1)
 	{
-		popUp = new popup();
 		popUp->setPopupText("Не удалось подключиться к серверу");
 		popUp->show();
 	}
@@ -120,8 +120,16 @@ void chat::on_pushButton_clicked()
 		{
 			ui->listWidget->clear();
 			QString all_messages = database.get_correspondence(g_user_name, login_dev);
-			restore_chat(all_messages);
-			status_read_new_msg = 0;
+			if (all_messages == "ERROR")
+			{
+				popUp->setPopupText("Ошибка на стороне сервера");
+				popUp->show();
+			}
+			else
+			{
+				restore_chat(all_messages);
+				status_read_new_msg = 0;
+			}
 		}
 	}
 }
@@ -136,19 +144,16 @@ void chat::on_pushButton_2_clicked()
 
 void chat::restore_chat(QString all_message)
 {	
-	if (all_message.size() != 0)
+	if (all_message != "")
 	{
-		if (all_message != "ERROR")
+		for (QString i : all_message.split(";"))
 		{
-			for (QString i : all_message.split(";"))
+			if (i != "")
 			{
-				if (i != "")
-				{
-					if (i.at(0) == '1')
-						add_message_to_listwidget(i.mid(1));
-					else if (i.at(0) == '0')
-						add_message_from_server(i.mid(1));
-				}
+				if (i.at(0) == '1')
+					add_message_to_listwidget(i.mid(1));
+				else if (i.at(0) == '0')
+					add_message_from_server(i.mid(1));
 			}
 		}
 	}
@@ -156,7 +161,7 @@ void chat::restore_chat(QString all_message)
 
 void chat::restore_new_messages(QString new_messages)
 {
-	if (new_messages.size() != 0)
+	if (new_messages != "")
 	{
 		if (new_messages != "ERROR")
 		{
@@ -169,8 +174,13 @@ void chat::restore_new_messages(QString new_messages)
 				if (i != "")
 					add_message_from_server(i.mid(1));
 			}
+			database.new_messages_to_all_messages(g_user_name, login_dev);
 		}
-		database.new_messages_to_all_messages(g_user_name, login_dev);
+		else
+		{
+			popUp->setPopupText("Ошибка на стороне сервера");
+			popUp->show();
+		}
 	}
 	status_read_new_msg = 1;
 }
@@ -197,11 +207,27 @@ void chat::on_pushButton_4_clicked()
 	QMessageBox::Button reply = QMessageBox::question(this, "Подтверждение удаления", "Вы уверены?", QMessageBox::Yes | QMessageBox::No);
     if (reply == QMessageBox::Yes)
 	{
-        database.delete_message(g_user_name, login_dev, message_name);
-		ui->listWidget->clear();
-		QString all_messages = database.get_correspondence(g_user_name, login_dev);
-		restore_chat(all_messages);
-		ui->pushButton_4->setHidden(true);
+        QString result_del = database.delete_message(g_user_name, login_dev, message_name);
+		if (result_del == "ERROR")
+		{
+			popUp->setPopupText("Ошибка на стороне сервера");
+			popUp->show();
+		}
+		else
+		{
+			ui->listWidget->clear();
+			QString all_messages = database.get_correspondence(g_user_name, login_dev);
+			if (all_messages == "ERROR")
+			{
+				popUp->setPopupText("Ошибка на стороне сервера");
+				popUp->show();
+			}
+			else
+			{
+				restore_chat(all_messages);
+				ui->pushButton_4->setHidden(true);
+			}
+		}
 	}
 }
 

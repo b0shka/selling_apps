@@ -6,6 +6,7 @@ filter_search::filter_search(QWidget *parent) :
     ui(new Ui::filter_search)
 {
     ui->setupUi(this);
+	popUp = new popup();
 	
 	setWindowFlags(Qt::FramelessWindowHint);
 	setAttribute(Qt::WA_TranslucentBackground);
@@ -62,8 +63,8 @@ void filter_search::on_pushButton_clicked()
         g_description = ui->lineEdit_4->text();
 
         ui->lineEdit_2->setStyleSheet(default_style_other_color);
-        ui->label_3->setStyleSheet(success_style_label);
-        ui->label_3->setText("Фильтры применены");
+		popUp->setPopupText("Фильтры применены");
+		popUp->show();
         close();
     }
 }

@@ -50,14 +50,29 @@ void profile::get_info_from_db()
         ui->lineEdit_2->setText(data.at(1));
         ui->lineEdit_3->setText(data.at(2));
     }
+	else
+	{
+		popUp->setPopupText("Ошибка на стороне сервера");
+		popUp->show();
+	}
 
     QString count_app = user_info.get_count_apps(g_user_name);
     if (count_app != "ERROR")
         ui->pushButton_4->setText(count_app);
+	else
+	{
+		popUp->setPopupText("Ошибка на стороне сервера");
+		popUp->show();
+	}
 
     QString count_star = user_info.get_all_star_for_profile(g_user_name);
     if (count_app != "ERROR")
         ui->label_9->setText(count_star);
+	else
+	{
+		popUp->setPopupText("Ошибка на стороне сервера");
+		popUp->show();
+	}
 }
 
 void profile::on_pushButton_clicked()
@@ -74,6 +89,11 @@ void profile::on_pushButton_clicked()
             close();
             g_status_delete = 1;
         }
+		else
+		{
+			popUp->setPopupText("Ошибка на стороне сервера");
+			popUp->show();
+		}
     }
 }
 
@@ -100,6 +120,11 @@ void profile::on_pushButton_2_clicked()
 			popUp->show();
             close();
         }
+		else
+		{
+			popUp->setPopupText("Ошибка на стороне сервера");
+			popUp->show();
+		}
     }
 }
 

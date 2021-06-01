@@ -6,6 +6,7 @@
 #include <QMouseEvent>
 #include <QPoint>
 #include "../sql_database/sql_database.h"
+#include "../popup/popup.h"
 
 namespace Ui {
 class favorite_app;
@@ -32,6 +33,7 @@ private:
     sql_database database;
     QString login;
 	QPoint m_mousePoint;
+	popup *popUp;
 };
 
 #endif // FAVORITE_APP_H

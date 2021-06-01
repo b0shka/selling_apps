@@ -11,6 +11,7 @@ autorization_mainwindow::autorization_mainwindow(QWidget *parent) :
     ui(new Ui::autorization_mainwindow)
 {
     ui->setupUi(this);
+	popUp = new popup();
 	
 	setWindowFlags(Qt::FramelessWindowHint);
 	setAttribute(Qt::WA_TranslucentBackground);
@@ -23,7 +24,6 @@ autorization_mainwindow::autorization_mainwindow(QWidget *parent) :
 	int count_messages = database.check_new_messages(g_user_name);
 	if (count_messages > 0)
 	{
-		popUp = new popup();
 		popUp->setPopupText("У вас есть новые сообщения");
 		popUp->show();
 	}
@@ -216,22 +216,56 @@ void autorization_mainwindow::on_lineEdit_returnPressed()
 void autorization_mainwindow::get_name_app_from_db()
 {
     QList<QList<QString>> list_apps_name = database.get_apps_name();
-	ui->listWidget->clear();
-	
-    try {
-        if (list_apps_name.size() == 0)
-            throw 1;
-        else
-        {
-            if (list_apps_name.at(0).at(0) != "ERROR")
-            {
-                add_apps_to_listWidget(list_apps_name);
-                list_apps_name.clear();
-            }
-        }
-    } catch (int a) {
-        qDebug() << "[ERROR] Нет записей в БД";
-    }
+	if (list_apps_name.size() != 0)
+	{
+		if (list_apps_name.at(0).at(0) == "ERROR")
+		{
+			popUp->setPopupText("Ошибка на стороне сервера");
+			popUp->show();
+		}
+		else
+		{
+			ui->listWidget->clear();
+			
+			try {
+				if (list_apps_name.size() == 0)
+					throw 1;
+				else
+				{
+					if (list_apps_name.at(0).at(0) != "ERROR")
+					{
+						add_apps_to_listWidget(list_apps_name);
+						list_apps_name.clear();
+					}
+				}
+			} catch (int a) {
+				qDebug() << "[ERROR] Нет записей в БД";
+				popUp->setPopupText("Нет записей в БД");
+				popUp->show();
+			}
+		}
+	}
+	else
+	{
+		ui->listWidget->clear();
+		
+		try {
+			if (list_apps_name.size() == 0)
+				throw 1;
+			else
+			{
+				if (list_apps_name.at(0).at(0) != "ERROR")
+				{
+					add_apps_to_listWidget(list_apps_name);
+					list_apps_name.clear();
+				}
+			}
+		} catch (int a) {
+			qDebug() << "[ERROR] Нет записей в БД";
+			popUp->setPopupText("Нет записей в БД");
+			popUp->show();
+		}
+	}
 }
 
 void autorization_mainwindow::add_apps_to_listWidget(QList<QList<QString>> list_result)
@@ -260,35 +294,44 @@ void autorization_mainwindow::add_apps_to_listWidget(QList<QList<QString>> list_
             }
             else
             {
-                QList<QString> description_app = (database.get_all_info_app_list_profile({i[0], i[3]})).at(2).split(";");
-                if ((g_technloges.split(";")).size() > 1)
-                {
-                    int add_status = 0;
-                    for (QString tech : g_technloges.split(";"))
-                    {
-                        for (QString j : description_app)
-                        {
-                            if (i[1].toInt() >= g_min_price && i[1].toInt() <= g_max_price && check_word_in_word(tech.replace(" ", ""), j.replace(" ", "")) == 1)
-                            {
-                                layout_title_app(i);
-                                add_status = 1;
-                            }
-                        }
-                        if (add_status == 1)
-                            break;
-                    }
-                }
-                else
-                {
-                    for (QString j : description_app)
-                    {
-                        if (i[1].toInt() >= g_min_price && i[1].toInt() <= g_max_price && check_word_in_word(g_technloges, j.replace(" ", "")) == 1)
-                        {
-                            layout_title_app(i);
-                            break;
-                        }
-                    }
-                }
+				QList<QString> description_app = (database.get_all_info_app_list_profile({i[0], i[3]}));
+				if (description_app[0] == "ERROR")
+				{
+					popUp->setPopupText("Ошибка на стороне сервера");
+					popUp->show();
+				}
+				else
+				{
+					description_app = description_app[2].split(";");
+					if ((g_technloges.split(";")).size() > 1)
+					{
+						int add_status = 0;
+						for (QString tech : g_technloges.split(";"))
+						{
+							for (QString j : description_app)
+							{
+								if (i[1].toInt() >= g_min_price && i[1].toInt() <= g_max_price && check_word_in_word(tech.replace(" ", ""), j.replace(" ", "")) == 1)
+								{
+									layout_title_app(i);
+									add_status = 1;
+								}
+							}
+							if (add_status == 1)
+								break;
+						}
+					}
+					else
+					{
+						for (QString j : description_app)
+						{
+							if (i[1].toInt() >= g_min_price && i[1].toInt() <= g_max_price && check_word_in_word(g_technloges, j.replace(" ", "")) == 1)
+							{
+								layout_title_app(i);
+								break;
+							}
+						}
+					}
+				}
             }
         }
         else if (g_description != "")
@@ -339,19 +382,46 @@ void autorization_mainwindow::layout_title_app(QList<QString> data_app)
 void autorization_mainwindow::search_result(QString search)
 {
     QList<QList<QString>> list_apps_name = database.get_apps_name();
-    QList<QList<QString>> list_result = {};
-
-    for (QList<QString> i : list_apps_name)
-    {
-        if (check_error(search.toLower(), i[0].toLower()) == 1)
-            list_result.push_back(i);
-
-        else if (check_word_in_word(search.toLower(), i[0].toLower()) == 1 || check_no_name(search.toLower(), i[1].toLower()) == 1 || check_no_name(search.toLower(), i[2].toLower()) == 1 || check_no_name(search.toLower(), i[3].toLower()) == 1)
-            list_result.push_back(i);
-    }
-    add_apps_to_listWidget(list_result);
-    list_apps_name.clear();
-    list_result.clear();
+	if (list_apps_name.size() != 0)
+	{
+		if (list_apps_name.at(0).at(0) == "ERROR")
+		{
+			popUp->setPopupText("Ошибка на стороне сервера");
+			popUp->show();
+		}
+		else
+		{
+			QList<QList<QString>> list_result = {};
+			
+			for (QList<QString> i : list_apps_name)
+			{
+				if (check_error(search.toLower(), i[0].toLower()) == 1)
+					list_result.push_back(i);
+				
+				else if (check_word_in_word(search.toLower(), i[0].toLower()) == 1 || check_no_name(search.toLower(), i[1].toLower()) == 1 || check_no_name(search.toLower(), i[2].toLower()) == 1 || check_no_name(search.toLower(), i[3].toLower()) == 1)
+					list_result.push_back(i);
+			}
+			add_apps_to_listWidget(list_result);
+			list_apps_name.clear();
+			list_result.clear();
+		}
+	}
+	else
+	{
+		QList<QList<QString>> list_result = {};
+		
+		for (QList<QString> i : list_apps_name)
+		{
+			if (check_error(search.toLower(), i[0].toLower()) == 1)
+				list_result.push_back(i);
+			
+			else if (check_word_in_word(search.toLower(), i[0].toLower()) == 1 || check_no_name(search.toLower(), i[1].toLower()) == 1 || check_no_name(search.toLower(), i[2].toLower()) == 1 || check_no_name(search.toLower(), i[3].toLower()) == 1)
+				list_result.push_back(i);
+		}
+		add_apps_to_listWidget(list_result);
+		list_apps_name.clear();
+		list_result.clear();
+	}
 }
 
 int autorization_mainwindow::check_error(QString search, QString name_main)

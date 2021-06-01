@@ -8,13 +8,30 @@ favorite_app::favorite_app(QWidget *parent) :
     ui(new Ui::favorite_app)
 {
     ui->setupUi(this);
+	popUp = new popup();
 	
 	setWindowFlags(Qt::FramelessWindowHint);
 	setAttribute(Qt::WA_TranslucentBackground);
 	
     QList<QList<QString>> list_apps_name = database.get_list_favorite_app();
-    add_apps_to_listWidget(list_apps_name);
-    list_apps_name.clear();
+	if (list_apps_name.size() != 0)
+	{
+		if (list_apps_name.at(0).at(0) == "ERROR")
+		{
+			popUp->setPopupText("Ошибка на стороне сервера");
+			popUp->show();
+		}
+		else
+		{
+			add_apps_to_listWidget(list_apps_name);
+			list_apps_name.clear();
+		}
+	}
+	else
+	{
+		add_apps_to_listWidget(list_apps_name);
+		list_apps_name.clear();
+	}
 }
 
 favorite_app::~favorite_app()
@@ -60,7 +77,24 @@ void favorite_app::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
     info_app.exec();
 
     QList<QList<QString>> list_apps_name = database.get_list_favorite_app();
-    add_apps_to_listWidget(list_apps_name);
+	if (list_apps_name.size() != 0)
+	{
+		if (list_apps_name.at(0).at(0) == "ERROR")
+		{
+			popUp->setPopupText("Ошибка на стороне сервера");
+			popUp->show();
+		}
+		else
+		{
+			add_apps_to_listWidget(list_apps_name);
+			list_apps_name.clear();
+		}
+	}
+	else
+	{
+		add_apps_to_listWidget(list_apps_name);
+		list_apps_name.clear();
+	}
 }
 
 void favorite_app::on_pushButton_8_clicked()

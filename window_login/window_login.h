@@ -30,6 +30,7 @@ private:
     QString password;
     QString username;
 	QPoint m_mousePoint;
+	popup *popUp;
 };
 
 #endif // WINDOW_LOGIN_H

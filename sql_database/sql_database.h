@@ -12,8 +12,8 @@
 class sql_database
 {
 public slots:
-    void first_start();
-    void create_table();
+    QString first_start();
+    QString create_table();
     QList<QList<QString>> get_apps_name();
     QString register_new_user(const QString &user_login, const QString &user_password);
     QString check_login_user(const QString &user_login, const QString &user_password);
@@ -60,8 +60,8 @@ public slots:
 	void new_messages_to_all_messages(const QString &login, const QString &login_dev);
 	int check_new_messages(const QString &login);
 	int check_new_message_in_chat(const QString &login_dev);
-	void delete_chat(const QString &login, const QString &login_dev);
-	void delete_message(const QString &login, const QString &login_dev, const QString &message);
+	QString delete_chat(const QString &login, const QString &login_dev);
+	QString delete_message(const QString &login, const QString &login_dev, const QString &message);
 	void add_app_photo(const QByteArray &image_bytes);
 
 private:

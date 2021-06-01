@@ -1,7 +1,7 @@
 ﻿#include "sql_database.h"
 
 // создания файла с БД
-void sql_database::first_start()
+QString sql_database::first_start()
 {
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("server.db");
@@ -9,12 +9,16 @@ void sql_database::first_start()
     if (!db.open())
     {
         qDebug() << "[ERROR] " << db.lastError().text();
-        return;
+        return "ERROR";
     }
-    create_table();
+    QString result_create_table = create_table();
+	if (result_create_table == "ERROR")
+		return "ERROR";
+	else
+		return "Success";
 }
 
-void sql_database::create_table()
+QString sql_database::create_table()
 {
     str_requests = "SELECT name FROM sqlite_master WHERE type = 'table';";
     sql.exec(str_requests);
@@ -37,7 +41,7 @@ void sql_database::create_table()
         if (!sql.exec(str_requests))
         {
             qDebug() << "[ERROR] Не удается создать таблицу с пользователями: " << db.lastError().text();
-            return;
+            return "ERROR";
         }
         db.commit();
 		qDebug() << "[INFO] Создана таблица с пользователями";
@@ -58,7 +62,7 @@ void sql_database::create_table()
         if (!sql.exec(str_requests))
         {
             qDebug() << "[ERROR] Не удается создать таблицу с программами: " << db.lastError().text();
-            return;
+            return "ERROR";
         }
         db.commit();
         qDebug() << "[INFO] Создана таблица с программами";
@@ -73,11 +77,12 @@ void sql_database::create_table()
         if (!sql.exec(str_requests))
         {
             qDebug() << "[ERROR] Не удается создать таблицу с переписками: " << db.lastError().text();
-            return;
+            return "ERROR";
         }
         db.commit();
         qDebug() << "[INFO] Создана таблица с переписками";
     }
+	return "Success";
 }
 
 // получение названий программ
@@ -412,7 +417,7 @@ QList<QString> sql_database::get_all_info_app_list_profile(const QList<QString> 
     if (!sql.exec(str_requests.arg(param_app[0]).arg(param_app.last())))
     {
         qDebug() << "[ERROR] Не удается получить информацию о программе из профиля: " << db.lastError().text();
-        return {{"ERROR"}};
+        return {"ERROR"};
     }
     QList<QString> list_apps_name;
 
@@ -612,7 +617,10 @@ QString sql_database::get_list_id_star_app(const QString &login, const QString &
 QString sql_database::check_id_in_id_star_app(const QString &login, const QString &app_name, const QString &user_id)
 {
     QString list_user = get_list_id_star_app(login, app_name);
-
+	
+	if (list_user == "ERROR")
+		return "ERROR";
+	
     bool result = list_user.contains(user_id);
 
     if (result == true)
@@ -640,10 +648,13 @@ QString sql_database::get_all_star_for_profile(const QString &login)
 
 void sql_database::get_max_price_app()
 {
-    str_requests = "SELECT app_price FROM " + app_table + " ;";
+    str_requests = "SELECT app_price FROM " + app_table + ";";
     if (!sql.exec(str_requests))
+	{
         qDebug() << "[ERROR] Не удалется получить все цены программ для определения g_max_price " << db.lastError().text();
-
+		g_max_price = 0;
+	}
+		
     QSqlRecord get_data = sql.record();
     QString app_price;
 	g_max_price = 0;
@@ -657,10 +668,13 @@ void sql_database::get_max_price_app()
 
 void sql_database::get_min_price_app()
 {
-    str_requests = "SELECT app_price FROM " + app_table + " ;";
+    str_requests = "SELECT app_price FROM " + app_table + ";";
     if (!sql.exec(str_requests))
+	{
         qDebug() << "[ERROR] Не удалется получить все цены программ для определения g_min_price " << db.lastError().text();
-
+		g_min_price = 0;
+	}
+	
     QSqlRecord get_data = sql.record();
     QList<QString> app_price;
     while (sql.next())
@@ -737,20 +751,28 @@ QString sql_database::get_id_favorite_app()
 
 QList<QList<QString>> sql_database::get_list_favorite_app()
 {
-    QList<QString> favorite_app = get_id_favorite_app().split(";");
-    QList<QList<QString>> data_apps = {};
-
-    if (favorite_app.at(0).size() > 0)
-    {
-        for (QString i : favorite_app)
-        {
-            QList<QString> data_app = get_info_app_id(i.toInt());
-            if (data_app.at(0) != "ERROR")
-                data_apps.push_back(data_app);
-        }
-    }
-
-    return data_apps;
+    QString favorite_app_str = get_id_favorite_app();
+	if (favorite_app_str == "ERROR")
+		return {{"ERROR"}};
+	else
+	{
+		QList<QString> favorite_app = favorite_app_str.split(";");
+		QList<QList<QString>> data_apps = {};
+		
+		if (favorite_app[0].size() > 0)
+		{
+			for (QString i : favorite_app)
+			{
+				QList<QString> data_app = get_info_app_id(i.toInt());
+				if (data_app[0] != "ERROR")
+					data_apps.push_back(data_app);
+				else
+					return {{"ERROR"}};
+			}
+		}
+		
+		return data_apps;
+	}
 }
 
 QList<QString> sql_database::get_info_app_id(const int &app_id)
@@ -778,6 +800,8 @@ QList<QString> sql_database::get_info_app_id(const int &app_id)
 QString sql_database::check_app_favorite(const QString &app_id)
 {
     QString favorite_app = get_id_favorite_app();
+	if (favorite_app == "ERROR")
+		return "ERROR";
 
     bool result = favorite_app.contains(app_id);
 
@@ -1221,13 +1245,13 @@ int sql_database::check_new_message_in_chat(const QString &login_dev)
 	return count_new_mesages;
 }
 
-void sql_database::delete_chat(const QString &login, const QString &login_dev)
+QString sql_database::delete_chat(const QString &login, const QString &login_dev)
 {
 	str_requests = "DELETE FROM " + chats_table + " WHERE (login = ('%1') and login_dev = ('%2')) or (login = ('%2') and login_dev = ('%1'));";
 	if (!sql.exec(str_requests.arg(login).arg(login_dev)))
 	{
 		qDebug() << "[ERROR] Не удается удалить чаты пользователя " << db.lastError().text();
-		return;
+		return "ERROR";
 	}
 	db.commit();
 	
@@ -1244,7 +1268,7 @@ void sql_database::delete_chat(const QString &login, const QString &login_dev)
 	if (!sql.exec(str_requests.arg(new_dialogs).arg(login)))
 	{
 		qDebug() << "[ERROR] Не удается обновить dialogs " << db.lastError().text();
-		return;
+		return "ERROR";
 	}
 	db.commit();
 	
@@ -1260,14 +1284,18 @@ void sql_database::delete_chat(const QString &login, const QString &login_dev)
 	if (!sql.exec(str_requests.arg(new_dialogs).arg(login_dev)))
 	{
 		qDebug() << "[ERROR] Не удается обновить dialogs " << db.lastError().text();
-		return;
+		return "ERROR";
 	}
 	db.commit();
+	return "Success";
 }
 
-void sql_database::delete_message(const QString &login, const QString &login_dev, const QString &message)
+QString sql_database::delete_message(const QString &login, const QString &login_dev, const QString &message)
 {
 	QString messages = get_correspondence(login, login_dev);
+	if (messages == "ERROR")
+		return "ERROR";
+	
 	QString new_messages = "";
 	
 	for (QString i : messages.split(";"))
@@ -1280,7 +1308,7 @@ void sql_database::delete_message(const QString &login, const QString &login_dev
 	if (!sql.exec(str_requests.arg(new_messages).arg(login).arg(login_dev)))
 	{
 		qDebug() << "[ERROR] Не удается обновить messages " << db.lastError().text();
-		return;
+		return "ERROR";
 	}
 	db.commit();
 	
@@ -1297,7 +1325,7 @@ void sql_database::delete_message(const QString &login, const QString &login_dev
 	if (!sql.exec(str_requests.arg(new_messages).arg(login_dev).arg(login)))
 	{
 		qDebug() << "[ERROR] Не удается обновить messages " << db.lastError().text();
-		return;
+		return "ERROR";
 	}
 	db.commit();
 	
@@ -1315,7 +1343,7 @@ void sql_database::delete_message(const QString &login, const QString &login_dev
 	if (!sql.exec(str_requests.arg(new_messages).arg(login).arg(login_dev)))
 	{
 		qDebug() << "[ERROR] Не удается обновить new_messages " << db.lastError().text();
-		return;
+		return "ERROR";
 	}
 	db.commit();
 	
@@ -1333,9 +1361,10 @@ void sql_database::delete_message(const QString &login, const QString &login_dev
 	if (!sql.exec(str_requests.arg(new_messages).arg(login_dev).arg(login)))
 	{
 		qDebug() << "[ERROR] Не удается обновить new_messages " << db.lastError().text();
-		return;
+		return "ERROR";
 	}
 	db.commit();
+	return "Success";
 }
 
 void sql_database::add_app_photo(const QByteArray &image_bytes)

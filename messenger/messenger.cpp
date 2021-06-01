@@ -61,6 +61,11 @@ void messenger::add_chats()
 				break;
 		}
 	}
+	else
+	{
+		popUp->setPopupText("Ошибка на стороне сервера");
+		popUp->show();
+	}
 }
 
 void messenger::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
@@ -82,12 +87,20 @@ void messenger::on_pushButton_clicked()
 	QMessageBox::Button reply = QMessageBox::question(this, "Подтверждение удаления", "Вы уверены?", QMessageBox::Yes | QMessageBox::No);
     if (reply == QMessageBox::Yes)
 	{
-        database.delete_chat(g_user_name, chat_name);
-		popUp->setPopupText("Переписка успешно удалена");
-		popUp->show();
-		ui->listWidget->clear();
-		add_chats();
-		ui->pushButton->setHidden(true);
+        QString result_del = database.delete_chat(g_user_name, chat_name);
+		if (result_del == "ERROR")
+		{
+			popUp->setPopupText("Ошибка на стороне сервера");
+			popUp->show();
+		}
+		else
+		{
+			popUp->setPopupText("Переписка успешно удалена");
+			popUp->show();
+			ui->listWidget->clear();
+			add_chats();
+			ui->pushButton->setHidden(true);
+		}
 	}
 }
 

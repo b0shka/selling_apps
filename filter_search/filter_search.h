@@ -6,6 +6,7 @@
 #include <QPoint>
 #include "../main_data/data.h"
 #include "../sql_database/sql_database.h"
+#include "../popup/popup.h"
 
 namespace Ui {
 class filter_search;
@@ -35,6 +36,7 @@ private:
     Ui::filter_search *ui;
     sql_database database;
 	QPoint m_mousePoint;
+	popup *popUp;
 };
 
 #endif // FILTER_SEARCH_H

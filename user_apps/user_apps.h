@@ -7,6 +7,7 @@
 #include <QPoint>
 #include "../sql_database/sql_database.h"
 #include "../main_data/data.h"
+#include "../popup/popup.h"
 
 namespace Ui {
 class user_apps;
@@ -33,6 +34,7 @@ private:
     sql_database database;
     QString login;
 	QPoint m_mousePoint;
+	popup *popUp;
 };
 
 #endif // USER_APPS_H

@@ -6,6 +6,7 @@ about_my_app::about_my_app(QList<QString> param_app, QWidget *parent) :
     ui(new Ui::about_my_app)
 {
     ui->setupUi(this);
+	popUp = new popup();
 	
 	setWindowFlags(Qt::FramelessWindowHint);
 	setAttribute(Qt::WA_TranslucentBackground);
@@ -32,31 +33,46 @@ void about_my_app::add_info(QList<QString> param_app)
         ui->lineEdit->setText(param_app[0]);
 
         QList<QString> info_app = database.get_all_info_app_list_profile(param_app);
-        ui->lineEdit_2->setText(info_app[0]);
-        ui->textEdit->setPlainText(info_app[1]);
-        ui->lineEdit_3->setText(info_app[2]);
-    }
-	
-	QList<QByteArray> list_bytes_photo = database.get_bytes_photo(param_app[0], param_app[1]);
-	
-	imageBytes1 = list_bytes_photo[0];
-	imageBytes2 = list_bytes_photo[1];
-	imageBytes3 = list_bytes_photo[2];
-	
-	one_Pixmap.loadFromData(list_bytes_photo[0]);
-	two_Pixmap.loadFromData(list_bytes_photo[1]);
-	three_Pixmap.loadFromData(list_bytes_photo[2]);
-	
-	if (list_bytes_photo[0] != nullptr)
-		ui->pushButton_10->setHidden(false);
-	if (list_bytes_photo[1] != nullptr)
-		ui->pushButton_11->setHidden(false);
-	if (list_bytes_photo[2] != nullptr)
-		ui->pushButton_12->setHidden(false);
-	
-	ui->label_10->setPixmap(one_Pixmap.scaled(166, 111));
-	ui->label_11->setPixmap(two_Pixmap.scaled(166, 111));
-	ui->label_12->setPixmap(three_Pixmap.scaled(166, 111));
+		if (info_app[0] == "ERROR")
+		{
+			popUp->setPopupText("Ошибка на стороне сервера");
+			popUp->show();
+		}
+		else
+		{
+			ui->lineEdit_2->setText(info_app[0]);
+			ui->textEdit->setPlainText(info_app[1]);
+			ui->lineEdit_3->setText(info_app[2]);
+			
+			QList<QByteArray> list_bytes_photo = database.get_bytes_photo(param_app[0], param_app[1]);
+			if (list_bytes_photo.size() == 0)
+			{
+				popUp->setPopupText("Ошибка на стороне сервера");
+				popUp->show();
+			}
+			else
+			{
+				imageBytes1 = list_bytes_photo[0];
+				imageBytes2 = list_bytes_photo[1];
+				imageBytes3 = list_bytes_photo[2];
+				
+				one_Pixmap.loadFromData(list_bytes_photo[0]);
+				two_Pixmap.loadFromData(list_bytes_photo[1]);
+				three_Pixmap.loadFromData(list_bytes_photo[2]);
+				
+				if (list_bytes_photo[0] != nullptr)
+					ui->pushButton_10->setHidden(false);
+				if (list_bytes_photo[1] != nullptr)
+					ui->pushButton_11->setHidden(false);
+				if (list_bytes_photo[2] != nullptr)
+					ui->pushButton_12->setHidden(false);
+				
+				ui->label_10->setPixmap(one_Pixmap.scaled(166, 111));
+				ui->label_11->setPixmap(two_Pixmap.scaled(166, 111));
+				ui->label_12->setPixmap(three_Pixmap.scaled(166, 111));
+			}
+		}
+	}
 }
 
 void about_my_app::mousePressEvent(QMouseEvent* event)
@@ -87,16 +103,19 @@ void about_my_app::on_pushButton_clicked()
 			QString result_delete = database.delete_app_from_db(id_app);
 			if (result_delete == "Success")
 			{
-				popUp = new popup();
 				popUp->setPopupText("Программа удалена");
 				popUp->show();
 				close();
 				g_status_delete_app = 1;
 			}
+			else
+			{
+				popUp->setPopupText("Ошибка на стороне сервера");
+				popUp->show();
+			}
 		}
 		else
 		{
-			popUp = new popup();
 			popUp->setPopupText("Ошибка на стороне сервера");
 			popUp->show();
 		}
@@ -147,6 +166,11 @@ void about_my_app::on_pushButton_2_clicked()
             close();
 			popUp = new popup();
 			popUp->setPopupText("Данные сохранены");
+			popUp->show();
+		}
+		else
+		{
+			popUp->setPopupText("Ошибка на стороне сервера");
 			popUp->show();
 		}
     }
@@ -242,50 +266,53 @@ void about_my_app::on_pushButton_3_clicked()
 {
 	QString filename = QFileDialog::getOpenFileName(this,
 		tr("Choose image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
-	if (one_Pixmap.isNull())
-		count_photo = 0;
-	else if (two_Pixmap.isNull())
-		count_photo = 1;
-	else if (three_Pixmap.isNull())
-		count_photo = 2;
-	else
-		count_photo = 3;
-	
-	if (count_photo == 0 || count_photo == 3)
+	if (filename != nullptr)
 	{
-		one_Pixmap.load(filename);
-		ui->label_10->setPixmap(one_Pixmap.scaled(166, 111));
-		QBuffer buffer(&imageBytes1);
-		buffer.open(QIODevice::WriteOnly);
-		if (filename.split(".")[1] == "png")
-			one_Pixmap.save(&buffer, "PNG");
-		else if (filename.split(".")[1] == "jpg" || filename.split(".")[1] == "jpeg")
-			one_Pixmap.save(&buffer, "JPG");
-		ui->pushButton_10->setHidden(false);
-	}
-	else if (count_photo == 1)
-	{
-		two_Pixmap.load(filename);
-		ui->label_11->setPixmap(two_Pixmap.scaled(166, 111));
-		QBuffer buffer(&imageBytes2);
-		buffer.open(QIODevice::WriteOnly);
-		if (filename.split(".")[1] == "png")
-			two_Pixmap.save(&buffer, "PNG");
-		else if (filename.split(".")[1] == "jpg" || filename.split(".")[1] == "jpeg")
-			two_Pixmap.save(&buffer, "JPG");
-		ui->pushButton_11->setHidden(false);
-	}
-	else if (count_photo == 2)
-	{
-		three_Pixmap.load(filename);
-		ui->label_12->setPixmap(three_Pixmap.scaled(166, 111));
-		count_photo = 0;
-		QBuffer buffer(&imageBytes3);
-		buffer.open(QIODevice::WriteOnly);
-		if (filename.split(".")[1] == "png")
-			three_Pixmap.save(&buffer, "PNG");
-		else if (filename.split(".")[1] == "jpg" || filename.split(".")[1] == "jpeg")
-			three_Pixmap.save(&buffer, "JPG");
-		ui->pushButton_12->setHidden(false);
+		if (one_Pixmap.isNull())
+			count_photo = 0;
+		else if (two_Pixmap.isNull())
+			count_photo = 1;
+		else if (three_Pixmap.isNull())
+			count_photo = 2;
+		else
+			count_photo = 3;
+		
+		if (count_photo == 0 || count_photo == 3)
+		{
+			one_Pixmap.load(filename);
+			ui->label_10->setPixmap(one_Pixmap.scaled(166, 111));
+			QBuffer buffer(&imageBytes1);
+			buffer.open(QIODevice::WriteOnly);
+			if (filename.split(".")[1] == "png")
+				one_Pixmap.save(&buffer, "PNG");
+			else if (filename.split(".")[1] == "jpg" || filename.split(".")[1] == "jpeg")
+				one_Pixmap.save(&buffer, "JPG");
+			ui->pushButton_10->setHidden(false);
+		}
+		else if (count_photo == 1)
+		{
+			two_Pixmap.load(filename);
+			ui->label_11->setPixmap(two_Pixmap.scaled(166, 111));
+			QBuffer buffer(&imageBytes2);
+			buffer.open(QIODevice::WriteOnly);
+			if (filename.split(".")[1] == "png")
+				two_Pixmap.save(&buffer, "PNG");
+			else if (filename.split(".")[1] == "jpg" || filename.split(".")[1] == "jpeg")
+				two_Pixmap.save(&buffer, "JPG");
+			ui->pushButton_11->setHidden(false);
+		}
+		else if (count_photo == 2)
+		{
+			three_Pixmap.load(filename);
+			ui->label_12->setPixmap(three_Pixmap.scaled(166, 111));
+			count_photo = 0;
+			QBuffer buffer(&imageBytes3);
+			buffer.open(QIODevice::WriteOnly);
+			if (filename.split(".")[1] == "png")
+				three_Pixmap.save(&buffer, "PNG");
+			else if (filename.split(".")[1] == "jpg" || filename.split(".")[1] == "jpeg")
+				three_Pixmap.save(&buffer, "JPG");
+			ui->pushButton_12->setHidden(false);
+		}
 	}
 }
