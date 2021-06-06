@@ -1,4 +1,4 @@
-# sellig_apps
+# selling_apps
 Program for selling and buying programs
 ____
 ### Install everything you need and run
