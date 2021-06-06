@@ -1,4 +1,4 @@
-# sellig app
+# sellig_apps
 Program for selling and buying programs
 ____
 ### Install everything you need and run
@@ -12,7 +12,8 @@ cd selling_apps/build-app-Desktop_Qt_5_9_9_GCC_64bit-Debug
 ./app
 ```
 
-![alt text](img/img.png)
+![alt text](img/img1.png)
+![alt text](img/img2.png)
 
 ### Additionally
 The chat uses SQLITE, so you need to run the `main` file in the `server` folder
