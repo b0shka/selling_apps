@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>389</width>
-    <height>273</height>
+    <height>259</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>381</width>
-    <height>266</height>
+    <height>2</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -34,19 +34,19 @@
      <x>5</x>
      <y>5</y>
      <width>381</width>
-     <height>266</height>
+     <height>251</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
      <width>381</width>
-     <height>266</height>
+     <height>251</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
      <width>381</width>
-     <height>266</height>
+     <height>251</height>
     </size>
    </property>
    <property name="styleSheet">
@@ -61,120 +61,11 @@ color: white;</string>
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <widget class="QFrame" name="frame_3">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>381</width>
-      <height>36</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QFrame{
-	border-bottom-left-radius: 0px;
-	border-bottom-right-radius: 0px;
-	background-color: #404040;
-}</string>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <widget class="QPushButton" name="close">
-     <property name="geometry">
-      <rect>
-       <x>350</x>
-       <y>5</y>
-       <width>26</width>
-       <height>26</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>-1</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton {
-	font-size: 20px;
-	background-color: #404040;
-	border-radius: 5px;
-}
-QPushButton::hover {
-	background-color: #ffb0be;
-	color: black;
-}</string>
-     </property>
-     <property name="text">
-      <string>✘</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="hide">
-     <property name="geometry">
-      <rect>
-       <x>320</x>
-       <y>5</y>
-       <width>26</width>
-       <height>26</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>-1</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton {
-	padding-bottom: 4px;
-	font-size: 20px;
-	background-color: #404040;
-	border-radius: 5px;
-}
-QPushButton::hover {
-	background-color: #2a2a2a;
-}</string>
-     </property>
-     <property name="text">
-      <string>_</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_9">
-     <property name="geometry">
-      <rect>
-       <x>140</x>
-       <y>10</y>
-       <width>101</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>-1</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font-size: 14px;
-color: white;</string>
-     </property>
-     <property name="text">
-      <string>Registration</string>
-     </property>
-    </widget>
-   </widget>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>235</y>
+      <y>220</y>
       <width>366</width>
       <height>21</height>
      </rect>
@@ -207,7 +98,7 @@ color: white;</string>
     <property name="geometry">
      <rect>
       <x>120</x>
-      <y>190</y>
+      <y>175</y>
       <width>151</width>
       <height>31</height>
      </rect>
@@ -230,7 +121,7 @@ QPushButton::hover {
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>105</y>
+      <y>90</y>
       <width>226</width>
       <height>31</height>
      </rect>
@@ -255,7 +146,7 @@ font-size: 14px;</string>
     <property name="geometry">
      <rect>
       <x>115</x>
-      <y>60</y>
+      <y>55</y>
       <width>161</width>
       <height>26</height>
      </rect>
@@ -282,7 +173,7 @@ font-size: 14px;</string>
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>145</y>
+      <y>130</y>
       <width>226</width>
       <height>31</height>
      </rect>
@@ -307,7 +198,7 @@ font-size: 14px;</string>
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>45</y>
+      <y>35</y>
       <width>36</width>
       <height>31</height>
      </rect>
@@ -333,6 +224,115 @@ QPushButton::hover {
     <property name="text">
      <string>🡸</string>
     </property>
+   </widget>
+   <widget class="QFrame" name="frame_5">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>381</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QFrame{
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+	background-color: #404040;
+}</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QPushButton" name="close">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>5</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>-1</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+	font-size: 20px;
+	background-color: #f73643;
+	border-radius: 8px;
+}
+QPushButton::hover {
+	background-color: #d63a44;
+	color: black;
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="hide">
+     <property name="geometry">
+      <rect>
+       <x>335</x>
+       <y>5</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>-1</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+	padding-bottom: 4px;
+	font-size: 20px;
+	background-color: #47fc65;
+	border-radius: 8px;
+}
+QPushButton::hover {
+	background-color: #49cc5f;
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_9">
+     <property name="geometry">
+      <rect>
+       <x>145</x>
+       <y>5</y>
+       <width>101</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>-1</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font-size: 14px;
+color: white;</string>
+     </property>
+     <property name="text">
+      <string>Registration</string>
+     </property>
+    </widget>
    </widget>
   </widget>
  </widget>

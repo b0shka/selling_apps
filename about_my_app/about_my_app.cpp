@@ -193,7 +193,7 @@ void about_my_app::on_pushButton_8_clicked()
 
 void about_my_app::on_pushButton_9_clicked()
 {
-    showMaximized();
+    showMinimized();
 }
 
 void about_my_app::on_lineEdit_returnPressed()

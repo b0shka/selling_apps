@@ -38,28 +38,28 @@ public:
     QPushButton *star_del;
     QLabel *label_4;
     QPushButton *star_add;
-    QFrame *frame_3;
-    QPushButton *close;
-    QPushButton *hide;
-    QLabel *label_8;
     QLabel *label_9;
     QLabel *label_10;
     QLabel *label_11;
     QLabel *label_12;
     QLabel *label_13;
+    QFrame *frame_4;
+    QPushButton *close;
+    QPushButton *hide;
+    QLabel *label_14;
 
     void setupUi(QDialog *about_app)
     {
         if (about_app->objectName().isEmpty())
             about_app->setObjectName(QStringLiteral("about_app"));
-        about_app->resize(613, 402);
-        about_app->setMinimumSize(QSize(605, 4));
-        about_app->setMaximumSize(QSize(5453425, 5345235));
+        about_app->resize(613, 393);
+        about_app->setMinimumSize(QSize(613, 393));
+        about_app->setMaximumSize(QSize(613, 393));
         about_app->setStyleSheet(QStringLiteral(""));
         frame = new QFrame(about_app);
         frame->setObjectName(QStringLiteral("frame"));
-        frame->setGeometry(QRect(5, 5, 606, 396));
-        frame->setMinimumSize(QSize(606, 396));
+        frame->setGeometry(QRect(5, 5, 606, 386));
+        frame->setMinimumSize(QSize(606, 3));
         frame->setMaximumSize(QSize(606, 396));
         frame->setStyleSheet(QLatin1String("border: none;\n"
 "border-radius: 5px;\n"
@@ -69,7 +69,7 @@ public:
         frame->setFrameShadow(QFrame::Raised);
         messages = new QPushButton(frame);
         messages->setObjectName(QStringLiteral("messages"));
-        messages->setGeometry(QRect(340, 360, 41, 31));
+        messages->setGeometry(QRect(340, 350, 41, 31));
         QFont font;
         font.setBold(true);
         font.setWeight(75);
@@ -85,7 +85,7 @@ public:
 "}"));
         label_3 = new QLabel(frame);
         label_3->setObjectName(QStringLiteral("label_3"));
-        label_3->setGeometry(QRect(475, 50, 116, 26));
+        label_3->setGeometry(QRect(475, 40, 116, 26));
         QFont font1;
         font1.setBold(true);
         font1.setItalic(false);
@@ -95,7 +95,7 @@ public:
         label_3->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         favorite_del = new QPushButton(frame);
         favorite_del->setObjectName(QStringLiteral("favorite_del"));
-        favorite_del->setGeometry(QRect(425, 360, 176, 31));
+        favorite_del->setGeometry(QRect(425, 350, 176, 31));
         favorite_del->setStyleSheet(QLatin1String("QPushButton {\n"
 "	font-size: 14px;\n"
 "	background-color: #404040;\n"
@@ -106,18 +106,18 @@ public:
 "}"));
         label_6 = new QLabel(frame);
         label_6->setObjectName(QStringLiteral("label_6"));
-        label_6->setGeometry(QRect(20, 110, 311, 146));
+        label_6->setGeometry(QRect(20, 100, 311, 146));
         label_6->setStyleSheet(QStringLiteral("font-size: 14px;"));
         label_6->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         label_6->setWordWrap(true);
         label = new QLabel(frame);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(15, 50, 406, 26));
+        label->setGeometry(QRect(15, 40, 406, 26));
         label->setFont(font);
         label->setStyleSheet(QStringLiteral("font-size: 22px;"));
         favorite_add = new QPushButton(frame);
         favorite_add->setObjectName(QStringLiteral("favorite_add"));
-        favorite_add->setGeometry(QRect(425, 360, 176, 31));
+        favorite_add->setGeometry(QRect(425, 350, 176, 31));
         favorite_add->setStyleSheet(QLatin1String("QPushButton {\n"
 "	font-size: 14px;\n"
 "	background-color: #404040;\n"
@@ -128,17 +128,17 @@ public:
 "}"));
         label_2 = new QLabel(frame);
         label_2->setObjectName(QStringLiteral("label_2"));
-        label_2->setGeometry(QRect(15, 85, 81, 21));
+        label_2->setGeometry(QRect(15, 75, 81, 21));
         label_2->setStyleSheet(QStringLiteral("font-size:15px;"));
         label_7 = new QLabel(frame);
         label_7->setObjectName(QStringLiteral("label_7"));
-        label_7->setGeometry(QRect(355, 110, 231, 146));
+        label_7->setGeometry(QRect(355, 100, 231, 146));
         label_7->setStyleSheet(QStringLiteral("font-size: 14px;"));
         label_7->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         label_7->setWordWrap(true);
         login_dev = new QPushButton(frame);
         login_dev->setObjectName(QStringLiteral("login_dev"));
-        login_dev->setGeometry(QRect(115, 365, 161, 21));
+        login_dev->setGeometry(QRect(115, 355, 161, 21));
         login_dev->setStyleSheet(QLatin1String("QPushButton {\n"
 "	font-size: 14px;\n"
 "	color: silver;\n"
@@ -152,11 +152,11 @@ public:
 "}"));
         label_5 = new QLabel(frame);
         label_5->setObjectName(QStringLiteral("label_5"));
-        label_5->setGeometry(QRect(350, 85, 96, 21));
+        label_5->setGeometry(QRect(350, 75, 96, 21));
         label_5->setStyleSheet(QStringLiteral("font-size:15px;"));
         star_del = new QPushButton(frame);
         star_del->setObjectName(QStringLiteral("star_del"));
-        star_del->setGeometry(QRect(385, 360, 36, 31));
+        star_del->setGeometry(QRect(385, 350, 36, 31));
         star_del->setFont(font);
         star_del->setStyleSheet(QLatin1String("QPushButton {\n"
 "	font-size: 18px;\n"
@@ -168,7 +168,7 @@ public:
 "}"));
         label_4 = new QLabel(frame);
         label_4->setObjectName(QStringLiteral("label_4"));
-        label_4->setGeometry(QRect(10, 365, 101, 21));
+        label_4->setGeometry(QRect(10, 355, 101, 21));
         QFont font2;
         font2.setItalic(true);
         label_4->setFont(font2);
@@ -176,7 +176,7 @@ public:
 "color: silver;"));
         star_add = new QPushButton(frame);
         star_add->setObjectName(QStringLiteral("star_add"));
-        star_add->setGeometry(QRect(385, 360, 36, 31));
+        star_add->setGeometry(QRect(385, 350, 36, 31));
         star_add->setFont(font);
         star_add->setStyleSheet(QLatin1String("QPushButton {\n"
 "	font-size: 18px;\n"
@@ -186,51 +186,9 @@ public:
 "QPushButton::hover {\n"
 "	background-color: #949494;\n"
 "}"));
-        frame_3 = new QFrame(frame);
-        frame_3->setObjectName(QStringLiteral("frame_3"));
-        frame_3->setGeometry(QRect(0, 0, 606, 36));
-        frame_3->setStyleSheet(QLatin1String("QFrame{\n"
-"	border-bottom-left-radius: 0px;\n"
-"	border-bottom-right-radius: 0px;\n"
-"	background-color: #404040;\n"
-"}"));
-        frame_3->setFrameShape(QFrame::StyledPanel);
-        frame_3->setFrameShadow(QFrame::Raised);
-        close = new QPushButton(frame_3);
-        close->setObjectName(QStringLiteral("close"));
-        close->setGeometry(QRect(575, 5, 26, 26));
-        close->setFont(font);
-        close->setStyleSheet(QLatin1String("QPushButton {\n"
-"	font-size: 20px;\n"
-"	background-color: #404040;\n"
-"	border-radius: 5px;\n"
-"}\n"
-"QPushButton::hover {\n"
-"	background-color: #ffb0be;\n"
-"	color: black;\n"
-"}"));
-        hide = new QPushButton(frame_3);
-        hide->setObjectName(QStringLiteral("hide"));
-        hide->setGeometry(QRect(545, 5, 26, 26));
-        hide->setFont(font);
-        hide->setStyleSheet(QLatin1String("QPushButton {\n"
-"	padding-bottom: 4px;\n"
-"	font-size: 20px;\n"
-"	background-color: #404040;\n"
-"	border-radius: 5px;\n"
-"}\n"
-"QPushButton::hover {\n"
-"	background-color: #2a2a2a;\n"
-"}"));
-        label_8 = new QLabel(frame_3);
-        label_8->setObjectName(QStringLiteral("label_8"));
-        label_8->setGeometry(QRect(245, 10, 86, 16));
-        label_8->setFont(font);
-        label_8->setStyleSheet(QLatin1String("font-size: 14px;\n"
-"color: white;"));
         label_9 = new QLabel(frame);
         label_9->setObjectName(QStringLiteral("label_9"));
-        label_9->setGeometry(QRect(10, 265, 121, 91));
+        label_9->setGeometry(QRect(10, 255, 121, 91));
         QFont font3;
         font3.setPointSize(1);
         label_9->setFont(font3);
@@ -238,19 +196,19 @@ public:
         label_9->setAlignment(Qt::AlignCenter);
         label_10 = new QLabel(frame);
         label_10->setObjectName(QStringLiteral("label_10"));
-        label_10->setGeometry(QRect(140, 265, 121, 91));
+        label_10->setGeometry(QRect(140, 255, 121, 91));
         label_10->setFont(font3);
         label_10->setStyleSheet(QStringLiteral("background-color: #2a2a2a"));
         label_10->setAlignment(Qt::AlignCenter);
         label_11 = new QLabel(frame);
         label_11->setObjectName(QStringLiteral("label_11"));
-        label_11->setGeometry(QRect(270, 265, 121, 91));
+        label_11->setGeometry(QRect(270, 255, 121, 91));
         label_11->setFont(font3);
         label_11->setStyleSheet(QStringLiteral("background-color: #2a2a2a"));
         label_11->setAlignment(Qt::AlignCenter);
         label_12 = new QLabel(frame);
         label_12->setObjectName(QStringLiteral("label_12"));
-        label_12->setGeometry(QRect(315, 365, 21, 26));
+        label_12->setGeometry(QRect(315, 355, 21, 26));
         QFont font4;
         label_12->setFont(font4);
         label_12->setStyleSheet(QLatin1String("font-size: 20px;\n"
@@ -258,11 +216,53 @@ public:
         label_12->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         label_13 = new QLabel(frame);
         label_13->setObjectName(QStringLiteral("label_13"));
-        label_13->setGeometry(QRect(280, 365, 31, 21));
+        label_13->setGeometry(QRect(280, 355, 31, 21));
         label_13->setFont(font4);
         label_13->setStyleSheet(QLatin1String("font-size: 12px;\n"
 "color: silver;"));
         label_13->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+        frame_4 = new QFrame(frame);
+        frame_4->setObjectName(QStringLiteral("frame_4"));
+        frame_4->setGeometry(QRect(0, 0, 606, 26));
+        frame_4->setStyleSheet(QLatin1String("QFrame{\n"
+"	border-bottom-left-radius: 0px;\n"
+"	border-bottom-right-radius: 0px;\n"
+"	background-color: #404040;\n"
+"}"));
+        frame_4->setFrameShape(QFrame::StyledPanel);
+        frame_4->setFrameShadow(QFrame::Raised);
+        close = new QPushButton(frame_4);
+        close->setObjectName(QStringLiteral("close"));
+        close->setGeometry(QRect(580, 5, 16, 16));
+        close->setFont(font);
+        close->setStyleSheet(QLatin1String("QPushButton {\n"
+"	font-size: 20px;\n"
+"	background-color: #f73643;\n"
+"	border-radius: 8px;\n"
+"}\n"
+"QPushButton::hover {\n"
+"	background-color: #d63a44;\n"
+"	color: black;\n"
+"}"));
+        hide = new QPushButton(frame_4);
+        hide->setObjectName(QStringLiteral("hide"));
+        hide->setGeometry(QRect(555, 5, 16, 16));
+        hide->setFont(font);
+        hide->setStyleSheet(QLatin1String("QPushButton {\n"
+"	padding-bottom: 4px;\n"
+"	font-size: 20px;\n"
+"	background-color: #47fc65;\n"
+"	border-radius: 8px;\n"
+"}\n"
+"QPushButton::hover {\n"
+"	background-color: #49cc5f;\n"
+"}"));
+        label_14 = new QLabel(frame_4);
+        label_14->setObjectName(QStringLiteral("label_14"));
+        label_14->setGeometry(QRect(245, 5, 86, 16));
+        label_14->setFont(font);
+        label_14->setStyleSheet(QLatin1String("font-size: 14px;\n"
+"color: white;"));
 
         retranslateUi(about_app);
 
@@ -285,14 +285,14 @@ public:
         star_del->setText(QApplication::translate("about_app", "\342\230\205", Q_NULLPTR));
         label_4->setText(QApplication::translate("about_app", "\320\240\320\260\320\267\321\200\320\260\320\261\320\276\321\202\321\207\320\270\320\272:", Q_NULLPTR));
         star_add->setText(QApplication::translate("about_app", "\342\230\206", Q_NULLPTR));
-        close->setText(QApplication::translate("about_app", "\342\234\230", Q_NULLPTR));
-        hide->setText(QApplication::translate("about_app", "_", Q_NULLPTR));
-        label_8->setText(QApplication::translate("about_app", "About app", Q_NULLPTR));
         label_9->setText(QString());
         label_10->setText(QString());
         label_11->setText(QString());
         label_12->setText(QApplication::translate("about_app", "\360\237\221\201", Q_NULLPTR));
         label_13->setText(QString());
+        close->setText(QString());
+        hide->setText(QString());
+        label_14->setText(QApplication::translate("about_app", "About app", Q_NULLPTR));
     } // retranslateUi
 
 };

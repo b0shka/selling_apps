@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>681</width>
-    <height>469</height>
+    <width>678</width>
+    <height>458</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -21,14 +21,14 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>668</width>
-    <height>428</height>
+    <width>678</width>
+    <height>458</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>1111</width>
-    <height>1111</height>
+    <width>678</width>
+    <height>458</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -38,25 +38,37 @@
    <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="minimumSize">
+    <size>
+     <width>678</width>
+     <height>458</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>678</width>
+     <height>458</height>
+    </size>
+   </property>
    <widget class="QFrame" name="frame_2">
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>5</y>
       <width>681</width>
-      <height>471</height>
+      <height>456</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
       <width>681</width>
-      <height>471</height>
+      <height>456</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
       <width>681</width>
-      <height>471</height>
+      <height>456</height>
      </size>
     </property>
     <property name="styleSheet">
@@ -75,7 +87,7 @@
      <property name="geometry">
       <rect>
        <x>5</x>
-       <y>35</y>
+       <y>25</y>
        <width>671</width>
        <height>56</height>
       </rect>
@@ -223,7 +235,7 @@ QPushButton::hover {
      <property name="geometry">
       <rect>
        <x>5</x>
-       <y>90</y>
+       <y>80</y>
        <width>671</width>
        <height>371</height>
       </rect>
@@ -250,13 +262,13 @@ QListWidget::item:hover {
 }</string>
      </property>
     </widget>
-    <widget class="QFrame" name="frame_3">
+    <widget class="QFrame" name="frame_5">
      <property name="geometry">
       <rect>
-       <x>5</x>
+       <x>0</x>
        <y>0</y>
-       <width>671</width>
-       <height>36</height>
+       <width>676</width>
+       <height>26</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -275,10 +287,10 @@ QListWidget::item:hover {
      <widget class="QPushButton" name="close">
       <property name="geometry">
        <rect>
-        <x>640</x>
+        <x>655</x>
         <y>5</y>
-        <width>26</width>
-        <height>26</height>
+        <width>16</width>
+        <height>16</height>
        </rect>
       </property>
       <property name="font">
@@ -291,26 +303,25 @@ QListWidget::item:hover {
       <property name="styleSheet">
        <string notr="true">QPushButton {
 	font-size: 20px;
-	color: white;
-	background-color: #2a2a2a;
-	border-radius: 5px;
+	background-color: #f73643;
+	border-radius: 8px;
 }
 QPushButton::hover {
-	background-color: #ffb0be;
+	background-color: #d63a44;
 	color: black;
 }</string>
       </property>
       <property name="text">
-       <string>✘</string>
+       <string/>
       </property>
      </widget>
      <widget class="QPushButton" name="hide">
       <property name="geometry">
        <rect>
-        <x>610</x>
+        <x>630</x>
         <y>5</y>
-        <width>26</width>
-        <height>26</height>
+        <width>16</width>
+        <height>16</height>
        </rect>
       </property>
       <property name="font">
@@ -324,23 +335,22 @@ QPushButton::hover {
        <string notr="true">QPushButton {
 	padding-bottom: 4px;
 	font-size: 20px;
-	color: white;
-	background-color: #2a2a2a;
-	border-radius: 5px;
+	background-color: #47fc65;
+	border-radius: 8px;
 }
 QPushButton::hover {
-	background-color: #949494;
+	background-color: #49cc5f;
 }</string>
       </property>
       <property name="text">
-       <string>_</string>
+       <string/>
       </property>
      </widget>
      <widget class="QLabel" name="label">
       <property name="geometry">
        <rect>
-        <x>285</x>
-        <y>10</y>
+        <x>300</x>
+        <y>5</y>
         <width>71</width>
         <height>16</height>
        </rect>

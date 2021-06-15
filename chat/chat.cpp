@@ -247,7 +247,7 @@ void chat::on_pushButton_8_clicked()
 
 void chat::on_pushButton_9_clicked()
 {
-	showMaximized();
+	showMinimized();
 }
 
 void chat::on_lineEdit_3_returnPressed()

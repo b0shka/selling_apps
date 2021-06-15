@@ -35,7 +35,7 @@ public:
     QPushButton *filter;
     QPushButton *update;
     QListWidget *listWidget;
-    QFrame *frame_3;
+    QFrame *frame_5;
     QPushButton *close;
     QPushButton *hide;
     QLabel *label;
@@ -45,22 +45,24 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
         MainWindow->setEnabled(true);
-        MainWindow->resize(681, 469);
+        MainWindow->resize(678, 458);
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
         MainWindow->setSizePolicy(sizePolicy);
-        MainWindow->setMinimumSize(QSize(668, 428));
-        MainWindow->setMaximumSize(QSize(1111, 1111));
+        MainWindow->setMinimumSize(QSize(678, 458));
+        MainWindow->setMaximumSize(QSize(678, 458));
         MainWindow->setStyleSheet(QStringLiteral(""));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
+        centralwidget->setMinimumSize(QSize(678, 458));
+        centralwidget->setMaximumSize(QSize(678, 458));
         frame_2 = new QFrame(centralwidget);
         frame_2->setObjectName(QStringLiteral("frame_2"));
-        frame_2->setGeometry(QRect(0, 5, 681, 471));
-        frame_2->setMinimumSize(QSize(681, 471));
-        frame_2->setMaximumSize(QSize(681, 471));
+        frame_2->setGeometry(QRect(0, 5, 681, 456));
+        frame_2->setMinimumSize(QSize(681, 456));
+        frame_2->setMaximumSize(QSize(681, 456));
         frame_2->setStyleSheet(QLatin1String("QFrame{\n"
 "	border: none;\n"
 "	border-radius: 5px;\n"
@@ -69,7 +71,7 @@ public:
         frame_2->setFrameShadow(QFrame::Raised);
         frame = new QFrame(frame_2);
         frame->setObjectName(QStringLiteral("frame"));
-        frame->setGeometry(QRect(5, 35, 671, 56));
+        frame->setGeometry(QRect(5, 25, 671, 56));
         frame->setStyleSheet(QStringLiteral("background-color: #404040"));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
@@ -135,7 +137,7 @@ public:
 "}"));
         listWidget = new QListWidget(frame_2);
         listWidget->setObjectName(QStringLiteral("listWidget"));
-        listWidget->setGeometry(QRect(5, 90, 671, 371));
+        listWidget->setGeometry(QRect(5, 80, 671, 371));
         listWidget->setStyleSheet(QLatin1String("QListWidget {\n"
 "	border: none;\n"
 "	font-size:15px;\n"
@@ -155,47 +157,45 @@ public:
 "QListWidget::item:hover {\n"
 "	background-color: #949494;\n"
 "}"));
-        frame_3 = new QFrame(frame_2);
-        frame_3->setObjectName(QStringLiteral("frame_3"));
-        frame_3->setGeometry(QRect(5, 0, 671, 36));
-        frame_3->setStyleSheet(QLatin1String("QFrame{\n"
+        frame_5 = new QFrame(frame_2);
+        frame_5->setObjectName(QStringLiteral("frame_5"));
+        frame_5->setGeometry(QRect(0, 0, 676, 26));
+        frame_5->setStyleSheet(QLatin1String("QFrame{\n"
 "	border-bottom-left-radius: 0px;\n"
 "	border-bottom-right-radius: 0px;\n"
 "	background-color: #2a2a2a;\n"
 "}"));
-        frame_3->setFrameShape(QFrame::StyledPanel);
-        frame_3->setFrameShadow(QFrame::Raised);
-        close = new QPushButton(frame_3);
+        frame_5->setFrameShape(QFrame::StyledPanel);
+        frame_5->setFrameShadow(QFrame::Raised);
+        close = new QPushButton(frame_5);
         close->setObjectName(QStringLiteral("close"));
-        close->setGeometry(QRect(640, 5, 26, 26));
+        close->setGeometry(QRect(655, 5, 16, 16));
         close->setFont(font1);
         close->setStyleSheet(QLatin1String("QPushButton {\n"
 "	font-size: 20px;\n"
-"	color: white;\n"
-"	background-color: #2a2a2a;\n"
-"	border-radius: 5px;\n"
+"	background-color: #f73643;\n"
+"	border-radius: 8px;\n"
 "}\n"
 "QPushButton::hover {\n"
-"	background-color: #ffb0be;\n"
+"	background-color: #d63a44;\n"
 "	color: black;\n"
 "}"));
-        hide = new QPushButton(frame_3);
+        hide = new QPushButton(frame_5);
         hide->setObjectName(QStringLiteral("hide"));
-        hide->setGeometry(QRect(610, 5, 26, 26));
+        hide->setGeometry(QRect(630, 5, 16, 16));
         hide->setFont(font1);
         hide->setStyleSheet(QLatin1String("QPushButton {\n"
 "	padding-bottom: 4px;\n"
 "	font-size: 20px;\n"
-"	color: white;\n"
-"	background-color: #2a2a2a;\n"
-"	border-radius: 5px;\n"
+"	background-color: #47fc65;\n"
+"	border-radius: 8px;\n"
 "}\n"
 "QPushButton::hover {\n"
-"	background-color: #949494;\n"
+"	background-color: #49cc5f;\n"
 "}"));
-        label = new QLabel(frame_3);
+        label = new QLabel(frame_5);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(285, 10, 71, 16));
+        label->setGeometry(QRect(300, 5, 71, 16));
         label->setFont(font1);
         label->setStyleSheet(QLatin1String("font-size: 14px;\n"
 "color: white;"));
@@ -214,8 +214,8 @@ public:
         login->setText(QApplication::translate("MainWindow", "\342\215\210", Q_NULLPTR));
         filter->setText(QApplication::translate("MainWindow", "\342\213\256", Q_NULLPTR));
         update->setText(QApplication::translate("MainWindow", "\342\255\257", Q_NULLPTR));
-        close->setText(QApplication::translate("MainWindow", "\342\234\230", Q_NULLPTR));
-        hide->setText(QApplication::translate("MainWindow", "_", Q_NULLPTR));
+        close->setText(QString());
+        hide->setText(QString());
         label->setText(QApplication::translate("MainWindow", "Sale App", Q_NULLPTR));
     } // retranslateUi
 

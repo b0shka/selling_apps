@@ -37,23 +37,23 @@ public:
     QPushButton *update;
     QLabel *label_8;
     QListWidget *listWidget;
-    QFrame *frame_3;
+    QPushButton *add;
+    QFrame *frame_4;
     QPushButton *close;
     QPushButton *hide;
     QLabel *label_2;
-    QPushButton *add;
 
     void setupUi(QDialog *autorization_mainwindow)
     {
         if (autorization_mainwindow->objectName().isEmpty())
             autorization_mainwindow->setObjectName(QStringLiteral("autorization_mainwindow"));
-        autorization_mainwindow->resize(679, 474);
-        autorization_mainwindow->setMinimumSize(QSize(668, 428));
-        autorization_mainwindow->setMaximumSize(QSize(5435235, 16777215));
+        autorization_mainwindow->resize(679, 462);
+        autorization_mainwindow->setMinimumSize(QSize(679, 462));
+        autorization_mainwindow->setMaximumSize(QSize(679, 462));
         frame_2 = new QFrame(autorization_mainwindow);
         frame_2->setObjectName(QStringLiteral("frame_2"));
-        frame_2->setGeometry(QRect(0, 0, 681, 471));
-        frame_2->setMinimumSize(QSize(681, 471));
+        frame_2->setGeometry(QRect(0, 0, 681, 466));
+        frame_2->setMinimumSize(QSize(681, 2));
         frame_2->setMaximumSize(QSize(681, 471));
         frame_2->setStyleSheet(QLatin1String("QFrame{\n"
 "	border: none;\n"
@@ -64,7 +64,7 @@ public:
         frame_2->setFrameShadow(QFrame::Raised);
         frame = new QFrame(frame_2);
         frame->setObjectName(QStringLiteral("frame"));
-        frame->setGeometry(QRect(5, 40, 671, 56));
+        frame->setGeometry(QRect(5, 30, 671, 56));
         frame->setStyleSheet(QStringLiteral("background-color: #404040"));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
@@ -171,7 +171,7 @@ public:
         label_8->setAlignment(Qt::AlignCenter);
         listWidget = new QListWidget(frame_2);
         listWidget->setObjectName(QStringLiteral("listWidget"));
-        listWidget->setGeometry(QRect(5, 95, 671, 376));
+        listWidget->setGeometry(QRect(5, 85, 671, 376));
         QFont font3;
         font3.setBold(false);
         font3.setWeight(50);
@@ -195,53 +195,9 @@ public:
 "QListWidget::item:hover {\n"
 "	background-color: #949494;\n"
 "}"));
-        frame_3 = new QFrame(frame_2);
-        frame_3->setObjectName(QStringLiteral("frame_3"));
-        frame_3->setGeometry(QRect(5, 5, 671, 36));
-        frame_3->setStyleSheet(QLatin1String("QFrame{\n"
-"	border-bottom-left-radius: 0px;\n"
-"	border-bottom-right-radius: 0px;\n"
-"	background-color: #2a2a2a;\n"
-"}"));
-        frame_3->setFrameShape(QFrame::StyledPanel);
-        frame_3->setFrameShadow(QFrame::Raised);
-        close = new QPushButton(frame_3);
-        close->setObjectName(QStringLiteral("close"));
-        close->setGeometry(QRect(640, 5, 26, 26));
-        close->setFont(font1);
-        close->setStyleSheet(QLatin1String("QPushButton {\n"
-"	color: white;\n"
-"	font-size: 20px;\n"
-"	background-color: #2a2a2a;\n"
-"	border-radius: 5px;\n"
-"}\n"
-"QPushButton::hover {\n"
-"	background-color: #ffb0be;\n"
-"	color: black;\n"
-"}"));
-        hide = new QPushButton(frame_3);
-        hide->setObjectName(QStringLiteral("hide"));
-        hide->setGeometry(QRect(610, 5, 26, 26));
-        hide->setFont(font1);
-        hide->setStyleSheet(QLatin1String("QPushButton {\n"
-"	padding-bottom: 4px;\n"
-"	font-size: 20px;\n"
-"	background-color: #2a2a2a;\n"
-"	color: white;\n"
-"	border-radius: 5px;\n"
-"}\n"
-"QPushButton::hover {\n"
-"	background-color: #949494;\n"
-"}"));
-        label_2 = new QLabel(frame_3);
-        label_2->setObjectName(QStringLiteral("label_2"));
-        label_2->setGeometry(QRect(290, 10, 71, 16));
-        label_2->setFont(font1);
-        label_2->setStyleSheet(QLatin1String("font-size: 14px;\n"
-"color: white;"));
         add = new QPushButton(frame_2);
         add->setObjectName(QStringLiteral("add"));
-        add->setGeometry(QRect(625, 420, 36, 36));
+        add->setGeometry(QRect(625, 410, 36, 36));
         add->setFont(font1);
         add->setStyleSheet(QLatin1String("QPushButton {\n"
 "	font-size: 20px;\n"
@@ -253,6 +209,48 @@ public:
 "QPushButton::hover {\n"
 "	background-color: #55ada3;\n"
 "}"));
+        frame_4 = new QFrame(frame_2);
+        frame_4->setObjectName(QStringLiteral("frame_4"));
+        frame_4->setGeometry(QRect(5, 5, 671, 26));
+        frame_4->setStyleSheet(QLatin1String("QFrame{\n"
+"	border-bottom-left-radius: 0px;\n"
+"	border-bottom-right-radius: 0px;\n"
+"	background-color: #2a2a2a;\n"
+"}"));
+        frame_4->setFrameShape(QFrame::StyledPanel);
+        frame_4->setFrameShadow(QFrame::Raised);
+        close = new QPushButton(frame_4);
+        close->setObjectName(QStringLiteral("close"));
+        close->setGeometry(QRect(650, 5, 16, 16));
+        close->setFont(font1);
+        close->setStyleSheet(QLatin1String("QPushButton {\n"
+"	font-size: 20px;\n"
+"	background-color: #f73643;\n"
+"	border-radius: 8px;\n"
+"}\n"
+"QPushButton::hover {\n"
+"	background-color: #d63a44;\n"
+"	color: black;\n"
+"}"));
+        hide = new QPushButton(frame_4);
+        hide->setObjectName(QStringLiteral("hide"));
+        hide->setGeometry(QRect(625, 5, 16, 16));
+        hide->setFont(font1);
+        hide->setStyleSheet(QLatin1String("QPushButton {\n"
+"	padding-bottom: 4px;\n"
+"	font-size: 20px;\n"
+"	background-color: #47fc65;\n"
+"	border-radius: 8px;\n"
+"}\n"
+"QPushButton::hover {\n"
+"	background-color: #49cc5f;\n"
+"}"));
+        label_2 = new QLabel(frame_4);
+        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setGeometry(QRect(300, 5, 71, 16));
+        label_2->setFont(font1);
+        label_2->setStyleSheet(QLatin1String("font-size: 14px;\n"
+"color: white;"));
 
         retranslateUi(autorization_mainwindow);
 
@@ -270,10 +268,10 @@ public:
         messages->setText(QApplication::translate("autorization_mainwindow", "\342\234\211", Q_NULLPTR));
         update->setText(QApplication::translate("autorization_mainwindow", "\342\255\257", Q_NULLPTR));
         label_8->setText(QString());
-        close->setText(QApplication::translate("autorization_mainwindow", "\342\234\230", Q_NULLPTR));
-        hide->setText(QApplication::translate("autorization_mainwindow", "_", Q_NULLPTR));
-        label_2->setText(QApplication::translate("autorization_mainwindow", "Sale App", Q_NULLPTR));
         add->setText(QApplication::translate("autorization_mainwindow", "+", Q_NULLPTR));
+        close->setText(QString());
+        hide->setText(QString());
+        label_2->setText(QApplication::translate("autorization_mainwindow", "Sale App", Q_NULLPTR));
     } // retranslateUi
 
 };

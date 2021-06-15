@@ -7,8 +7,20 @@
     <x>0</x>
     <y>0</y>
     <width>318</width>
-    <height>464</height>
+    <height>438</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>318</width>
+    <height>438</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>318</width>
+    <height>438</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>List apps</string>
@@ -22,19 +34,19 @@
      <x>5</x>
      <y>5</y>
      <width>311</width>
-     <height>456</height>
+     <height>431</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
      <width>311</width>
-     <height>456</height>
+     <height>431</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
      <width>311</width>
-     <height>456</height>
+     <height>431</height>
     </size>
    </property>
    <property name="styleSheet">
@@ -49,122 +61,13 @@ color: white;</string>
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <widget class="QFrame" name="frame_3">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>311</width>
-      <height>36</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QFrame{
-	border-bottom-left-radius: 0px;
-	border-bottom-right-radius: 0px;
-	background-color: #404040;
-}</string>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <widget class="QPushButton" name="pushButton_8">
-     <property name="geometry">
-      <rect>
-       <x>280</x>
-       <y>5</y>
-       <width>26</width>
-       <height>26</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>-1</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton {
-	font-size: 20px;
-	background-color: #404040;
-	border-radius: 5px;
-}
-QPushButton::hover {
-	background-color: #ffb0be;
-	color: black;
-}</string>
-     </property>
-     <property name="text">
-      <string>✘</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_9">
-     <property name="geometry">
-      <rect>
-       <x>250</x>
-       <y>5</y>
-       <width>26</width>
-       <height>26</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>-1</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton {
-	padding-bottom: 4px;
-	font-size: 20px;
-	background-color: #404040;
-	border-radius: 5px;
-}
-QPushButton::hover {
-	background-color: #2a2a2a;
-}</string>
-     </property>
-     <property name="text">
-      <string>_</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_9">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>10</y>
-       <width>66</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>-1</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font-size: 14px;
-color: white;</string>
-     </property>
-     <property name="text">
-      <string>List app</string>
-     </property>
-    </widget>
-   </widget>
    <widget class="QListWidget" name="listWidget">
     <property name="geometry">
      <rect>
       <x>5</x>
-      <y>80</y>
+      <y>70</y>
       <width>301</width>
-      <height>371</height>
+      <height>356</height>
      </rect>
     </property>
     <property name="font">
@@ -198,7 +101,7 @@ QListWidget::item:hover {
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>50</y>
+      <y>40</y>
       <width>196</width>
       <height>21</height>
      </rect>
@@ -217,6 +120,115 @@ color: white;</string>
     <property name="text">
      <string>Список программ</string>
     </property>
+   </widget>
+   <widget class="QFrame" name="frame_5">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>311</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QFrame{
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+	background-color: #404040;
+}</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QPushButton" name="pushButton_8">
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>5</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>-1</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+	font-size: 20px;
+	background-color: #f73643;
+	border-radius: 8px;
+}
+QPushButton::hover {
+	background-color: #d63a44;
+	color: black;
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_9">
+     <property name="geometry">
+      <rect>
+       <x>265</x>
+       <y>5</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>-1</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+	padding-bottom: 4px;
+	font-size: 20px;
+	background-color: #47fc65;
+	border-radius: 8px;
+}
+QPushButton::hover {
+	background-color: #49cc5f;
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_9">
+     <property name="geometry">
+      <rect>
+       <x>125</x>
+       <y>5</y>
+       <width>66</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>-1</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font-size: 14px;
+color: white;</string>
+     </property>
+     <property name="text">
+      <string>List app</string>
+     </property>
+    </widget>
    </widget>
   </widget>
  </widget>
