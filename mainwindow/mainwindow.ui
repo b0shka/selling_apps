@@ -265,9 +265,9 @@ QListWidget::item:hover {
     <widget class="QFrame" name="frame_5">
      <property name="geometry">
       <rect>
-       <x>0</x>
+       <x>5</x>
        <y>0</y>
-       <width>676</width>
+       <width>671</width>
        <height>26</height>
       </rect>
      </property>
@@ -287,7 +287,7 @@ QListWidget::item:hover {
      <widget class="QPushButton" name="close">
       <property name="geometry">
        <rect>
-        <x>655</x>
+        <x>650</x>
         <y>5</y>
         <width>16</width>
         <height>16</height>
@@ -318,7 +318,7 @@ QPushButton::hover {
      <widget class="QPushButton" name="hide">
       <property name="geometry">
        <rect>
-        <x>630</x>
+        <x>625</x>
         <y>5</y>
         <width>16</width>
         <height>16</height>
@@ -349,7 +349,7 @@ QPushButton::hover {
      <widget class="QLabel" name="label">
       <property name="geometry">
        <rect>
-        <x>300</x>
+        <x>295</x>
         <y>5</y>
         <width>71</width>
         <height>16</height>

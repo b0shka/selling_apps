@@ -159,7 +159,7 @@ public:
 "}"));
         frame_5 = new QFrame(frame_2);
         frame_5->setObjectName(QStringLiteral("frame_5"));
-        frame_5->setGeometry(QRect(0, 0, 676, 26));
+        frame_5->setGeometry(QRect(5, 0, 671, 26));
         frame_5->setStyleSheet(QLatin1String("QFrame{\n"
 "	border-bottom-left-radius: 0px;\n"
 "	border-bottom-right-radius: 0px;\n"
@@ -169,7 +169,7 @@ public:
         frame_5->setFrameShadow(QFrame::Raised);
         close = new QPushButton(frame_5);
         close->setObjectName(QStringLiteral("close"));
-        close->setGeometry(QRect(655, 5, 16, 16));
+        close->setGeometry(QRect(650, 5, 16, 16));
         close->setFont(font1);
         close->setStyleSheet(QLatin1String("QPushButton {\n"
 "	font-size: 20px;\n"
@@ -182,7 +182,7 @@ public:
 "}"));
         hide = new QPushButton(frame_5);
         hide->setObjectName(QStringLiteral("hide"));
-        hide->setGeometry(QRect(630, 5, 16, 16));
+        hide->setGeometry(QRect(625, 5, 16, 16));
         hide->setFont(font1);
         hide->setStyleSheet(QLatin1String("QPushButton {\n"
 "	padding-bottom: 4px;\n"
@@ -195,7 +195,7 @@ public:
 "}"));
         label = new QLabel(frame_5);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(300, 5, 71, 16));
+        label->setGeometry(QRect(295, 5, 71, 16));
         label->setFont(font1);
         label->setStyleSheet(QLatin1String("font-size: 14px;\n"
 "color: white;"));
