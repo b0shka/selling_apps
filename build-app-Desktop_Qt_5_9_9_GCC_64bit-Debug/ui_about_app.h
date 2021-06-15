@@ -45,6 +45,8 @@ public:
     QLabel *label_9;
     QLabel *label_10;
     QLabel *label_11;
+    QLabel *label_12;
+    QLabel *label_13;
 
     void setupUi(QDialog *about_app)
     {
@@ -136,7 +138,7 @@ public:
         label_7->setWordWrap(true);
         login_dev = new QPushButton(frame);
         login_dev->setObjectName(QStringLiteral("login_dev"));
-        login_dev->setGeometry(QRect(115, 365, 216, 21));
+        login_dev->setGeometry(QRect(115, 365, 161, 21));
         login_dev->setStyleSheet(QLatin1String("QPushButton {\n"
 "	font-size: 14px;\n"
 "	color: silver;\n"
@@ -246,6 +248,21 @@ public:
         label_11->setFont(font3);
         label_11->setStyleSheet(QStringLiteral("background-color: #2a2a2a"));
         label_11->setAlignment(Qt::AlignCenter);
+        label_12 = new QLabel(frame);
+        label_12->setObjectName(QStringLiteral("label_12"));
+        label_12->setGeometry(QRect(315, 365, 21, 26));
+        QFont font4;
+        label_12->setFont(font4);
+        label_12->setStyleSheet(QLatin1String("font-size: 20px;\n"
+"color: silver;"));
+        label_12->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+        label_13 = new QLabel(frame);
+        label_13->setObjectName(QStringLiteral("label_13"));
+        label_13->setGeometry(QRect(280, 365, 31, 21));
+        label_13->setFont(font4);
+        label_13->setStyleSheet(QLatin1String("font-size: 12px;\n"
+"color: silver;"));
+        label_13->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         retranslateUi(about_app);
 
@@ -274,6 +291,8 @@ public:
         label_9->setText(QString());
         label_10->setText(QString());
         label_11->setText(QString());
+        label_12->setText(QApplication::translate("about_app", "\360\237\221\201", Q_NULLPTR));
+        label_13->setText(QString());
     } // retranslateUi
 
 };

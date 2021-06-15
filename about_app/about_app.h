@@ -32,6 +32,7 @@ private slots:
 	void on_hide_clicked();
 	void mousePressEvent(QMouseEvent* event);
 	void mouseMoveEvent(QMouseEvent* event);
+	void get_views(QString login, QString name_app);
 	
 private:
     Ui::about_app *ui;

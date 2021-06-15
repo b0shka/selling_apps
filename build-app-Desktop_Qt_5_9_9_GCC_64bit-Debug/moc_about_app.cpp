@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_about_app_t {
-    QByteArrayData data[17];
-    char stringdata0[256];
+    QByteArrayData data[19];
+    char stringdata0[272];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -48,7 +48,9 @@ QT_MOC_LITERAL(12, 190, 15), // "on_hide_clicked"
 QT_MOC_LITERAL(13, 206, 15), // "mousePressEvent"
 QT_MOC_LITERAL(14, 222, 12), // "QMouseEvent*"
 QT_MOC_LITERAL(15, 235, 5), // "event"
-QT_MOC_LITERAL(16, 241, 14) // "mouseMoveEvent"
+QT_MOC_LITERAL(16, 241, 14), // "mouseMoveEvent"
+QT_MOC_LITERAL(17, 256, 9), // "get_views"
+QT_MOC_LITERAL(18, 266, 5) // "login"
 
     },
     "about_app\0add_info\0\0QList<QString>\0"
@@ -57,7 +59,8 @@ QT_MOC_LITERAL(16, 241, 14) // "mouseMoveEvent"
     "on_favorite_del_clicked\0on_star_del_clicked\0"
     "on_messages_clicked\0on_close_clicked\0"
     "on_hide_clicked\0mousePressEvent\0"
-    "QMouseEvent*\0event\0mouseMoveEvent"
+    "QMouseEvent*\0event\0mouseMoveEvent\0"
+    "get_views\0login"
 };
 #undef QT_MOC_LITERAL
 
@@ -67,7 +70,7 @@ static const uint qt_meta_data_about_app[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      11,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -75,17 +78,18 @@ static const uint qt_meta_data_about_app[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   69,    2, 0x08 /* Private */,
-       5,    0,   72,    2, 0x08 /* Private */,
-       6,    0,   73,    2, 0x08 /* Private */,
-       7,    0,   74,    2, 0x08 /* Private */,
-       8,    0,   75,    2, 0x08 /* Private */,
-       9,    0,   76,    2, 0x08 /* Private */,
-      10,    0,   77,    2, 0x08 /* Private */,
-      11,    0,   78,    2, 0x08 /* Private */,
-      12,    0,   79,    2, 0x08 /* Private */,
-      13,    1,   80,    2, 0x08 /* Private */,
-      16,    1,   83,    2, 0x08 /* Private */,
+       1,    1,   74,    2, 0x08 /* Private */,
+       5,    0,   77,    2, 0x08 /* Private */,
+       6,    0,   78,    2, 0x08 /* Private */,
+       7,    0,   79,    2, 0x08 /* Private */,
+       8,    0,   80,    2, 0x08 /* Private */,
+       9,    0,   81,    2, 0x08 /* Private */,
+      10,    0,   82,    2, 0x08 /* Private */,
+      11,    0,   83,    2, 0x08 /* Private */,
+      12,    0,   84,    2, 0x08 /* Private */,
+      13,    1,   85,    2, 0x08 /* Private */,
+      16,    1,   88,    2, 0x08 /* Private */,
+      17,    2,   91,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
@@ -99,6 +103,7 @@ static const uint qt_meta_data_about_app[] = {
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 14,   15,
     QMetaType::Void, 0x80000000 | 14,   15,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString,   18,    4,
 
        0        // eod
 };
@@ -120,6 +125,7 @@ void about_app::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 8: _t->on_hide_clicked(); break;
         case 9: _t->mousePressEvent((*reinterpret_cast< QMouseEvent*(*)>(_a[1]))); break;
         case 10: _t->mouseMoveEvent((*reinterpret_cast< QMouseEvent*(*)>(_a[1]))); break;
+        case 11: _t->get_views((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -161,13 +167,13 @@ int about_app::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 12;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 11)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 12;
     }
     return _id;
 }

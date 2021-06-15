@@ -63,7 +63,9 @@ public slots:
 	QString delete_chat(const QString &login, const QString &login_dev);
 	QString delete_message(const QString &login, const QString &login_dev, const QString &message);
 	void add_app_photo(const QByteArray &image_bytes);
-
+	int get_count_views_in_app(const QString &login, const QString &name_app);
+	void add_views_to_app(const QString &login, const QString &name_app);
+	
 private:
     QSqlDatabase db;
     QSqlQuery sql;

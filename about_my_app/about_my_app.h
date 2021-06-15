@@ -37,6 +37,7 @@ private slots:
 	void on_lineEdit_3_returnPressed();
 	void mousePressEvent(QMouseEvent* event);
 	void mouseMoveEvent(QMouseEvent* event);
+	void get_views(QString login, QString name_app);
 	
 private:
     Ui::about_my_app *ui;

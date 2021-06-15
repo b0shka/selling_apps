@@ -29,7 +29,6 @@ void about_my_app::add_info(QList<QString> param_app)
 {
 	if (param_app[0].size() > 0)
     {
-        app_name = param_app[0];
         ui->lineEdit->setText(param_app[0]);
 
         QList<QString> info_app = database.get_all_info_app_list_profile(param_app);
@@ -73,6 +72,8 @@ void about_my_app::add_info(QList<QString> param_app)
 			}
 		}
 	}
+	
+	get_views(g_user_name, param_app[0]);
 }
 
 void about_my_app::mousePressEvent(QMouseEvent* event)
@@ -90,6 +91,15 @@ void about_my_app::mouseMoveEvent(QMouseEvent* event)
 		move(event->globalPos() - m_mousePoint);
 		event->accept();
 	}
+}
+
+void about_my_app::get_views(QString login, QString name_app)
+{
+	int count_views = database.get_count_views_in_app(login, name_app);
+	if (count_views != -1)
+		ui->label_14->setText(QString::number(count_views));
+	else
+		ui->label_13->clear();
 }
 
 void about_my_app::on_pushButton_clicked()

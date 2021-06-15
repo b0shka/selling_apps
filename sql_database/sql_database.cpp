@@ -57,6 +57,7 @@ QString sql_database::create_table()
 													 "app_photo3 BLOB,"
                                                      "app_star integer,"
                                                      "id_users_star TEXT,"
+													 "count_views integer,"
                                                      "author VARCHAR (40) NOT NULL"
                                                      ");";
         if (!sql.exec(str_requests))
@@ -346,7 +347,7 @@ QString sql_database::add_new_app(const QList<QString> &param_app, const QByteAr
         return "ERROR";
     }
 	
-	str_requests = "INSERT INTO " + app_table + " (id, app_name, app_price, app_description, app_technologes, app_photo1, app_photo2, app_photo3, author) VALUES(:id , :name, :price, :description, :technologes, :photo1, :photo2, :photo3, :author);";
+	str_requests = "INSERT INTO " + app_table + " (id, app_name, app_price, app_description, app_technologes, app_photo1, app_photo2, app_photo3, count_views, author) VALUES(:id , :name, :price, :description, :technologes, :photo1, :photo2, :photo3, :views, :author);";
 	sql.prepare(str_requests);
 	sql.bindValue(":id", app_id);
 	sql.bindValue(":name", param_app.at(0));
@@ -356,6 +357,7 @@ QString sql_database::add_new_app(const QList<QString> &param_app, const QByteAr
 	sql.bindValue(":photo1", image_bytes1);
 	sql.bindValue(":photo2", image_bytes2);
 	sql.bindValue(":photo3", image_bytes3);
+	sql.bindValue(":views", 0);
 	sql.bindValue(":author", param_app.at(4));
 	if (!sql.exec())
 	{
@@ -1330,14 +1332,12 @@ QString sql_database::delete_message(const QString &login, const QString &login_
 	db.commit();
 	
 	messages = get_new_messages(login, login_dev);
-	qDebug() << messages;
 	new_messages = "";
 	for (QString i : messages.split(";"))
 	{
 		if (i.mid(1) != message and i != "")
 			new_messages += i + ";";
 	}
-	qDebug() << new_messages;
 	
 	str_requests = "UPDATE " + chats_table + " SET new_messages = ('%1') WHERE login = ('%2') and login_dev = ('%3');";
 	if (!sql.exec(str_requests.arg(new_messages).arg(login).arg(login_dev)))
@@ -1355,7 +1355,6 @@ QString sql_database::delete_message(const QString &login, const QString &login_
 		if (i.mid(1) != message and i != "")
 			new_messages += i + ";";
 	}
-	qDebug() << new_messages;
 	
 	str_requests = "UPDATE " + chats_table + " SET new_messages = ('%1') WHERE login = ('%2') and login_dev = ('%3');";
 	if (!sql.exec(str_requests.arg(new_messages).arg(login_dev).arg(login)))
@@ -1376,6 +1375,36 @@ void sql_database::add_app_photo(const QByteArray &image_bytes)
 	if (!sql.exec())
 	{
 		qDebug() << "[ERROR] Не удается добавить фото в БД " << db.lastError().text();
+		return;
+	}
+	db.commit();
+}
+
+int sql_database::get_count_views_in_app(const QString &login, const QString &name_app)
+{
+	str_requests = "SELECT count_views FROM " + app_table + " WHERE app_name = ('%1') and author = ('%2');";
+	if (!sql.exec(str_requests.arg(name_app).arg(login)))
+	{
+		qDebug() << "[ERROR] Не удается получить количество просмотров " << db.lastError().text();
+		return -1;
+	}
+	
+	QSqlRecord get_data = sql.record();
+    int count_views;
+    while (sql.next())
+        count_views = sql.value(get_data.indexOf("count_views")).toInt();
+	
+	return count_views;
+}
+
+void sql_database::add_views_to_app(const QString &login, const QString &name_app)
+{
+	int count_views = get_count_views_in_app(login, name_app);
+	qDebug() << count_views;
+	str_requests = "UPDATE " + app_table + " SET count_views = (%1) WHERE app_name = ('%2') and author = ('%3');";
+	if (!sql.exec(str_requests.arg(count_views+1).arg(name_app).arg(login)))
+	{
+		qDebug() << "[ERROR] Не удается обновить count_views " << db.lastError().text();
 		return;
 	}
 	db.commit();

@@ -70,6 +70,8 @@ about_app::about_app(QList<QString> param_app, QWidget *parent) : QDialog(parent
 			}
 		}
 	}
+	
+	get_views(param_app[1], param_app[0]);
 }
 
 about_app::~about_app()
@@ -138,6 +140,18 @@ void about_app::mouseMoveEvent(QMouseEvent* event)
 		move(event->globalPos() - m_mousePoint);
 		event->accept();
 	}
+}
+
+void about_app::get_views(QString login, QString name_app)
+{
+	if (g_status_autorization == 1)
+		database.add_views_to_app(login, name_app);
+		
+	int count_views = database.get_count_views_in_app(login, name_app);
+	if (count_views != -1)
+		ui->label_13->setText(QString::number(count_views));
+	else
+		ui->label_12->clear();
 }
 
 void about_app::on_login_dev_clicked()

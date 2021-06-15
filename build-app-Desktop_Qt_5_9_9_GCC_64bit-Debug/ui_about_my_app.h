@@ -49,6 +49,8 @@ public:
     QPushButton *pushButton_11;
     QPushButton *pushButton_12;
     QPushButton *pushButton_3;
+    QLabel *label_13;
+    QLabel *label_14;
 
     void setupUi(QDialog *about_my_app)
     {
@@ -119,7 +121,7 @@ public:
 "border-radius: 5px;"));
         pushButton_2 = new QPushButton(frame);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
-        pushButton_2->setGeometry(QRect(115, 400, 211, 31));
+        pushButton_2->setGeometry(QRect(115, 400, 121, 31));
         pushButton_2->setStyleSheet(QLatin1String("QPushButton {\n"
 "	font-size: 14px;\n"
 "	background-color: #404040;\n"
@@ -262,6 +264,21 @@ public:
 "QPushButton::hover {\n"
 "	background-color: #949494;\n"
 "}"));
+        label_13 = new QLabel(frame);
+        label_13->setObjectName(QStringLiteral("label_13"));
+        label_13->setGeometry(QRect(300, 405, 21, 26));
+        QFont font2;
+        label_13->setFont(font2);
+        label_13->setStyleSheet(QLatin1String("font-size: 20px;\n"
+"color: silver;"));
+        label_13->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+        label_14 = new QLabel(frame);
+        label_14->setObjectName(QStringLiteral("label_14"));
+        label_14->setGeometry(QRect(245, 405, 51, 21));
+        label_14->setFont(font2);
+        label_14->setStyleSheet(QLatin1String("font-size: 12px;\n"
+"color: silver;"));
+        label_14->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         retranslateUi(about_my_app);
 
@@ -276,7 +293,7 @@ public:
         label->setText(QApplication::translate("about_my_app", "\320\235\320\260\320\267\320\262\320\260\320\275\320\270\320\265", Q_NULLPTR));
         label_4->setText(QApplication::translate("about_my_app", "\320\236\320\277\320\270\321\201\320\260\320\275\320\270\320\265", Q_NULLPTR));
         lineEdit->setText(QString());
-        pushButton_2->setText(QApplication::translate("about_my_app", "\320\241\320\276\321\205\321\200\320\260\320\275\320\270\321\202\321\214 \320\270\320\267\320\274\320\265\320\275\320\265\320\275\320\270\321\217", Q_NULLPTR));
+        pushButton_2->setText(QApplication::translate("about_my_app", "\320\241\320\276\321\205\321\200\320\260\320\275\320\270\321\202\321\214", Q_NULLPTR));
         label_3->setText(QApplication::translate("about_my_app", "\320\246\320\265\320\275\320\260", Q_NULLPTR));
         pushButton->setText(QApplication::translate("about_my_app", "\320\243\320\264\320\260\320\273\320\270\321\202\321\214", Q_NULLPTR));
         pushButton_8->setText(QApplication::translate("about_my_app", "\342\234\230", Q_NULLPTR));
@@ -289,6 +306,8 @@ public:
         pushButton_11->setText(QApplication::translate("about_my_app", "\342\234\230", Q_NULLPTR));
         pushButton_12->setText(QApplication::translate("about_my_app", "\342\234\230", Q_NULLPTR));
         pushButton_3->setText(QApplication::translate("about_my_app", "\320\224\320\276\320\261\320\260\320\262\320\270\321\202\321\214 \321\204\320\276\321\202\320\276", Q_NULLPTR));
+        label_13->setText(QApplication::translate("about_my_app", "\360\237\221\201", Q_NULLPTR));
+        label_14->setText(QString());
     } // retranslateUi
 
 };
