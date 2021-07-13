@@ -11,8 +11,8 @@
 #include "../sql_database/sql_database.h"
 #include "../main_data/data.h"
 #include "../popup/popup.h"
+#include "../main_data/logger.h"
 
-using namespace std;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

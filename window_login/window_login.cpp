@@ -79,16 +79,18 @@ void window_login::on_pushButton_clicked()
             g_status_autorization = 1;
 			popUp->setPopupText("Вы авторизовались");
 			popUp->show();
-            qDebug() << "[INFO] Авторизация пользователя";
+            qDebug(logDebug) << "Авторизация пользователя";
             close();
         }
         if (result_login == "NOT")
         {
+			qDebug(logDebug) << "Не верный login или password";
             ui->label_3->setStyleSheet(lock_style_label);
             ui->label_3->setText("Не верный login или password");
         }
         else if (result_login == "ERROR")
         {
+			qDebug(logError) << "Авторизация пользователя";
             ui->label_3->setStyleSheet(error_style_label);
             ui->label_3->setText("Ошибка на стороне сервера");
         }

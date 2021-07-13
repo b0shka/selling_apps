@@ -7,6 +7,7 @@
 #include "../developper_app/developper_app.h"
 #include "../sql_database/sql_database.h"
 #include "../popup/popup.h"
+#include "../main_data/logger.h"
 
 namespace Ui {
 class about_app;

@@ -29,6 +29,7 @@ SOURCES += \
     filter_search/filter_search.cpp \
 	main.cpp \
     main_data/data.cpp \
+	main_data/logger.cpp \
 	mainwindow/mainwindow.cpp \
 	messenger/messenger.cpp \
 	popup/popup.cpp \
@@ -51,6 +52,7 @@ HEADERS += \
     favorite_app/favorite_app.h \
     filter_search/filter_search.h \
     main_data/data.h \
+	main_data/logger.h \
 	mainwindow/mainwindow.h \
 	messenger/messenger.h \
 	popup/popup.h \

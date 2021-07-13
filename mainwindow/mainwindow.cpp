@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	QString result_start = database.first_start();
 	if (result_start == "ERROR")
 	{
+		qDebug(logError()) << "Старт программы";
 		popUp->setPopupText("Ошибка на стороне сервера");
 		popUp->show();
 	}
@@ -27,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 MainWindow::~MainWindow()
 {
-    delete ui;
+	delete ui;
 }
 
 void MainWindow::mousePressEvent(QMouseEvent* event)
@@ -40,7 +41,7 @@ void MainWindow::mousePressEvent(QMouseEvent* event)
 
 void MainWindow::mouseMoveEvent(QMouseEvent* event)
 {
-	if (event->buttons() & Qt::LeftButton )
+	if (event->buttons() & Qt::LeftButton)
 	{
 		move(event->globalPos() - m_mousePoint);
 		event->accept();
@@ -70,7 +71,7 @@ void MainWindow::on_login_clicked()
 
     if (g_status_autorization == 1)
         change_mainwindow();
-}
+}	
 
 void MainWindow::on_filter_clicked()
 {
@@ -138,6 +139,7 @@ void MainWindow::get_name_app_from_db()
 	{
 		if (list_apps_name.at(0).at(0) == "ERROR")
 		{
+			qDebug(logError()) << "Получение программ из БД";
 			popUp->setPopupText("Ошибка на стороне сервера");
 			popUp->show();
 		}
@@ -157,7 +159,7 @@ void MainWindow::get_name_app_from_db()
 					}
 				}
 			} catch (int a) {
-				qDebug() << "[ERROR] Нет записей в БД";
+				qDebug(logError()) << "Нет записей в БД";
 				popUp->setPopupText("Нет записей в БД");
 				popUp->show();
 			}
@@ -179,7 +181,7 @@ void MainWindow::get_name_app_from_db()
 				}
 			}
 		} catch (int a) {
-			qDebug() << "[ERROR] Нет записей в БД";
+			qDebug(logError()) << "Нет записей в БД";
 			popUp->setPopupText("Нет записей в БД");
 			popUp->show();
 		}
@@ -217,6 +219,7 @@ void MainWindow::add_apps_to_listWidget(QList<QList<QString>> list_result)
 				QList<QString> description_app = (database.get_all_info_app_list_profile({i[0], i[3]}));
 				if (description_app[0] == "ERROR")
 				{
+					qDebug(logError()) << "Получение данных для портфолио";
 					popUp->setPopupText("Ошибка на стороне сервера");
 					popUp->show();
 				}
@@ -306,6 +309,7 @@ void MainWindow::search_result(QString search)
 	{
 		if (list_apps_name.at(0).at(0) == "ERROR")
 		{
+			qDebug(logError) << "Получение программ из БД";
 			popUp->setPopupText("Ошибка на стороне сервера");
 			popUp->show();
 		}

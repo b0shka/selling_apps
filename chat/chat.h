@@ -11,6 +11,7 @@
 #include "thread_in_chat.h"
 #include "client.h"
 #include "../popup/popup.h"
+#include "../main_data/logger.h"
 
 namespace Ui {
 class chat;

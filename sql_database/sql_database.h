@@ -7,7 +7,11 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QSqlRecord>
+#include <QtSql>
+#include <QSqlDatabase>
 #include "../main_data/data.h"
+#include "../main_data/logger.h"
+
 
 class sql_database
 {

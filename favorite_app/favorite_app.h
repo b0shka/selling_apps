@@ -7,6 +7,7 @@
 #include <QPoint>
 #include "../sql_database/sql_database.h"
 #include "../popup/popup.h"
+#include "../main_data/logger.h"
 
 namespace Ui {
 class favorite_app;

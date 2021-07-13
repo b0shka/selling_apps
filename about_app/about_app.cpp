@@ -15,6 +15,7 @@ about_app::about_app(QList<QString> param_app, QWidget *parent) : QDialog(parent
     int user_id = database.get_id_user(g_user_name);
 	if (user_id == 0)
 	{
+		qDebug(logError) << "Получение id пользователя";
 		popUp->setPopupText("Ошибка на стороне сервера");
 		popUp->show();
 	}
@@ -23,6 +24,7 @@ about_app::about_app(QList<QString> param_app, QWidget *parent) : QDialog(parent
 		QString check_id_star = database.check_id_in_id_star_app(ui->login_dev->text(), ui->label->text(), QString::number(user_id));
 		if (check_id_star == "ERROR")
 		{
+			qDebug(logError) << "Проверка id в списке уже поставленных звезду";
 			popUp->setPopupText("Ошибка на стороне сервера");
 			popUp->show();
 		}
@@ -31,6 +33,7 @@ about_app::about_app(QList<QString> param_app, QWidget *parent) : QDialog(parent
 			QString app_id = database.get_id_app(param_app[1], param_app[0]);
 			if (app_id == "ERROR")
 			{
+				qDebug(logError) << "Получение id программы";
 				popUp->setPopupText("Ошибка на стороне сервера");
 				popUp->show();
 			}
@@ -39,6 +42,7 @@ about_app::about_app(QList<QString> param_app, QWidget *parent) : QDialog(parent
 				QString check_id_app_favorite = database.check_app_favorite(app_id);
 				if (check_id_app_favorite == "ERROR")
 				{
+					qDebug(logError) << "Проверка программы в избранном";
 					popUp->setPopupText("Ошибка на стороне сервера");
 					popUp->show();
 				}
@@ -87,6 +91,7 @@ void about_app::add_info(QList<QString> param_app)
     QList<QString> other_info_app = database.get_all_info_app_list_profile(param_app);
 	if (other_info_app[0] == "ERROR")
 	{
+		qDebug(logError) << "Получение полной информации о программе из профиля";
 		popUp->setPopupText("Ошибка на стороне сервера");
 		popUp->show();
 	}
@@ -106,6 +111,7 @@ void about_app::add_info(QList<QString> param_app)
 	QList<QByteArray> list_bytes_photo = database.get_bytes_photo(param_app[0], param_app[1]);
 	if (list_bytes_photo.size() == 0)
 	{
+		qDebug(logError) << "Получение байтов изображения из БД";
 		popUp->setPopupText("Ошибка на стороне сервера");
 		popUp->show();
 	}
@@ -170,11 +176,14 @@ void about_app::on_star_add_clicked()
 	{
 		ui->star_add->setHidden(true);
 		ui->star_del->setHidden(false);
+		
+		qDebug(logDebug) << "Поставленна звезда программе";
 		popUp->setPopupText("Звезда поставлена");
 		popUp->show();
 	}
 	else
 	{
+		qDebug(logError) << "Поставили звезду программе";
 		popUp->setPopupText("Ошибка на стороне сервера");
 		popUp->show();
 	}
@@ -188,11 +197,14 @@ void about_app::on_favorite_add_clicked()
 	{
 		ui->favorite_add->setHidden(true);
 		ui->favorite_del->setHidden(false);
+		
+		qDebug(logDebug) << "Добавили программу в избранное";
 		popUp->setPopupText("Программа добавлена в избранное");
 		popUp->show();
 	}
 	else
 	{
+		qDebug(logError) << "Добавили программу в избранное";
 		popUp->setPopupText("Ошибка на стороне сервера");
 		popUp->show();
 	}
@@ -206,11 +218,14 @@ void about_app::on_favorite_del_clicked()
 	{
 		ui->favorite_del->setHidden(true);
 		ui->favorite_add->setHidden(false);
+		
+		qDebug(logDebug) << "Удалили программу из избранного";
 		popUp->setPopupText("Программа удалена из избранного");
 		popUp->show();
 	}
 	else
 	{
+		qDebug(logError) << "Удалили программу из избранного";
 		popUp->setPopupText("Ошибка на стороне сервера");
 		popUp->show();
 	}
@@ -224,11 +239,14 @@ void about_app::on_star_del_clicked()
 	{
 		ui->star_del->setHidden(true);
 		ui->star_add->setHidden(false);
+		
+		qDebug(logDebug) << "Удалили звезду";
 		popUp->setPopupText("Звезда удалена");
 		popUp->show();
 	}
 	else
 	{
+		qDebug(logError) << "Удалили звезду";
 		popUp->setPopupText("Ошибка на стороне сервера");
 		popUp->show();
 	}

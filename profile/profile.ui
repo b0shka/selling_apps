@@ -64,7 +64,7 @@ color: white;</string>
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
-      <x>215</x>
+      <x>180</x>
       <y>245</y>
       <width>86</width>
       <height>21</height>

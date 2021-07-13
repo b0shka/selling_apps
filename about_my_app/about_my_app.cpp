@@ -34,6 +34,7 @@ void about_my_app::add_info(QList<QString> param_app)
         QList<QString> info_app = database.get_all_info_app_list_profile(param_app);
 		if (info_app[0] == "ERROR")
 		{
+			qDebug(logError) << "Получение полной информации о программе из профиля";
 			popUp->setPopupText("Ошибка на стороне сервера");
 			popUp->show();
 		}
@@ -46,6 +47,7 @@ void about_my_app::add_info(QList<QString> param_app)
 			QList<QByteArray> list_bytes_photo = database.get_bytes_photo(param_app[0], param_app[1]);
 			if (list_bytes_photo.size() == 0)
 			{
+				qDebug(logError) << "Получение байтов изображения из БД";
 				popUp->setPopupText("Ошибка на стороне сервера");
 				popUp->show();
 			}
@@ -113,6 +115,7 @@ void about_my_app::on_pushButton_clicked()
 			QString result_delete = database.delete_app_from_db(id_app);
 			if (result_delete == "Success")
 			{
+				qDebug(logDebug) << "Удалил программу";
 				popUp->setPopupText("Программа удалена");
 				popUp->show();
 				close();
@@ -120,12 +123,14 @@ void about_my_app::on_pushButton_clicked()
 			}
 			else
 			{
+				qDebug(logError) << "Удалил программу";
 				popUp->setPopupText("Ошибка на стороне сервера");
 				popUp->show();
 			}
 		}
 		else
 		{
+			qDebug(logError) << "Получение id программы";
 			popUp->setPopupText("Ошибка на стороне сервера");
 			popUp->show();
 		}
@@ -174,12 +179,15 @@ void about_my_app::on_pushButton_2_clicked()
         {
             g_status_change_app = 1;
             close();
+			
+			qDebug(logDebug) << "Сохранение данных";
 			popUp = new popup();
 			popUp->setPopupText("Данные сохранены");
 			popUp->show();
 		}
 		else
 		{
+			qDebug(logError) << "Сохранение данных";
 			popUp->setPopupText("Ошибка на стороне сервера");
 			popUp->show();
 		}

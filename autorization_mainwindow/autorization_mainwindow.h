@@ -6,6 +6,7 @@
 #include "../mainwindow/mainwindow.h"
 #include "thread_new_messages.h"
 #include "../popup/popup.h"
+#include "../main_data/logger.h"
 
 namespace Ui {
 class autorization_mainwindow;

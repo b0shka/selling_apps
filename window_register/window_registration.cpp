@@ -74,6 +74,7 @@ void window_registration::on_pushButton_clicked()
             ui->lineEdit->setStyleSheet(lock_style_other_color);
             ui->label_2->setStyleSheet(lock_style_label);
             ui->label_2->setText("Login слишком длинный");
+			qDebug(logDebug) << "Login слишком длинный";
         }
         else
         {
@@ -87,7 +88,7 @@ void window_registration::on_pushButton_clicked()
                 ui->label_2->setText("Вы успешно зарегистрировались!");
                 ui->lineEdit->setText("");
                 ui->lineEdit_2->setText("");
-                qDebug() << "[INFO] Успешная регистрация пользователя";
+                qDebug(logDebug) << "Успешная регистрация пользователя";
             }
             else if (result_register == "NOT")
             {
@@ -95,10 +96,11 @@ void window_registration::on_pushButton_clicked()
                 ui->lineEdit->setStyleSheet(lock_style_other_color);
                 ui->label_2->setStyleSheet(lock_style_label);
                 ui->label_2->setText("Пользователь с таким login уже существует");
-                qDebug() << "[INFO] Пользователь с таким login уже существует";
+                qDebug(logDebug) << "Пользователь с таким login уже существует";
             }
             else if (result_register == "ERROR")
             {
+				qDebug(logError) << "Регистрация пользователя";
                 ui->label_2->setStyleSheet(error_style_label);
                 ui->label_2->setText("Ошибка на стороне сервера");
             }

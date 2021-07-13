@@ -24,6 +24,7 @@ autorization_mainwindow::autorization_mainwindow(QWidget *parent) :
 	int count_messages = database.check_new_messages(g_user_name);
 	if (count_messages > 0)
 	{
+		qDebug(logDebug) << "Есть новые сообщения";
 		popUp->setPopupText("У вас есть новые сообщения");
 		popUp->show();
 	}
@@ -124,6 +125,7 @@ void autorization_mainwindow::on_update_clicked()
 	int new_messages = database.check_new_messages(g_user_name);
 	if (new_messages == 1)
 	{
+		qDebug(logDebug) << "Есть новые сообщения";
 		popUp->setPopupText("У вас есть новые сообщения");
 		popUp->show();
 	}
@@ -220,6 +222,7 @@ void autorization_mainwindow::get_name_app_from_db()
 	{
 		if (list_apps_name.at(0).at(0) == "ERROR")
 		{
+			qDebug(logError) << "Получение названий программ из БД";
 			popUp->setPopupText("Ошибка на стороне сервера");
 			popUp->show();
 		}
@@ -239,7 +242,7 @@ void autorization_mainwindow::get_name_app_from_db()
 					}
 				}
 			} catch (int a) {
-				qDebug() << "[ERROR] Нет записей в БД";
+				qDebug(logError) << "Нет записей в БД";
 				popUp->setPopupText("Нет записей в БД");
 				popUp->show();
 			}
@@ -261,7 +264,7 @@ void autorization_mainwindow::get_name_app_from_db()
 				}
 			}
 		} catch (int a) {
-			qDebug() << "[ERROR] Нет записей в БД";
+			qDebug(logError) << "Нет записей в БД";
 			popUp->setPopupText("Нет записей в БД");
 			popUp->show();
 		}
@@ -297,6 +300,7 @@ void autorization_mainwindow::add_apps_to_listWidget(QList<QList<QString>> list_
 				QList<QString> description_app = (database.get_all_info_app_list_profile({i[0], i[3]}));
 				if (description_app[0] == "ERROR")
 				{
+					qDebug(logError) << "Получение полной информации о программе из профиля";
 					popUp->setPopupText("Ошибка на стороне сервера");
 					popUp->show();
 				}
@@ -386,6 +390,7 @@ void autorization_mainwindow::search_result(QString search)
 	{
 		if (list_apps_name.at(0).at(0) == "ERROR")
 		{
+			qDebug(logError) << "Получение названий программ из БД";
 			popUp->setPopupText("Ошибка на стороне сервера");
 			popUp->show();
 		}

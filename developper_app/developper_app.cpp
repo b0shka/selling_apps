@@ -55,6 +55,7 @@ void developper_app::get_info_from_db(QString login)
     }
 	else
 	{
+		qDebug(logError) << "Получение информации для профиля";
 		popUp->setPopupText("Ошибка на стороне сервера");
 		popUp->show();
 	}
@@ -64,6 +65,7 @@ void developper_app::get_info_from_db(QString login)
         ui->pushButton_2->setText(count_app);
 	else
 	{
+		qDebug(logError) << "Получение количества программ";
 		popUp->setPopupText("Ошибка на стороне сервера");
 		popUp->show();
 	}
@@ -73,6 +75,7 @@ void developper_app::get_info_from_db(QString login)
         ui->label_12->setText(count_star);
 	else
 	{
+		qDebug(logError) << "Получение количества звезд";
 		popUp->setPopupText("Ошибка на стороне сервера");
 		popUp->show();
 	}

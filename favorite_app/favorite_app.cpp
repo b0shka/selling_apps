@@ -18,6 +18,7 @@ favorite_app::favorite_app(QWidget *parent) :
 	{
 		if (list_apps_name.at(0).at(0) == "ERROR")
 		{
+			qDebug(logError) << "Получение избранных программ";
 			popUp->setPopupText("Ошибка на стороне сервера");
 			popUp->show();
 		}
@@ -81,6 +82,7 @@ void favorite_app::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 	{
 		if (list_apps_name.at(0).at(0) == "ERROR")
 		{
+			qDebug(logError) << "Получение избранных программ";
 			popUp->setPopupText("Ошибка на стороне сервера");
 			popUp->show();
 		}

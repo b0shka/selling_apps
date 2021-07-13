@@ -68,7 +68,7 @@ public:
         frame->setFrameShadow(QFrame::Raised);
         label_9 = new QLabel(frame);
         label_9->setObjectName(QStringLiteral("label_9"));
-        label_9->setGeometry(QRect(215, 245, 86, 21));
+        label_9->setGeometry(QRect(180, 245, 86, 21));
         QFont font;
         font.setBold(true);
         font.setWeight(75);

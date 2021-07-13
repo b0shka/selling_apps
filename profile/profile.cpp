@@ -52,6 +52,7 @@ void profile::get_info_from_db()
     }
 	else
 	{
+		qDebug(logError) << "Получение информации для профиля";
 		popUp->setPopupText("Ошибка на стороне сервера");
 		popUp->show();
 	}
@@ -61,6 +62,7 @@ void profile::get_info_from_db()
         ui->pushButton_4->setText(count_app);
 	else
 	{
+		qDebug(logError) << "Получение крличества программ";
 		popUp->setPopupText("Ошибка на стороне сервера");
 		popUp->show();
 	}
@@ -70,6 +72,7 @@ void profile::get_info_from_db()
         ui->label_9->setText(count_star);
 	else
 	{
+		qDebug(logError) << "Получение количества звезд";
 		popUp->setPopupText("Ошибка на стороне сервера");
 		popUp->show();
 	}
@@ -84,6 +87,7 @@ void profile::on_pushButton_clicked()
         QString result_delete = user_delete.delete_user_from_db(g_user_name);
         if (result_delete == "Success")
         {
+			qDebug(logDebug) << "Удалении записи";
 			popUp->setPopupText("Запись удалена");
 			popUp->show();
             close();
@@ -91,6 +95,7 @@ void profile::on_pushButton_clicked()
         }
 		else
 		{
+			qDebug(logError) << "Удалении записи";
 			popUp->setPopupText("Ошибка на стороне сервера");
 			popUp->show();
 		}
@@ -116,12 +121,15 @@ void profile::on_pushButton_2_clicked()
         {
 			g_status_change = 1;
             g_user_name = new_login;
+			
+			qDebug(logDebug) << "Сохранение данных";
 			popUp->setPopupText("Данные сохранены");
 			popUp->show();
             close();
         }
 		else
 		{
+			qDebug(logError) << "Сохранение данных";
 			popUp->setPopupText("Ошибка на стороне сервера");
 			popUp->show();
 		}

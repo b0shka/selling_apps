@@ -63,6 +63,8 @@ void filter_search::on_pushButton_clicked()
         g_description = ui->lineEdit_4->text();
 
         ui->lineEdit_2->setStyleSheet(default_style_other_color);
+		
+		qDebug(logDebug) << "Фильтры применены";
 		popUp->setPopupText("Фильтры применены");
 		popUp->show();
         close();
@@ -79,6 +81,7 @@ void filter_search::on_pushButton_2_clicked()
     ui->lineEdit_2->setStyleSheet(default_style_other_color);
     ui->label_3->setStyleSheet(success_style_label);
     ui->label_3->setText("Фильтры сброшены");
+	qDebug(logDebug) << "Фильтры сброшены";
 
     if (g_max_price == 0)
         ui->lineEdit->setText("");

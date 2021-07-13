@@ -19,6 +19,7 @@ user_apps::user_apps(QString login, QWidget *parent) :
 	{
 		if (list_apps_name.at(0) == "ERROR")
 		{
+			qDebug(logError) << "Получение программ из профиля";
 			popUp->setPopupText("Ошибка на стороне сервера");
 			popUp->show();
 		}
@@ -85,6 +86,7 @@ void user_apps::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 			{
 				if (list_apps_name.at(0) == "ERROR")
 				{
+					qDebug(logError) << "Получение программ из профиля";
 					popUp->setPopupText("Ошибка на стороне сервера");
 					popUp->show();
 				}

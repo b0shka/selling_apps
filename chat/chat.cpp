@@ -21,6 +21,7 @@ chat::chat(QString login_dev, QWidget *parent) :
 	client.conect_server();
 	if (client.result_connect == -1)
 	{
+		qDebug(logError) << "Не удалось подключиться к серверу";
 		popUp->setPopupText("Не удалось подключиться к серверу");
 		popUp->show();
 	}
@@ -122,6 +123,7 @@ void chat::on_pushButton_clicked()
 			QString all_messages = database.get_correspondence(g_user_name, login_dev);
 			if (all_messages == "ERROR")
 			{
+				qDebug(logError) << "Получение переписки";
 				popUp->setPopupText("Ошибка на стороне сервера");
 				popUp->show();
 			}
@@ -178,6 +180,7 @@ void chat::restore_new_messages(QString new_messages)
 		}
 		else
 		{
+			qDebug(logError) << "Вывод новых сообщений"; 
 			popUp->setPopupText("Ошибка на стороне сервера");
 			popUp->show();
 		}
@@ -210,6 +213,7 @@ void chat::on_pushButton_4_clicked()
         QString result_del = database.delete_message(g_user_name, login_dev, message_name);
 		if (result_del == "ERROR")
 		{
+			qDebug(logError) << "Удаление сообщения";
 			popUp->setPopupText("Ошибка на стороне сервера");
 			popUp->show();
 		}
@@ -219,6 +223,7 @@ void chat::on_pushButton_4_clicked()
 			QString all_messages = database.get_correspondence(g_user_name, login_dev);
 			if (all_messages == "ERROR")
 			{
+				qDebug(logError) << "Получение переписки";
 				popUp->setPopupText("Ошибка на стороне сервера");
 				popUp->show();
 			}

@@ -8,7 +8,7 @@ QString sql_database::first_start()
     sql = QSqlQuery(db);
     if (!db.open())
     {
-        qDebug() << "[ERROR] " << db.lastError().text();
+        qDebug(logError) << db.lastError().text();
         return "ERROR";
     }
     QString result_create_table = create_table();
@@ -40,11 +40,11 @@ QString sql_database::create_table()
                                                       ");";
         if (!sql.exec(str_requests))
         {
-            qDebug() << "[ERROR] Не удается создать таблицу с пользователями: " << db.lastError().text();
+            qDebug(logError) << "Не удается создать таблицу с пользователями: " << db.lastError().text();
             return "ERROR";
         }
         db.commit();
-		qDebug() << "[INFO] Создана таблица с пользователями";
+		qDebug(logInfo) << "Создана таблица с пользователями";
 
         str_requests = "CREATE TABLE " + app_table + " ("
                                                      "id integer PRIMARY KEY NOT NULL,"
@@ -62,11 +62,11 @@ QString sql_database::create_table()
                                                      ");";
         if (!sql.exec(str_requests))
         {
-            qDebug() << "[ERROR] Не удается создать таблицу с программами: " << db.lastError().text();
+            qDebug(logError) << "Не удается создать таблицу с программами: " << db.lastError().text();
             return "ERROR";
         }
         db.commit();
-        qDebug() << "[INFO] Создана таблица с программами";
+        qDebug(logInfo) << "Создана таблица с программами";
 		
 		str_requests = "CREATE TABLE " + chats_table + " ("
 													   "id integer PRIMARY KEY NOT NULL,"
@@ -77,11 +77,11 @@ QString sql_database::create_table()
 													   ");";
         if (!sql.exec(str_requests))
         {
-            qDebug() << "[ERROR] Не удается создать таблицу с переписками: " << db.lastError().text();
+            qDebug(logError) << "Не удается создать таблицу с переписками: " << db.lastError().text();
             return "ERROR";
         }
         db.commit();
-        qDebug() << "[INFO] Создана таблица с переписками";
+        qDebug(logInfo) << "Создана таблица с переписками";
     }
 	return "Success";
 }
@@ -92,7 +92,7 @@ QList<QList<QString>> sql_database::get_apps_name()
     str_requests = "SELECT app_name, app_price, app_description, author FROM " + app_table + ";";
     if (!sql.exec(str_requests))
     {
-        qDebug() << "[ERROR] Не удается получить названия программ: " << db.lastError().text();
+        qDebug(logError) << "Не удается получить названия программ: " << db.lastError().text();
         return {{"ERROR"}};
     }
     QList<QList<QString>> list_apps_name = {};
@@ -118,7 +118,7 @@ QString sql_database::register_new_user(const QString &user_login, const QString
     str_requests = "SELECT id FROM " + user_table + " WHERE login = ('%1');";
     if (!sql.exec(str_requests.arg(user_login)))
     {
-        qDebug() << "[ERROR] Не удалось сделать проверку на существование такого же пользователя:" << db.lastError().text();
+        qDebug(logError) << "Не удалось сделать проверку на существование такого же пользователя:" << db.lastError().text();
         return "ERROR";
     }
     int count_users = 0;
@@ -132,14 +132,14 @@ QString sql_database::register_new_user(const QString &user_login, const QString
 
     if (user_id == 0)
     {
-        qDebug() << "[ERROR] Не удается сгенерировать id: " << db.lastError().text();
+        qDebug(logError) << "Не удается сгенерировать id: " << db.lastError().text();
         return "ERROR";
     }
 
     str_requests = "INSERT INTO " + user_table + " (id, login, password) VALUES(%1, '%2', '%3');";
     if (!sql.exec(str_requests.arg(user_id).arg(user_login).arg(user_password)))
     {
-        qDebug() << "[ERROR] Не получается создать запись при регистрации: " << db.lastError().text();
+        qDebug(logError) << "Не получается создать запись при регистрации: " << db.lastError().text();
         return "ERROR";
     }
     db.commit();
@@ -152,7 +152,7 @@ QString sql_database::check_login_user(const QString &user_login, const QString 
     str_requests = "SELECT id, login FROM " + user_table + " WHERE (login = ('%1') or email = ('%1') or number_phone = ('%1')) and password = ('%2');";
     if (!sql.exec(str_requests.arg(user_login).arg(user_password)))
     {
-        qDebug() << "[ERROR] Не удается получить данные для авторизации" << db.lastError().text();
+        qDebug(logError) << "Не удается получить данные для авторизации" << db.lastError().text();
         return "ERROR";
     }
 
@@ -175,7 +175,7 @@ QList<QString> sql_database::get_info_for_profile(const QString &login)
     str_requests = "SELECT id, email, number_phone FROM " + user_table + " WHERE login = ('%1');";
     if (!sql.exec(str_requests.arg(login)))
     {
-        qDebug() << "[ERROR] Не удается получить данные для профиля: " << db.lastError().text();
+        qDebug(logError) << "Не удается получить данные для профиля: " << db.lastError().text();
         return {"ERROR"};
     }
     QSqlRecord get_data = sql.record();
@@ -195,7 +195,7 @@ QString sql_database::delete_user_from_db(const QString &login)
 	str_requests = "DELETE FROM " + chats_table + " WHERE login = ('%1') or login_dev = ('%1');";
 	if (!sql.exec(str_requests.arg(login)))
 	{
-		qDebug() << "[ERROR] Не удается удалить чаты пользователя " << db.lastError().text();
+		qDebug(logError) << "Не удается удалить чаты пользователя " << db.lastError().text();
 		return "ERROR";
 	}
 	db.commit();
@@ -203,7 +203,7 @@ QString sql_database::delete_user_from_db(const QString &login)
 	str_requests = "SELECT dialogs FROM " + user_table + " WHERE login = ('%1');";
 	if (!sql.exec(str_requests.arg(login)))
 	{
-		qDebug() << "[ERROR] Не удается получить список переписок пользователя " << db.lastError().text();
+		qDebug(logError) << "Не удается получить список переписок пользователя " << db.lastError().text();
 		return "ERROR";
 	}
 	QSqlRecord get_data = sql.record();
@@ -216,7 +216,7 @@ QString sql_database::delete_user_from_db(const QString &login)
 		str_requests = "SELECT dialogs FROM " + user_table + " WHERE login = ('%1');";
 		if (!sql.exec(str_requests.arg(i)))
 		{
-			qDebug() << "[ERROR] Не удается получить список переписок пользователя с которым переписовался пользователь " << db.lastError().text();
+			qDebug(logError) << "Не удается получить список переписок пользователя с которым переписовался пользователь " << db.lastError().text();
 			return "ERROR";
 		}
 		
@@ -235,7 +235,7 @@ QString sql_database::delete_user_from_db(const QString &login)
 		str_requests = "UPDATE " + user_table + " SET dialogs = ('%1') WHERE login = ('%2');";
 		if (!sql.exec(str_requests.arg(new_dev_dialogs).arg(i)))
 		{
-			qDebug() << "[ERROR] Не удается обновить dialogs пользователя с которым переписовался пользователь " << db.lastError().text();
+			qDebug(logError) << "Не удается обновить dialogs пользователя с которым переписовался пользователь " << db.lastError().text();
 			return "ERROR";
 		}
 		db.commit();
@@ -244,7 +244,7 @@ QString sql_database::delete_user_from_db(const QString &login)
     str_requests = "DELETE FROM " + user_table + " WHERE login = ('%1');";
     if (!sql.exec(str_requests.arg(login)))
     {
-        qDebug() << "[ERROR] Ошибка при удалении пользователя: " << db.lastError().text();
+        qDebug(logError) << "Ошибка при удалении пользователя: " << db.lastError().text();
         return "ERROR";
     }
     db.commit();
@@ -252,12 +252,12 @@ QString sql_database::delete_user_from_db(const QString &login)
     str_requests = "DELETE FROM " + app_table + " WHERE author = ('%1');";
     if (!sql.exec(str_requests.arg(login)))
     {
-        qDebug() << "[ERROR] Не получается удалить все программы пользователя при удалении аккаунта " << db.lastError().text();
+        qDebug(logError) << "Не получается удалить все программы пользователя при удалении аккаунта " << db.lastError().text();
         return "ERROR";
     }
     db.commit();
 
-    qDebug() << "[INFO] Пользователь успешно удален";
+    qDebug(logInfo) << "Пользователь успешно удален";
     return "Success";
 }
 
@@ -268,7 +268,7 @@ QString sql_database::save_change_in_profile(const QList<QString> &data_change)
 		str_requests = "SELECT login FROM " + user_table + ";";
 		if (!sql.exec(str_requests))
 		{
-			qDebug() << "[ERROR] << Не удалось получить все login " << db.lastError().text();
+			qDebug(logError) << "<< Не удалось получить все login " << db.lastError().text();
 			return "ERROR";
 		}
 		
@@ -294,7 +294,7 @@ QString sql_database::save_change_in_profile(const QList<QString> &data_change)
 				str_requests = "UPDATE " + user_table + " SET dialogs = ('%1') WHERE login = ('%2');";
 				if (!sql.exec(str_requests.arg(new_dialogs).arg(i)))
 				{
-					qDebug() << "[ERROR] Не удается обновить dialogs " << db.lastError().text();
+					qDebug(logError) << "Не удается обновить dialogs " << db.lastError().text();
 					return "ERROR";
 				}
 				db.commit();
@@ -304,7 +304,7 @@ QString sql_database::save_change_in_profile(const QList<QString> &data_change)
 		str_requests = "UPDATE " + app_table + " SET author = ('%1') WHERE author = ('%2');";
 		if (!sql.exec(str_requests.arg(data_change.at(1)).arg(g_user_name)))
 		{
-			qDebug() << "[ERROR] Не удается обновить author " << db.lastError().text();
+			qDebug(logError) << "Не удается обновить author " << db.lastError().text();
 			return "ERROR";
 		}
 		db.commit();
@@ -312,7 +312,7 @@ QString sql_database::save_change_in_profile(const QList<QString> &data_change)
 		str_requests = "UPDATE " + chats_table + " SET login = ('%1') WHERE login = ('%2');";
 		if (!sql.exec(str_requests.arg(data_change.at(1)).arg(g_user_name)))
 		{
-			qDebug() << "[ERROR] Не удается изменить login в chats " << db.lastError().text();
+			qDebug(logError) << "Не удается изменить login в chats " << db.lastError().text();
 			return "ERROR";
 		}
 		db.commit();
@@ -320,7 +320,7 @@ QString sql_database::save_change_in_profile(const QList<QString> &data_change)
 		str_requests = "UPDATE " + chats_table + " SET login_dev = ('%1') WHERE login_dev = ('%2');";
 		if (!sql.exec(str_requests.arg(data_change.at(1)).arg(g_user_name)))
 		{
-			qDebug() << "[ERROR] Не удается изменить login_dev в chats " << db.lastError().text();
+			qDebug(logError) << "Не удается изменить login_dev в chats " << db.lastError().text();
 			return "ERROR";
 		}
 		db.commit();
@@ -329,7 +329,7 @@ QString sql_database::save_change_in_profile(const QList<QString> &data_change)
     str_requests = "UPDATE " + user_table + " SET login = ('%1'), email = ('%2'), number_phone = ('%3') WHERE id = ('%4');";
     if (!sql.exec(str_requests.arg(data_change.at(1)).arg(data_change.at(2)).arg(data_change.at(3)).arg(data_change.at(0))))
     {
-        qDebug() << "[ERROR] Не удается сохранить изменения профиля: " << db.lastError().text();
+        qDebug(logError) << "Не удается сохранить изменения профиля: " << db.lastError().text();
         return "ERROR";
     }
     db.commit();
@@ -343,7 +343,7 @@ QString sql_database::add_new_app(const QList<QString> &param_app, const QByteAr
 
     if (app_id == 0)
     {
-        qDebug() << "[ERROR] Не удается сгенерировать id: " << db.lastError().text();
+        qDebug(logError) << "Не удается сгенерировать id: " << db.lastError().text();
         return "ERROR";
     }
 	
@@ -361,7 +361,7 @@ QString sql_database::add_new_app(const QList<QString> &param_app, const QByteAr
 	sql.bindValue(":author", param_app.at(4));
 	if (!sql.exec())
 	{
-		qDebug() << "[ERROR] Не удается добавить фото в БД " << db.lastError().text();
+		qDebug(logError) << "Не удается добавить фото в БД " << db.lastError().text();
 		return "ERROR";
 	}
 	db.commit();
@@ -374,7 +374,7 @@ int sql_database::generate_id(const QString &name_table)
     sql.exec(str_requests);
     if (!sql.exec(str_requests))
     {
-        qDebug() << "[ERROR] Не удается получить данные из БД для генерации id: " << db.lastError().text();
+        qDebug(logError) << "Не удается получить данные из БД для генерации id: " << db.lastError().text();
         return 0;
     }
     QSqlRecord get_data = sql.record();
@@ -397,7 +397,7 @@ QList<QString> sql_database::get_apps_for_list_profile(const QString &login)
     str_requests = "SELECT app_name FROM " + app_table + " WHERE author = ('%1');";
     if (!sql.exec(str_requests.arg(login)))
     {
-        qDebug() << "[ERROR] Не удается получить названия программ из профиля: " << db.lastError().text();
+        qDebug(logError) << "Не удается получить названия программ из профиля: " << db.lastError().text();
         return {{"ERROR"}};
     }
     QList<QString> list_apps_name;
@@ -418,7 +418,7 @@ QList<QString> sql_database::get_all_info_app_list_profile(const QList<QString> 
     str_requests = "SELECT app_price, app_description, app_technologes FROM " + app_table + " WHERE app_name = ('%1') and author = ('%2');";
     if (!sql.exec(str_requests.arg(param_app[0]).arg(param_app.last())))
     {
-        qDebug() << "[ERROR] Не удается получить информацию о программе из профиля: " << db.lastError().text();
+        qDebug(logError) << "Не удается получить информацию о программе из профиля: " << db.lastError().text();
         return {"ERROR"};
     }
     QList<QString> list_apps_name;
@@ -441,7 +441,7 @@ QList<QByteArray> sql_database::get_bytes_photo(const QString &app_name, const Q
 	str_requests = "SELECT app_photo1, app_photo2, app_photo3 FROM " + app_table + " WHERE app_name = ('%1') and author = ('%2');";
 	if (!sql.exec(str_requests.arg(app_name).arg(login)))
 	{
-		qDebug() << "[ERROR] Не удается получить bytes фото " << db.lastError().text();
+		qDebug(logError) << "Не удается получить bytes фото " << db.lastError().text();
 		return {nullptr};
 	}
 	
@@ -463,7 +463,7 @@ QString sql_database::delete_app_from_db(const int &app_id)
     str_requests = "DELETE FROM " + app_table + " WHERE id = (%1);";
 	if (!sql.exec(str_requests.arg(app_id)))
     {
-        qDebug() << "[ERROR] Ошибка при удалении программы: " << db.lastError().text();
+        qDebug(logError) << "Ошибка при удалении программы: " << db.lastError().text();
         return "ERROR";
     }
 	
@@ -487,7 +487,7 @@ QString sql_database::save_change_app(const QList<QString> &data_change, const Q
 	
 	if (!sql.exec())
 	{
-		qDebug() << "[ERROR] Не удается сохранить изменения программы " << db.lastError().text();
+		qDebug(logError) << "Не удается сохранить изменения программы " << db.lastError().text();
 		return "ERROR";
 	}
     db.commit();
@@ -499,7 +499,7 @@ QString sql_database::get_count_apps(const QString &login)
     str_requests = "SELECT app_name FROM " + app_table + " WHERE author = ('%1');";
     if (!sql.exec(str_requests.arg(login)))
     {
-        qDebug() << "[ERROR] Не удалось получить список программ для подсчета их количества" << db.lastError().text();
+        qDebug(logError) << "Не удалось получить список программ для подсчета их количества" << db.lastError().text();
         return "ERROR";
     }
     int count = 0;
@@ -514,7 +514,7 @@ QString sql_database::add_star_to_app(const QString &login, const QString &app_n
     str_requests = "SELECT app_star FROM " + app_table + " WHERE app_name = ('%1') and author = ('%2');";
     if (!sql.exec(str_requests.arg(app_name).arg(login)))
     {
-        qDebug() << "[ERROR] Не удается получить количество звезд программы " << db.lastError().text();
+        qDebug(logError) << "Не удается получить количество звезд программы " << db.lastError().text();
         return "ERROR";
     }
 
@@ -528,7 +528,7 @@ QString sql_database::add_star_to_app(const QString &login, const QString &app_n
     str_requests = "UPDATE " + app_table + " SET app_star = (%1) WHERE app_name = ('%2') and author = ('%3');";
     if (!sql.exec(str_requests.arg(count_star).arg(app_name).arg(login)))
     {
-        qDebug() << "[ERROR] Не удается обновить количество звезд программы " << db.lastError().text();
+        qDebug(logError) << "Не удается обновить количество звезд программы " << db.lastError().text();
         return "ERROR";
     }
 
@@ -538,7 +538,7 @@ QString sql_database::add_star_to_app(const QString &login, const QString &app_n
     QString result_update_list_star = add_id_users_star_app(login, app_name, QString::number(user_id));
     if (result_update_list_star == "ERROR")
     {
-        qDebug() << "[ERROR] Не удается обновить список id которые поставили звезду программе " << db.lastError().text();
+        qDebug(logError) << "Не удается обновить список id которые поставили звезду программе " << db.lastError().text();
         return "ERROR";
     }
 
@@ -557,7 +557,7 @@ QString sql_database::add_id_users_star_app(const QString &login, const QString 
     str_requests = "UPDATE " + app_table + " SET id_users_star = ('%1') WHERE app_name = ('%2') and author = ('%3');";
     if(!sql.exec(str_requests.arg(list_user).arg(app_name).arg(login)))
     {
-        qDebug() << "[ERROR] Не удается обновить список id пользователей поставивших звезду программе " << db.lastError().text();
+        qDebug(logError) << "Не удается обновить список id пользователей поставивших звезду программе " << db.lastError().text();
         return "ERROR";
     }
 
@@ -570,7 +570,7 @@ int sql_database::get_id_user(const QString &login)
     str_requests = "SELECT id FROM " + user_table + " WHERE login = ('%1');";
     if (!sql.exec(str_requests.arg(login)))
     {
-        qDebug() << "[ERROR] Не удается получить id пользователя " << db.lastError().text();
+        qDebug(logError) << "Не удается получить id пользователя " << db.lastError().text();
         return 0;
     }
 
@@ -587,7 +587,7 @@ int sql_database::get_id_app(const QString &app_name, const QString &app_price, 
 	str_requests = "SELECT id FROM " + app_table + " WHERE app_name = ('%1') and app_price = ('%2') and app_description = ('%3') and app_technologes = ('%4');";
 	if (!sql.exec(str_requests.arg(app_name).arg(app_price).arg(app_description).arg(app_technologes)))
 	{
-		qDebug() << "[ERROR] Не удатся получить id программы " << db.lastError().text();
+		qDebug(logError) << "Не удатся получить id программы " << db.lastError().text();
 		return 0;
 	}
 	
@@ -604,7 +604,7 @@ QString sql_database::get_list_id_star_app(const QString &login, const QString &
     str_requests = "SELECT id_users_star FROM " + app_table + " WHERE app_name = ('%1') and author = ('%2');";
     if (!sql.exec(str_requests.arg(app_name).arg(login)))
     {
-        qDebug() << "[ERROR] Не удается получить id пользователей поставивших звезду программе " << db.lastError().text();
+        qDebug(logError) << "Не удается получить id пользователей поставивших звезду программе " << db.lastError().text();
         return "ERROR";
     }
 
@@ -636,7 +636,7 @@ QString sql_database::get_all_star_for_profile(const QString &login)
     str_requests = "SELECT app_star FROM " + app_table + " WHERE author = ('%1');";
     if (!sql.exec(str_requests.arg(login)))
     {
-        qDebug() << "[ERROR] Не удается получить количество звезд с одного профиля " << db.lastError().text();
+        qDebug(logError) << "Не удается получить количество звезд с одного профиля " << db.lastError().text();
         return "ERROR";
     }
 
@@ -653,7 +653,7 @@ void sql_database::get_max_price_app()
     str_requests = "SELECT app_price FROM " + app_table + ";";
     if (!sql.exec(str_requests))
 	{
-        qDebug() << "[ERROR] Не удалется получить все цены программ для определения g_max_price " << db.lastError().text();
+        qDebug(logError) << "Не удалется получить все цены программ для определения g_max_price " << db.lastError().text();
 		g_max_price = 0;
 	}
 		
@@ -673,7 +673,7 @@ void sql_database::get_min_price_app()
     str_requests = "SELECT app_price FROM " + app_table + ";";
     if (!sql.exec(str_requests))
 	{
-        qDebug() << "[ERROR] Не удалется получить все цены программ для определения g_min_price " << db.lastError().text();
+        qDebug(logError) << "Не удалется получить все цены программ для определения g_min_price " << db.lastError().text();
 		g_min_price = 0;
 	}
 	
@@ -715,7 +715,7 @@ QString sql_database::add_app_to_favorite(const QString &login, const QString &a
     QString new_favorite_app = get_id_app(login, app_name);
     if (new_favorite_app == "ERROR")
     {
-        qDebug() << "[ERROR] Не удается получить id программы " << db.lastError().text();
+        qDebug(logError) << "Не удается получить id программы " << db.lastError().text();
         return "ERROR";
     }
 
@@ -727,7 +727,7 @@ QString sql_database::add_app_to_favorite(const QString &login, const QString &a
     str_requests = "UPDATE " + user_table + " SET favorite_app = ('%1') WHERE login = ('%2');";
     if (!sql.exec(str_requests.arg(favorite_app).arg(g_user_name)))
     {
-        qDebug() << "[ERROR] Не удается изменить список избранных программ " << db.lastError().text();
+        qDebug(logError) << "Не удается изменить список избранных программ " << db.lastError().text();
         return "ERROR";
     }
     db.commit();
@@ -739,7 +739,7 @@ QString sql_database::get_id_favorite_app()
     str_requests = "SELECT favorite_app FROM " + user_table + " WHERE login = ('%1');";
     if (!sql.exec(str_requests.arg(g_user_name)))
     {
-        qDebug() << "[ERROR] Не удается получить id избранных программ " << db.lastError().text();
+        qDebug(logError) << "Не удается получить id избранных программ " << db.lastError().text();
         return "ERROR";
     }
 
@@ -782,7 +782,7 @@ QList<QString> sql_database::get_info_app_id(const int &app_id)
     str_requests = "SELECT app_name, author FROM " + app_table + " WHERE id = (%1);";
     if (!sql.exec(str_requests.arg(app_id)))
     {
-        qDebug() << "[ERROR] Не удается получить информацию о программе для избранного: " << db.lastError().text();
+        qDebug(logError) << "Не удается получить информацию о программе для избранного: " << db.lastError().text();
         return {"ERROR"};
     }
 
@@ -828,7 +828,7 @@ QString sql_database::delete_app_to_favorite(const QString &login, const QString
     str_requests = "UPDATE " + user_table + " SET favorite_app = ('%1');";
     if (!sql.exec(str_requests.arg(favorite_app)))
     {
-        qDebug() << "[ERROR] Не получается удалить программу из избранного " << db.lastError().text();
+        qDebug(logError) << "Не получается удалить программу из избранного " << db.lastError().text();
         return "ERROR";
     }
 
@@ -841,7 +841,7 @@ QString sql_database::delete_app_star(const QString &login, const QString &app_n
     str_requests = "SELECT app_star FROM " + app_table + " WHERE app_name = ('%1') and author = ('%2');";
     if (!sql.exec(str_requests.arg(app_name).arg(login)))
     {
-        qDebug() << "[ERROR] Не удается получить количество звезд программы " << db.lastError().text();
+        qDebug(logError) << "Не удается получить количество звезд программы " << db.lastError().text();
         return "ERROR";
     }
 
@@ -855,7 +855,7 @@ QString sql_database::delete_app_star(const QString &login, const QString &app_n
     str_requests = "UPDATE " + app_table + " SET app_star = (%1) WHERE app_name = ('%2') and author = ('%3');";
     if (!sql.exec(str_requests.arg(count_star).arg(app_name).arg(login)))
     {
-        qDebug() << "[ERROR] Не удается обновить количество звезд программы " << db.lastError().text();
+        qDebug(logError) << "Не удается обновить количество звезд программы " << db.lastError().text();
         return "ERROR";
     }
 
@@ -865,7 +865,7 @@ QString sql_database::delete_app_star(const QString &login, const QString &app_n
     QString result_update_list_star = delete_id_users_star_app(login, app_name, QString::number(user_id));
     if (result_update_list_star == "ERROR")
     {
-        qDebug() << "[ERROR] Не удается обновить список id которые поставили звезду программе " << db.lastError().text();
+        qDebug(logError) << "Не удается обновить список id которые поставили звезду программе " << db.lastError().text();
         return "ERROR";
     }
     return "Success";
@@ -884,7 +884,7 @@ QString sql_database::delete_id_users_star_app(const QString &login, const QStri
     str_requests = "UPDATE " + app_table + " SET id_users_star = ('%1') WHERE app_name = ('%2') and author = ('%3');";
     if(!sql.exec(str_requests.arg(list_user).arg(app_name).arg(login)))
     {
-        qDebug() << "[ERROR] Не удается обновить список id пользователей поставивших звезду программе " << db.lastError().text();
+        qDebug(logError) << "Не удается обновить список id пользователей поставивших звезду программе " << db.lastError().text();
         return "ERROR";
     }
 
@@ -897,7 +897,7 @@ void sql_database::change_status_online(const QString &login)
 	str_requests = "UPDATE " + user_table + " SET status_online = ('%1') WHERE login = ('%2');";
 	if (!sql.exec(str_requests.arg(g_status_online).arg(login)))
 	{
-		qDebug() << "[ERROR] Не удается изменить статус online " << db.lastError().text();
+		qDebug(logError) << "Не удается изменить статус online " << db.lastError().text();
 		return;
 	}
 	
@@ -909,7 +909,7 @@ void sql_database::add_client_id(const int &client, const QString &login)
 	str_requests = "UPDATE " + user_table + " SET id_socket = ('%1') WHERE login = ('%2');";
 	if (!sql.exec(str_requests.arg(client).arg(login)))
 	{
-		qDebug() << "[ERROR] Не удалось добавить client в id_socket " << db.lastError().text();
+		qDebug(logError) << "Не удалось добавить client в id_socket " << db.lastError().text();
 		return;
 	}
 	
@@ -921,7 +921,7 @@ int sql_database::get_id_socket_user(const QString &login)
 	str_requests = "SELECT id_socket FROM " + user_table + " WHERE login = ('%1');";
 	if (!sql.exec(str_requests.arg(login)))
 	{
-		qDebug() << "[ERROR] Не удается получить id_socket " << db.lastError().text();
+		qDebug(logError) << "Не удается получить id_socket " << db.lastError().text();
 		return 0;
 	}
 	
@@ -938,7 +938,7 @@ int sql_database::get_status_online(const QString &login)
 	str_requests = "SELECT status_online FROM " + user_table + " WHERE login = ('%1');";
 	if (!sql.exec(str_requests.arg(login)))
 	{
-		qDebug() << "[ERROR] Не удается получить статус online " << db.lastError().text();
+		qDebug(logError) << "Не удается получить статус online " << db.lastError().text();
 		return 2;
 	}
 	
@@ -955,7 +955,7 @@ void sql_database::start_dialog(const QString &login, const QString &login_dev)
 	str_requests = "SELECT dialogs FROM " + user_table + " WHERE login = ('%1');";
 	if (!sql.exec(str_requests.arg(login)))
 	{
-		qDebug() << "[ERROR] Не удается получить dialogs " << db.lastError().text();
+		qDebug(logError) << "Не удается получить dialogs " << db.lastError().text();
 		return;
 	}
 	
@@ -972,7 +972,7 @@ void sql_database::start_dialog(const QString &login, const QString &login_dev)
 		str_requests = "UPDATE " + user_table + " SET dialogs = ('%1') WHERE login = ('%2');";
 		if (!sql.exec(str_requests.arg(dialogs).arg(login)))
 		{
-			qDebug() << "[ERROR] Не удается обновить dialogs " << db.lastError().text();
+			qDebug(logError) << "Не удается обновить dialogs " << db.lastError().text();
 			return;
 		}
 		
@@ -982,7 +982,7 @@ void sql_database::start_dialog(const QString &login, const QString &login_dev)
 	str_requests = "SELECT dialogs FROM " + user_table + " WHERE login = ('%1');";
 	if (!sql.exec(str_requests.arg(login_dev)))
 	{
-		qDebug() << "[ERROR] Не удается получить dialogs " << db.lastError().text();
+		qDebug(logError) << "Не удается получить dialogs " << db.lastError().text();
 		return;
 	}
 	
@@ -998,7 +998,7 @@ void sql_database::start_dialog(const QString &login, const QString &login_dev)
 		str_requests = "UPDATE " + user_table + " SET dialogs = ('%1') WHERE login = ('%2');";
 		if (!sql.exec(str_requests.arg(dialogs).arg(login_dev)))
 		{
-			qDebug() << "[ERROR] Не удается обновить dialogs " << db.lastError().text();
+			qDebug(logError) << "Не удается обновить dialogs " << db.lastError().text();
 			return;
 		}
 		
@@ -1013,7 +1013,7 @@ void sql_database::start_chat(const QString &login, const QString &login_dev)
 	str_requests = "SELECT id FROM " + chats_table + " WHERE login = ('%1') and login_dev = ('%2');";
 	if (!sql.exec(str_requests.arg(login).arg(login_dev)))
 	{
-		qDebug() << "[ERROR] Не удается получить id переписки " << db.lastError().text();
+		qDebug(logError) << "Не удается получить id переписки " << db.lastError().text();
 		return;
 	}
 	
@@ -1029,7 +1029,7 @@ void sql_database::start_chat(const QString &login, const QString &login_dev)
 		str_requests = "INSERT INTO " + chats_table + " (id, login, login_dev) VALUES(%1, '%2', '%3');";
 		if (!sql.exec(str_requests.arg(chat_id).arg(login).arg(login_dev)))
 		{
-			qDebug() << "[ERROR] Не получается создать запись с чатом " << db.lastError().text();
+			qDebug(logError) << "Не получается создать запись с чатом " << db.lastError().text();
 			return;
 		}
 		db.commit();
@@ -1038,7 +1038,7 @@ void sql_database::start_chat(const QString &login, const QString &login_dev)
 	str_requests = "SELECT id FROM " + chats_table + " WHERE login = ('%1') and login_dev = ('%2');";
 	if (!sql.exec(str_requests.arg(login_dev).arg(login)))
 	{
-		qDebug() << "[ERROR] Не удается получить id переписки " << db.lastError().text();
+		qDebug(logError) << "Не удается получить id переписки " << db.lastError().text();
 		return;
 	}
 	
@@ -1053,7 +1053,7 @@ void sql_database::start_chat(const QString &login, const QString &login_dev)
 		str_requests = "INSERT INTO " + chats_table + " (id, login, login_dev) VALUES(%1, '%2', '%3');";
 		if (!sql.exec(str_requests.arg(chat_id).arg(login_dev).arg(login)))
 		{
-			qDebug() << "[ERROR] Не получается создать запись с чатом " << db.lastError().text();
+			qDebug(logError) << "Не получается создать запись с чатом " << db.lastError().text();
 			return;
 		}
 		db.commit();
@@ -1065,7 +1065,7 @@ QString sql_database::get_dialogs(const QString &login)
 	str_requests = "SELECT dialogs FROM " + user_table + " WHERE login = ('%1');";
 	if (!sql.exec(str_requests.arg(login)))
 	{
-		qDebug() << "[ERROR] Не удается получить dialogs " << db.lastError().text();
+		qDebug(logError) << "Не удается получить dialogs " << db.lastError().text();
 		return "ERROR";
 	}
 	
@@ -1082,7 +1082,7 @@ QString sql_database::get_correspondence(const QString &login, const QString &lo
 	str_requests = "SELECT messages FROM " + chats_table + " WHERE login = ('%1') and login_dev = ('%2');";
 	if (!sql.exec(str_requests.arg(login).arg(login_dev)))
 	{
-		qDebug() << "[ERROR] Не удается получить переписку " << db.lastError().text();
+		qDebug(logError) << "Не удается получить переписку " << db.lastError().text();
 		return "ERROR";
 	}
 	
@@ -1099,7 +1099,7 @@ void sql_database::add_to_chat(const QString &login, const QString &login_dev, c
 	str_requests = "SELECT messages FROM " + chats_table + " WHERE login = ('%1') and login_dev = ('%2');";
 	if (!sql.exec(str_requests.arg(login).arg(login_dev)))
 	{
-		qDebug() << "[ERROR] Не удается получить message в chats " << db.lastError().text();
+		qDebug(logError) << "Не удается получить message в chats " << db.lastError().text();
 		return;
 	}
 	
@@ -1115,7 +1115,7 @@ void sql_database::add_to_chat(const QString &login, const QString &login_dev, c
 		str_requests = "UPDATE " + chats_table + " SET messages = ('%1') WHERE login = ('%2') and login_dev = ('%3');";
 		if (!sql.exec(str_requests.arg(message).arg(login).arg(login_dev)))
 		{
-			qDebug() << "[ERROR] Не получается обновить messages в chats " << db.lastError().text();
+			qDebug(logError) << "Не получается обновить messages в chats " << db.lastError().text();
 			return;
 		}
 		
@@ -1147,7 +1147,7 @@ QString sql_database::get_new_messages(const QString &login, const QString &logi
 	str_requests = "SELECT new_messages FROM " + chats_table + " WHERE login = ('%1') and login_dev = ('%2');";
 	if (!sql.exec(str_requests.arg(login).arg(login_dev)))
 	{
-		qDebug() << "[ERROR] Не удается получить new_message " << db.lastError().text();
+		qDebug(logError) << "Не удается получить new_message " << db.lastError().text();
 		return "ERROR";
 	}
 	
@@ -1166,7 +1166,7 @@ void sql_database::new_messages_to_all_messages(const QString &login, const QStr
 	str_requests = "SELECT messages FROM " + chats_table + " WHERE login = ('%1') and login_dev = ('%2');";
 	if (!sql.exec(str_requests.arg(login).arg(login_dev)))
 	{
-		qDebug() << "[ERROR] Не удается получить message в chats " << db.lastError().text();
+		qDebug(logError) << "Не удается получить message в chats " << db.lastError().text();
 		return;
 	}
 	
@@ -1182,7 +1182,7 @@ void sql_database::new_messages_to_all_messages(const QString &login, const QStr
 		str_requests = "UPDATE " + chats_table + " SET messages = ('%1') WHERE login = ('%2') and login_dev = ('%3');";
 		if (!sql.exec(str_requests.arg(message).arg(login).arg(login_dev)))
 		{
-			qDebug() << "[ERROR] Не получается обновить messages в chats " << db.lastError().text();
+			qDebug(logError) << "Не получается обновить messages в chats " << db.lastError().text();
 			return;
 		}
 		
@@ -1192,7 +1192,7 @@ void sql_database::new_messages_to_all_messages(const QString &login, const QStr
 	str_requests = "UPDATE " + chats_table + " SET new_messages = ('%1') WHERE login = ('%2') and login_dev = ('%3')";
 	if (!sql.exec(str_requests.arg("").arg(login).arg(login_dev)))
 	{
-		qDebug() << "[ERROR] Не удается очистить new_messages " << db.lastError().text();
+		qDebug(logError) << "Не удается очистить new_messages " << db.lastError().text();
 		return;
 	}
 	
@@ -1204,7 +1204,7 @@ int sql_database::check_new_messages(const QString &login)
 	str_requests = "SELECT new_messages FROM " + chats_table + " WHERE login = ('%1');";
 	if (!sql.exec(str_requests.arg(login)))
 	{
-		qDebug() << "[ERROR] Не удается получить все new_messages " << db.lastError().text();
+		qDebug(logError) << "Не удается получить все new_messages " << db.lastError().text();
 		return 0;
 	}
 	
@@ -1228,7 +1228,7 @@ int sql_database::check_new_message_in_chat(const QString &login_dev)
 	str_requests = "SELECT new_messages FROM " + chats_table + " WHERE login = ('%1') and login_dev = ('%2');";
 	if (!sql.exec(str_requests.arg(g_user_name).arg(login_dev)))
 	{
-		qDebug() << "[ERROR] Не удается получить new_messages определенной переписки " << db.lastError().text();
+		qDebug(logError) << "Не удается получить new_messages определенной переписки " << db.lastError().text();
 		return 0;
 	}
 	
@@ -1252,7 +1252,7 @@ QString sql_database::delete_chat(const QString &login, const QString &login_dev
 	str_requests = "DELETE FROM " + chats_table + " WHERE (login = ('%1') and login_dev = ('%2')) or (login = ('%2') and login_dev = ('%1'));";
 	if (!sql.exec(str_requests.arg(login).arg(login_dev)))
 	{
-		qDebug() << "[ERROR] Не удается удалить чаты пользователя " << db.lastError().text();
+		qDebug(logError) << "Не удается удалить чаты пользователя " << db.lastError().text();
 		return "ERROR";
 	}
 	db.commit();
@@ -1269,7 +1269,7 @@ QString sql_database::delete_chat(const QString &login, const QString &login_dev
 	str_requests = "UPDATE " + user_table + " SET dialogs = ('%1') WHERE login = ('%2');";
 	if (!sql.exec(str_requests.arg(new_dialogs).arg(login)))
 	{
-		qDebug() << "[ERROR] Не удается обновить dialogs " << db.lastError().text();
+		qDebug(logError) << "Не удается обновить dialogs " << db.lastError().text();
 		return "ERROR";
 	}
 	db.commit();
@@ -1285,7 +1285,7 @@ QString sql_database::delete_chat(const QString &login, const QString &login_dev
 	str_requests = "UPDATE " + user_table + " SET dialogs = ('%1') WHERE login = ('%2');";
 	if (!sql.exec(str_requests.arg(new_dialogs).arg(login_dev)))
 	{
-		qDebug() << "[ERROR] Не удается обновить dialogs " << db.lastError().text();
+		qDebug(logError) << "Не удается обновить dialogs " << db.lastError().text();
 		return "ERROR";
 	}
 	db.commit();
@@ -1309,7 +1309,7 @@ QString sql_database::delete_message(const QString &login, const QString &login_
 	str_requests = "UPDATE " + chats_table + " SET messages = ('%1') WHERE login = ('%2') and login_dev = ('%3');";
 	if (!sql.exec(str_requests.arg(new_messages).arg(login).arg(login_dev)))
 	{
-		qDebug() << "[ERROR] Не удается обновить messages " << db.lastError().text();
+		qDebug(logError) << "Не удается обновить messages " << db.lastError().text();
 		return "ERROR";
 	}
 	db.commit();
@@ -1326,7 +1326,7 @@ QString sql_database::delete_message(const QString &login, const QString &login_
 	str_requests = "UPDATE " + chats_table + " SET messages = ('%1') WHERE login = ('%2') and login_dev = ('%3');";
 	if (!sql.exec(str_requests.arg(new_messages).arg(login_dev).arg(login)))
 	{
-		qDebug() << "[ERROR] Не удается обновить messages " << db.lastError().text();
+		qDebug(logError) << "Не удается обновить messages " << db.lastError().text();
 		return "ERROR";
 	}
 	db.commit();
@@ -1342,7 +1342,7 @@ QString sql_database::delete_message(const QString &login, const QString &login_
 	str_requests = "UPDATE " + chats_table + " SET new_messages = ('%1') WHERE login = ('%2') and login_dev = ('%3');";
 	if (!sql.exec(str_requests.arg(new_messages).arg(login).arg(login_dev)))
 	{
-		qDebug() << "[ERROR] Не удается обновить new_messages " << db.lastError().text();
+		qDebug(logError) << "Не удается обновить new_messages " << db.lastError().text();
 		return "ERROR";
 	}
 	db.commit();
@@ -1359,7 +1359,7 @@ QString sql_database::delete_message(const QString &login, const QString &login_
 	str_requests = "UPDATE " + chats_table + " SET new_messages = ('%1') WHERE login = ('%2') and login_dev = ('%3');";
 	if (!sql.exec(str_requests.arg(new_messages).arg(login_dev).arg(login)))
 	{
-		qDebug() << "[ERROR] Не удается обновить new_messages " << db.lastError().text();
+		qDebug(logError) << "Не удается обновить new_messages " << db.lastError().text();
 		return "ERROR";
 	}
 	db.commit();
@@ -1374,7 +1374,7 @@ void sql_database::add_app_photo(const QByteArray &image_bytes)
 	sql.bindValue(":pic", image_bytes);
 	if (!sql.exec())
 	{
-		qDebug() << "[ERROR] Не удается добавить фото в БД " << db.lastError().text();
+		qDebug(logError) << "Не удается добавить фото в БД " << db.lastError().text();
 		return;
 	}
 	db.commit();
@@ -1385,7 +1385,7 @@ int sql_database::get_count_views_in_app(const QString &login, const QString &na
 	str_requests = "SELECT count_views FROM " + app_table + " WHERE app_name = ('%1') and author = ('%2');";
 	if (!sql.exec(str_requests.arg(name_app).arg(login)))
 	{
-		qDebug() << "[ERROR] Не удается получить количество просмотров " << db.lastError().text();
+		qDebug(logError) << "Не удается получить количество просмотров " << db.lastError().text();
 		return -1;
 	}
 	
@@ -1404,7 +1404,7 @@ void sql_database::add_views_to_app(const QString &login, const QString &name_ap
 	str_requests = "UPDATE " + app_table + " SET count_views = (%1) WHERE app_name = ('%2') and author = ('%3');";
 	if (!sql.exec(str_requests.arg(count_views+1).arg(name_app).arg(login)))
 	{
-		qDebug() << "[ERROR] Не удается обновить count_views " << db.lastError().text();
+		qDebug(logError) << "Не удается обновить count_views " << db.lastError().text();
 		return;
 	}
 	db.commit();

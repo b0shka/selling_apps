@@ -92,11 +92,14 @@ void add_app::on_pushButton_clicked()
             database.get_max_price_app();
             database.get_min_price_app();
 			close();
+			
+			qDebug(logDebug) << "Добавление программы";
 			popUp->setPopupText("Программа добавлена");
 			popUp->show();
         }
         else if (result_add_app == "ERROR")
         {
+			qDebug(logError) << "Добавление программы";
             ui->label_5->setStyleSheet(error_style_label);
             ui->label_5->setText("Ошибка на сервере");
         }
@@ -109,12 +112,8 @@ bool add_app::eventFilter(QObject *watched, QEvent *event)
     if (watched == ui->label_2)
     {
         if(event->type() == QEvent::MouseButtonPress)
-        {
-            //обрабатываешь щелчёк мышки по лейблу
-            qDebug() << event->type();            
-        }                   
+            qDebug() << event->type();
     }
-    
     
     return false;
 }

@@ -63,6 +63,7 @@ void messenger::add_chats()
 	}
 	else
 	{
+		qDebug(logError) << "Получение переписок";
 		popUp->setPopupText("Ошибка на стороне сервера");
 		popUp->show();
 	}
@@ -90,13 +91,16 @@ void messenger::on_pushButton_clicked()
         QString result_del = database.delete_chat(g_user_name, chat_name);
 		if (result_del == "ERROR")
 		{
+			qDebug(logError) << "Удаление переписки";
 			popUp->setPopupText("Ошибка на стороне сервера");
 			popUp->show();
 		}
 		else
 		{
+			qDebug(logDebug) << "Удаление переписки";
 			popUp->setPopupText("Переписка успешно удалена");
 			popUp->show();
+			
 			ui->listWidget->clear();
 			add_chats();
 			ui->pushButton->setHidden(true);
