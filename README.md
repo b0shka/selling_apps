@@ -4,7 +4,7 @@ ____
 ### Install everything you need and run
 #### Installation
 ```
-https://github.com/b0shka/selling_apps.git
+git clone https://github.com/b0shka/selling_apps.git
 cd selling_apps/build-app-Desktop_Qt_5_9_9_GCC_64bit-Debug
 ```
 #### Run
