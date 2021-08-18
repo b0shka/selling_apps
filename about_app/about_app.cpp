@@ -124,10 +124,13 @@ void about_app::add_info(QList<QString> param_app)
 		one_Pixmap.loadFromData(list_bytes_photo[0]);
 		two_Pixmap.loadFromData(list_bytes_photo[1]);
 		three_Pixmap.loadFromData(list_bytes_photo[2]);
+
+        int width = ui->label_9->width();
+        int height = ui->label_9->height();
 		
-		ui->label_9->setPixmap(one_Pixmap.scaled(121, 91));
-		ui->label_10->setPixmap(two_Pixmap.scaled(121, 91));
-		ui->label_11->setPixmap(three_Pixmap.scaled(121, 91));
+        ui->label_9->setPixmap(one_Pixmap.scaled(width, height, Qt::KeepAspectRatio));
+        ui->label_10->setPixmap(two_Pixmap.scaled(width, height, Qt::KeepAspectRatio));
+        ui->label_11->setPixmap(three_Pixmap.scaled(width, height, Qt::KeepAspectRatio));
 	}
 }
 

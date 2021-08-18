@@ -157,11 +157,14 @@ void add_app::on_pushButton_2_clicked()
 			count_photo = 2;
 		else
 			count_photo = 3;
+
+        int width = ui->label_2->width();
+        int height = ui->label_2->height();
 		
 		if (count_photo == 0 || count_photo == 3)
 		{
 			one_Pixmap.load(filename);
-			ui->label_2->setPixmap(one_Pixmap.scaled(166, 111));
+            ui->label_2->setPixmap(one_Pixmap.scaled(width, height, Qt::KeepAspectRatio));
 			QBuffer buffer(&imageBytes1);
 			buffer.open(QIODevice::WriteOnly);
 			if (filename.split(".")[1] == "png")
@@ -173,7 +176,7 @@ void add_app::on_pushButton_2_clicked()
 		else if (count_photo == 1)
 		{
 			two_Pixmap.load(filename);
-			ui->label_3->setPixmap(two_Pixmap.scaled(166, 111));
+            ui->label_3->setPixmap(two_Pixmap.scaled(width, height, Qt::KeepAspectRatio));
 			QBuffer buffer(&imageBytes2);
 			buffer.open(QIODevice::WriteOnly);
 			if (filename.split(".")[1] == "png")
@@ -185,7 +188,7 @@ void add_app::on_pushButton_2_clicked()
 		else if (count_photo == 2)
 		{
 			three_Pixmap.load(filename);
-			ui->label_4->setPixmap(three_Pixmap.scaled(166, 111));
+            ui->label_4->setPixmap(three_Pixmap.scaled(width, height, Qt::KeepAspectRatio));
 			count_photo = 0;
 			QBuffer buffer(&imageBytes3);
 			buffer.open(QIODevice::WriteOnly);
@@ -200,6 +203,9 @@ void add_app::on_pushButton_2_clicked()
 
 void add_app::on_pushButton_10_clicked()
 {
+    int width = ui->label_2->width();
+    int height = ui->label_2->height();
+
 	if (two_Pixmap.isNull())
 	{
 		ui->label_2->clear();
@@ -209,7 +215,7 @@ void add_app::on_pushButton_10_clicked()
 	}
 	else
 	{
-		ui->label_2->setPixmap(two_Pixmap.scaled(166, 111));
+        ui->label_2->setPixmap(two_Pixmap.scaled(width, height, Qt::KeepAspectRatio));
 		if (three_Pixmap.isNull())
 		{
 			two_Pixmap.loadFromData(nullptr);
@@ -223,7 +229,7 @@ void add_app::on_pushButton_10_clicked()
 	}
 	else
 	{
-		ui->label_3->setPixmap(three_Pixmap.scaled(166, 111));
+        ui->label_3->setPixmap(three_Pixmap.scaled(width, height, Qt::KeepAspectRatio));
 		ui->label_4->clear();
 		ui->pushButton_12->setHidden(true);
 		two_Pixmap = three_Pixmap;
@@ -234,6 +240,9 @@ void add_app::on_pushButton_10_clicked()
 
 void add_app::on_pushButton_11_clicked()
 {
+    int width = ui->label_3->width();
+    int height = ui->label_2->height();
+
 	if (three_Pixmap.isNull())
 	{
 		ui->label_3->clear();
@@ -243,7 +252,7 @@ void add_app::on_pushButton_11_clicked()
 	}
 	else
 	{
-		ui->label_3->setPixmap(three_Pixmap.scaled(166, 111));
+        ui->label_3->setPixmap(three_Pixmap.scaled(width, height, Qt::KeepAspectRatio));
 		ui->label_4->clear();
 		ui->pushButton_12->setHidden(true);
 		two_Pixmap = three_Pixmap;

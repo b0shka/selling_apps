@@ -323,7 +323,7 @@ QPushButton::hover {
     <property name="geometry">
      <rect>
       <x>240</x>
-      <y>225</y>
+      <y>230</y>
       <width>21</width>
       <height>21</height>
      </rect>

@@ -67,10 +67,13 @@ void about_my_app::add_info(QList<QString> param_app)
 					ui->pushButton_11->setHidden(false);
 				if (list_bytes_photo[2] != nullptr)
 					ui->pushButton_12->setHidden(false);
+
+                int width = ui->label_10->width();
+                int height = ui->label_10->height();
 				
-				ui->label_10->setPixmap(one_Pixmap.scaled(166, 111));
-				ui->label_11->setPixmap(two_Pixmap.scaled(166, 111));
-				ui->label_12->setPixmap(three_Pixmap.scaled(166, 111));
+                ui->label_10->setPixmap(one_Pixmap.scaled(width, height, Qt::KeepAspectRatio));
+                ui->label_11->setPixmap(two_Pixmap.scaled(width, height, Qt::KeepAspectRatio));
+                ui->label_12->setPixmap(three_Pixmap.scaled(width, height, Qt::KeepAspectRatio));
 			}
 		}
 	}
